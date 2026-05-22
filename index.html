@@ -688,6 +688,204 @@ function showToast(msg){
   const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;
   t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);
 }
+}
+</script>
+
+<!-- FIREBASE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-analytics.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+  import { getFirestore, collection, addDoc, getDocs, orderBy, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+  import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-storage.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBlyi5hI-jSSyIf-H9rnpP_4Ldj6Cfpqu8",
+    authDomain: "hfgm-ministry.firebaseapp.com",
+    projectId: "hfgm-ministry",
+    storageBucket: "hfgm-ministry.firebasestorage.app",
+    messagingSenderId: "1079389581104",
+    appId: "1:1079389581104:web:c6eb77c5567368897fe2f5",
+    measurementId: "G-WH5RDYMMTV"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
+  const googleProvider = new GoogleAuthProvider();
+
+  // ===== REAL LOGIN =====
+  window.firebaseLogin = async function() {
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-pass').value;
+    if(!email || !password) { showToast('❌ ఇమెయిల్ మరియు పాస్‌వర్డ్ రాయండి!'); return; }
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      handleUser(result.user);
+    } catch(e) {
+      showToast('❌ లాగిన్ విఫలమైంది: ' + e.message);
+    }
+  }
+
+  // ===== REAL REGISTER =====
+  window.firebaseRegister = async function() {
+    const name = document.getElementById('reg-name').value;
+    const email = document.getElementById('reg-email').value;
+    const password = document.getElementById('reg-pass').value;
+    if(!name || !email || !password) { showToast('❌ అన్నీ fill చేయండి!'); return; }
+    try {
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      handleUser(result.user, name);
+    } catch(e) {
+      showToast('❌ రిజిస్ట్రేషన్ విఫలమైంది: ' + e.message);
+    }
+  }
+
+  // ===== GOOGLE LOGIN =====
+  window.googleLogin = async function() {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      handleUser(result.user);
+    } catch(e) {
+      showToast('❌ Google లాగిన్ విఫలమైంది!');
+    }
+  }
+
+  // ===== LOGOUT =====
+  window.firebaseLogout = async function() {
+    await signOut(auth);
+    document.getElementById('main-app').style.display='none';
+    document.getElementById('auth-page').style.display='flex';
+    showToast('లాగౌట్ అయ్యారు. మళ్ళీ రండి!');
+  }
+
+  function handleUser(user, name) {
+    const displayName = name || user.displayName || user.email.split('@')[0];
+    currentUser = { name: displayName, email: user.email, handle: '@' + displayName.toLowerCase().replace(/\s/g,''), uid: user.uid };
+    document.getElementById('avatar-btn').textContent = displayName[0].toUpperCase();
+    document.getElementById('auth-page').style.display='none';
+    document.getElementById('main-app').style.display='block';
+    renderHome();
+    loadFirebaseVideos();
+    showToast('స్వాగతం ' + displayName + '! తెలుగు తరంగంలోకి రండి! 🌊');
+  }
+
+  // ===== AUTH STATE =====
+  onAuthStateChanged(auth, (user) => {
+    if(user) handleUser(user);
+  });
+
+  // ===== REAL VIDEO UPLOAD =====
+  window.firebasePublish = async function() {
+    const title = document.getElementById('vid-title').value;
+    const desc = document.getElementById('vid-desc').value;
+    const cat = document.getElementById('vid-cat').value;
+    const fileInput = document.getElementById('file-input');
+
+    if(!title) { showToast('❌ వీడియో శీర్షిక రాయండి!'); return; }
+    if(!currentUser) { showToast('❌ ముందు లాగిన్ చేయండి!'); return; }
+
+    if(fileInput.files[0]) {
+      const file = fileInput.files[0];
+      const storageRef = ref(storage, 'videos/' + currentUser.uid + '/' + Date.now() + '_' + file.name);
+      const wrap = document.getElementById('progress-wrap');
+      const bar = document.getElementById('progress-bar');
+      const status = document.getElementById('upload-status');
+      wrap.style.display = 'block';
+      status.textContent = 'వీడియో upload అవుతోంది...';
+
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          bar.style.width = progress + '%';
+          status.textContent = Math.round(progress) + '% upload అయింది...';
+        },
+        (error) => { showToast('❌ Upload విఫలమైంది!'); },
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          await saveVideoToFirestore(title, desc, cat, downloadURL);
+        }
+      );
+    } else {
+      await saveVideoToFirestore(title, desc, cat, '');
+    }
+  }
+
+  async function saveVideoToFirestore(title, desc, cat, videoURL) {
+    try {
+      await addDoc(collection(db, 'telugu-tarangam-videos'), {
+        title, desc, cat, videoURL,
+        ch: currentUser.name,
+        uid: currentUser.uid,
+        views: 0, likes: 0,
+        emoji: '🎬',
+        createdAt: serverTimestamp()
+      });
+      showToast('🌊 వీడియో విజయవంతంగా పబ్లిష్ అయింది!');
+      document.getElementById('vid-title').value = '';
+      document.getElementById('vid-desc').value = '';
+      document.getElementById('progress-wrap').style.display = 'none';
+      document.getElementById('upload-status').textContent = '';
+      await loadFirebaseVideos();
+      navigate('home');
+    } catch(e) {
+      showToast('❌ Save విఫలమైంది: ' + e.message);
+    }
+  }
+
+  // ===== LOAD REAL VIDEOS =====
+  async function loadFirebaseVideos() {
+    try {
+      const q = query(collection(db, 'telugu-tarangam-videos'), orderBy('createdAt', 'desc'));
+      const snapshot = await getDocs(q);
+      const fbVideos = [];
+      snapshot.forEach(doc => {
+        const d = doc.data();
+        fbVideos.push({
+          id: doc.id, title: d.title, ch: d.ch,
+          views: d.views + ' వీక్షణలు', time: 'కొత్తగా',
+          emoji: d.emoji || '🎬',
+          bg: 'linear-gradient(135deg,#001a1a,#002a2a)',
+          chColor: 'linear-gradient(135deg,#ff6b00,#ffb347)',
+          chInitial: d.ch ? d.ch[0].toUpperCase() : 'మ',
+          duration: '0:00', subs: '0',
+          desc: d.desc, likes: d.likes || 0, comments: [],
+          videoURL: d.videoURL
+        });
+      });
+      if(fbVideos.length > 0) {
+        fbVideos.forEach(v => {
+          if(!videos.find(x => x.id === v.id)) videos.unshift(v);
+        });
+        renderHome();
+        showToast(fbVideos.length + ' real వీడియోలు load అయ్యాయి! 🌊');
+      }
+    } catch(e) {
+      console.log('Videos load error:', e);
+    }
+  }
+
+  // Override buttons to use Firebase
+  document.addEventListener('DOMContentLoaded', () => {
+    // Override login button
+    const loginBtn = document.querySelector('#login-form .auth-btn');
+    if(loginBtn) loginBtn.onclick = window.firebaseLogin;
+
+    const regBtn = document.querySelector('#register-form .auth-btn');
+    if(regBtn) regBtn.onclick = window.firebaseRegister;
+
+    const googleBtn = document.querySelector('.google-btn');
+    if(googleBtn) googleBtn.onclick = window.googleLogin;
+
+    const publishBtn = document.querySelector('.submit-btn');
+    if(publishBtn) publishBtn.onclick = window.firebasePublish;
+
+    const logoutItem = document.querySelector('.menu-item.danger');
+    if(logoutItem) logoutItem.onclick = window.firebaseLogout;
+  });
 </script>
 </body>
 </html>
