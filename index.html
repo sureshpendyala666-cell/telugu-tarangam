@@ -262,6 +262,15 @@ main{flex:1;padding:20px;overflow-y:auto;}
       <div class="form-group"><label>ఇమెయిల్</label><input type="email" id="login-email" placeholder="మీ ఇమెయిల్..."></div>
       <div class="form-group"><label>పాస్‌వర్డ్</label><input type="password" id="login-pass" placeholder="••••••••"></div>
       <button class="auth-btn" onclick="doLogin()">లాగిన్ చేయండి 🌊</button>
+      <div style="text-align:right;margin-top:8px;">
+        <span onclick="showForgotPassword()" style="font-size:13px;color:var(--accent);cursor:pointer;text-decoration:underline;">పాస్‌వర్డ్ మర్చిపోయారా?</span>
+      </div>
+      <div id="forgot-form" style="display:none;margin-top:16px;background:var(--card);border-radius:10px;padding:16px;">
+        <div style="font-size:14px;font-weight:700;margin-bottom:10px;">🔑 పాస్‌వర్డ్ రీసెట్</div>
+        <div class="form-group"><label>ఇమెయిల్ చెప్పండి</label><input type="email" id="reset-email" placeholder="మీ ఇమెయిల్..."></div>
+        <button onclick="sendResetEmail()" style="width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border:none;border-radius:8px;padding:10px;font-family:'Noto Sans Telugu',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">📧 Reset Link పంపండి</button>
+        <div style="text-align:center;margin-top:8px;"><span onclick="hideForgotPassword()" style="font-size:12px;color:var(--muted);cursor:pointer;">← వెనక్కి వెళ్ళండి</span></div>
+      </div>
       <div class="auth-divider">— లేదా —</div>
       <button class="google-btn" onclick="doLogin()">🌐 Google తో లాగిన్</button>
     </div>
@@ -695,7 +704,7 @@ function showToast(msg){
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-analytics.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
   import { getFirestore, collection, addDoc, getDocs, orderBy, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
   import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-storage.js";
 
@@ -754,6 +763,26 @@ function showToast(msg){
   }
 
   // ===== LOGOUT =====
+  // ===== FORGOT PASSWORD =====
+  window.showForgotPassword = function() {
+    document.getElementById('forgot-form').style.display='block';
+    document.getElementById('reset-email').value = document.getElementById('login-email').value || '';
+  }
+  window.hideForgotPassword = function() {
+    document.getElementById('forgot-form').style.display='none';
+  }
+  window.sendResetEmail = async function() {
+    const email = document.getElementById('reset-email').value;
+    if(!email) { showToast('❌ ఇమెయిల్ రాయండి!'); return; }
+    try {
+      await sendPasswordResetEmail(auth, email);
+      showToast('✅ Reset link మీ ఇమెయిల్ కి పంపబడింది!');
+      hideForgotPassword();
+    } catch(e) {
+      showToast('❌ Error: ' + e.message);
+    }
+  }
+
   window.firebaseLogout = async function() {
     await signOut(auth);
     document.getElementById('main-app').style.display='none';
