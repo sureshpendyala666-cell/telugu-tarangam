@@ -2,919 +2,425 @@
 <html lang="te">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>తెలుగు తరంగం</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+Telugu:wght@400;600;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>తరంగం — Super App</title>
+<meta name="theme-color" content="#0a0a0f">
+
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800;900&family=Noto+Sans+Telugu:wght@400;600;700;800&display=swap" rel="stylesheet">
+
 <style>
 :root{
-  --bg:#07080f;--surface:#0f1018;--card:#171820;--border:#22233a;
-  --accent:#ff6b00;--accent2:#ffb347;--teal:#00c9a7;
-  --text:#f2f2fa;--muted:#6b6b88;--glow:rgba(255,107,0,0.4);
+  --bg:#0a0a0f;--s1:#0f0f18;--s2:#141420;--s3:#1a1a28;
+  --border:#1e1e30;--border2:#282840;
+  --gold:#fbbf24;--green:#10b981;--red:#ef4444;
+  --acg:linear-gradient(135deg,#7c3aed,#db2777,#f97316);
+  --text:#f0f0ff;--muted:#8b8bb8;--muted2:#555575;
+  --font:'Baloo 2',sans-serif;--te:'Noto Sans Telugu',sans-serif;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:'Noto Sans Telugu','Rajdhani',sans-serif;min-height:100vh;overflow-x:hidden;}
-
-/* AUTH */
-#auth-page{display:none;min-height:100vh;align-items:center;justify-content:center;
-  background:radial-gradient(ellipse at 50% 30%,rgba(255,107,0,0.15) 0%,transparent 65%),var(--bg);}
-#auth-page.active{display:flex;}
-.auth-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px 40px;width:100%;max-width:420px;box-shadow:0 32px 80px rgba(0,0,0,0.7);animation:slideUp 0.4s ease;}
-@keyframes slideUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
-.auth-logo{text-align:center;margin-bottom:32px;}
-.auth-logo-icon{
-  width:72px;height:72px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
-  font-size:32px;margin-bottom:14px;
-  box-shadow:0 0 40px var(--glow);
-  animation:wave 3s ease-in-out infinite;
-}
-@keyframes wave{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
-.auth-logo h1{font-size:28px;font-weight:700;margin-bottom:4px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.auth-logo p{font-size:13px;color:var(--muted);}
-.auth-tabs{display:flex;gap:0;margin-bottom:28px;background:var(--card);border-radius:10px;padding:4px;}
-.auth-tab{flex:1;padding:10px;text-align:center;cursor:pointer;border-radius:8px;font-size:14px;font-weight:700;color:var(--muted);transition:all 0.2s;}
-.auth-tab.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;}
-.form-group{margin-bottom:18px;}
-.form-group label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;letter-spacing:1px;}
-.form-group input{width:100%;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--text);font-family:'Noto Sans Telugu',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;}
-.form-group input:focus{border-color:var(--accent);}
-.form-group input::placeholder{color:var(--muted);}
-.auth-btn{width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border:none;border-radius:10px;padding:14px;font-family:'Noto Sans Telugu',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all 0.2s;margin-top:8px;}
-.auth-btn:hover{box-shadow:0 0 30px var(--glow);transform:translateY(-1px);}
-.auth-divider{text-align:center;color:var(--muted);font-size:12px;margin:16px 0;}
-.google-btn{width:100%;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:12px;font-family:'Noto Sans Telugu',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px;}
-.google-btn:hover{border-color:var(--accent);color:var(--accent);}
-
-/* HEADER */
-header{position:sticky;top:0;z-index:100;background:rgba(7,8,15,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 20px;height:62px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
-.logo{display:flex;align-items:center;gap:12px;cursor:pointer;flex-shrink:0;}
-.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 16px var(--glow);}
-.logo-name{font-size:20px;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.logo-sub{font-size:9px;color:var(--muted);letter-spacing:2px;}
-.search-wrap{flex:1;max-width:500px;display:flex;}
-.search-wrap input{flex:1;background:var(--surface);border:1px solid var(--border);border-right:none;border-radius:10px 0 0 10px;padding:9px 14px;color:var(--text);font-family:'Noto Sans Telugu',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;}
-.search-wrap input:focus{border-color:var(--accent);}
-.search-wrap input::placeholder{color:var(--muted);}
-.search-wrap button{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:0 10px 10px 0;padding:9px 18px;color:white;cursor:pointer;font-size:15px;}
-.hdr-actions{display:flex;align-items:center;gap:10px;flex-shrink:0;}
-.hdr-btn{background:transparent;border:1px solid var(--border);border-radius:8px;padding:7px 14px;color:var(--text);cursor:pointer;font-family:'Noto Sans Telugu',sans-serif;font-size:13px;font-weight:600;transition:all 0.2s;}
-.hdr-btn:hover{border-color:var(--accent);color:var(--accent);}
-.hdr-btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:white;}
-.hdr-btn.primary:hover{box-shadow:0 0 20px var(--glow);}
-.avatar-btn{width:36px;height:36px;border-radius:50%;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--teal));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;border:none;position:relative;}
-.avatar-menu{position:absolute;top:46px;right:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:8px;min-width:190px;display:none;box-shadow:0 16px 40px rgba(0,0,0,0.5);z-index:200;}
-.avatar-menu.open{display:block;}
-.menu-item{display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;border-radius:8px;font-size:14px;font-weight:600;transition:background 0.2s;color:var(--text);}
-.menu-item:hover{background:var(--card);}
-.menu-item.danger{color:var(--accent);}
-
-/* LAYOUT */
-.app-layout{display:flex;min-height:calc(100vh - 62px);}
-.sidebar{width:215px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);padding:12px 0;position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;}
-.nav-item{display:flex;align-items:center;gap:12px;padding:10px 18px;cursor:pointer;font-size:14px;font-weight:600;color:var(--muted);border-left:3px solid transparent;transition:all 0.2s;}
-.nav-item:hover{background:var(--card);color:var(--text);}
-.nav-item.active{background:var(--card);color:var(--accent);border-left-color:var(--accent);}
-.nav-icon{font-size:16px;width:20px;text-align:center;}
-.nav-divider{height:1px;background:var(--border);margin:10px 16px;}
-.nav-section{padding:6px 18px;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
-main{flex:1;padding:20px;overflow-y:auto;}
-
-/* HERO */
-.hero{
-  background:linear-gradient(135deg,#1a0800,#0a0812,#001a10);
-  border:1px solid var(--border);border-radius:16px;
-  padding:36px 40px;margin-bottom:28px;
-  position:relative;overflow:hidden;
-  display:flex;align-items:center;gap:32px;
-}
-.hero::before{content:'';position:absolute;top:-40%;right:-5%;width:400px;height:400px;background:radial-gradient(circle,rgba(255,107,0,0.12) 0%,transparent 70%);pointer-events:none;}
-.hero-content{flex:1;z-index:1;}
-.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;font-size:11px;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:12px;}
-.hero h1{font-size:48px;font-weight:700;line-height:1.1;margin-bottom:10px;
-  background:linear-gradient(135deg,#fff,var(--accent2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hero p{color:var(--muted);font-size:15px;margin-bottom:22px;max-width:380px;line-height:1.6;}
-.hero-btns{display:flex;gap:12px;}
-.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border:none;border-radius:10px;padding:12px 28px;font-family:'Noto Sans Telugu',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;}
-.btn-primary:hover{box-shadow:0 0 30px var(--glow);transform:translateY(-2px);}
-.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border);border-radius:10px;padding:12px 28px;font-family:'Noto Sans Telugu',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;}
-.btn-secondary:hover{border-color:var(--accent);color:var(--accent);}
-.hero-stats{display:flex;flex-direction:column;gap:14px;z-index:1;}
-.stat{text-align:center;padding:14px 22px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;}
-.stat-num{font-size:28px;font-weight:700;color:var(--accent);line-height:1;}
-.stat-label{font-size:11px;color:var(--muted);letter-spacing:1px;margin-top:2px;}
-
-/* TABS */
-.category-tabs{display:flex;gap:8px;margin-bottom:20px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
-.category-tabs::-webkit-scrollbar{display:none;}
-.tab{flex-shrink:0;padding:7px 16px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-size:13px;font-weight:600;transition:all 0.2s;white-space:nowrap;}
-.tab:hover{border-color:var(--accent);color:var(--text);}
-.tab.active{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent;color:white;}
-
-/* SECTION TITLE */
-.section-title{font-size:22px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
-.section-title::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);}
-
-/* VIDEO GRID */
-.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:32px;}
-.video-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all 0.3s;animation:fadeUp 0.4s ease both;}
-.video-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 8px 28px rgba(0,0,0,0.5);}
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-.thumb{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:44px;}
-.thumb-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 60%);opacity:0;transition:opacity 0.3s;display:flex;align-items:center;justify-content:center;}
-.video-card:hover .thumb-overlay{opacity:1;}
-.play-btn{width:50px;height:50px;background:rgba(255,107,0,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:white;box-shadow:0 0 24px var(--glow);}
-.duration{position:absolute;bottom:7px;right:7px;background:rgba(0,0,0,0.85);color:white;font-size:11px;padding:2px 7px;border-radius:4px;}
-.live-badge{position:absolute;top:7px;left:7px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;font-size:10px;padding:2px 8px;border-radius:4px;animation:blink 1.5s ease-in-out infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.5;}}
-.card-info{padding:12px;display:flex;gap:10px;}
-.ch-avatar{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:white;}
-.card-meta{flex:1;min-width:0;}
-.card-title{font-size:14px;font-weight:700;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.4;}
-.card-ch{font-size:12px;color:var(--muted);margin-bottom:2px;}
-.card-stats{font-size:11px;color:var(--muted);}
-
-/* SHORTS */
-.shorts-scroll{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none;margin-bottom:32px;}
-.shorts-scroll::-webkit-scrollbar{display:none;}
-.short-card{flex-shrink:0;width:150px;cursor:pointer;transition:transform 0.2s;}
-.short-card:hover{transform:scale(1.04);}
-.short-thumb{width:150px;height:265px;border-radius:12px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:56px;margin-bottom:7px;transition:border-color 0.2s;}
-.short-card:hover .short-thumb{border-color:var(--accent);}
-.short-title{font-size:12px;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.short-views{font-size:11px;color:var(--muted);}
-
-/* WATCH */
-.watch-layout{display:grid;grid-template-columns:1fr 340px;gap:20px;}
-.video-player{background:#000;aspect-ratio:16/9;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:80px;margin-bottom:14px;position:relative;overflow:hidden;cursor:pointer;border:1px solid var(--border);}
-.player-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;transition:opacity 0.3s;}
-.big-play{width:72px;height:72px;background:rgba(255,107,0,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:white;box-shadow:0 0 40px var(--glow);}
-.video-title-big{font-size:20px;font-weight:700;margin-bottom:12px;line-height:1.4;}
-.video-meta-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border);}
-.video-stats{font-size:13px;color:var(--muted);}
-.action-btns{display:flex;gap:8px;}
-.action-btn{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:7px 14px;cursor:pointer;font-size:13px;font-weight:600;transition:all 0.2s;color:var(--text);}
-.action-btn:hover{border-color:var(--accent);color:var(--accent);}
-.action-btn.liked{background:rgba(255,107,0,0.15);border-color:var(--accent);color:var(--accent);}
-.channel-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
-.channel-info{display:flex;align-items:center;gap:12px;}
-.channel-pic{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:white;}
-.channel-name{font-size:15px;font-weight:700;}
-.channel-subs{font-size:12px;color:var(--muted);}
-.sub-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border:none;border-radius:8px;padding:9px 20px;font-family:'Noto Sans Telugu',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;}
-.sub-btn:hover{box-shadow:0 0 20px var(--glow);}
-.sub-btn.subscribed{background:var(--surface);color:var(--text);border:1px solid var(--border);}
-.video-desc{background:var(--card);border-radius:10px;padding:14px;font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px;}
-.comments-section h3{font-size:18px;font-weight:700;margin-bottom:14px;}
-.comment-input-row{display:flex;gap:10px;margin-bottom:20px;}
-.comment-input{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-family:'Noto Sans Telugu',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;}
-.comment-input:focus{border-color:var(--accent);}
-.comment-submit{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border:none;border-radius:10px;padding:10px 18px;cursor:pointer;font-family:'Noto Sans Telugu',sans-serif;font-size:13px;font-weight:700;}
-.comment{display:flex;gap:10px;margin-bottom:14px;}
-.comment-avatar{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;}
-.comment-author{font-size:13px;font-weight:700;margin-bottom:3px;}
-.comment-text{font-size:13px;color:var(--muted);line-height:1.5;}
-.rec-title-head{font-size:18px;font-weight:700;margin-bottom:14px;}
-.rec-card{display:flex;gap:10px;margin-bottom:12px;cursor:pointer;padding:8px;border-radius:10px;transition:background 0.2s;}
-.rec-card:hover{background:var(--card);}
-.rec-thumb{width:120px;height:68px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:28px;border:1px solid var(--border);}
-.rec-title-sm{font-size:13px;font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:4px;}
-.rec-ch,.rec-views{font-size:11px;color:var(--muted);}
-
-/* UPLOAD */
-.upload-page{max-width:680px;margin:0 auto;}
-.upload-page h2{font-size:26px;font-weight:700;margin-bottom:24px;}
-.upload-zone{border:2px dashed var(--border);border-radius:16px;padding:56px 40px;text-align:center;cursor:pointer;transition:all 0.3s;margin-bottom:24px;background:var(--surface);}
-.upload-zone:hover,.upload-zone.dragover{border-color:var(--accent);background:rgba(255,107,0,0.05);}
-.upload-zone .upload-icon{font-size:52px;margin-bottom:14px;}
-.upload-zone h3{font-size:18px;font-weight:700;margin-bottom:8px;}
-.upload-zone p{color:var(--muted);font-size:13px;margin-bottom:18px;}
-.upload-zone-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border:none;border-radius:8px;padding:10px 24px;font-family:'Noto Sans Telugu',sans-serif;font-size:14px;font-weight:700;cursor:pointer;}
-.input-group{margin-bottom:18px;}
-.input-group label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;letter-spacing:1px;}
-.input-group input,.input-group textarea,.input-group select{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-family:'Noto Sans Telugu',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;}
-.input-group input:focus,.input-group textarea:focus,.input-group select:focus{border-color:var(--accent);}
-.input-group textarea{resize:vertical;min-height:100px;}
-.input-group select option{background:var(--surface);}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.progress-bar-wrap{background:var(--surface);border-radius:20px;height:8px;margin-bottom:8px;overflow:hidden;display:none;}
-.progress-bar{height:100%;background:linear-gradient(to right,var(--accent),var(--accent2));border-radius:20px;transition:width 0.3s;width:0%;}
-.submit-btn{width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border:none;border-radius:10px;padding:14px;font-family:'Noto Sans Telugu',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all 0.2s;}
-.submit-btn:hover{box-shadow:0 0 30px var(--glow);}
-
-/* PROFILE */
-.profile-banner{height:160px;border-radius:16px;margin-bottom:-46px;background:linear-gradient(135deg,#1a0800,#0a0812,#001a10);display:flex;align-items:center;justify-content:center;font-size:56px;border:1px solid var(--border);}
-.profile-info{padding:0 20px 20px;display:flex;align-items:flex-end;gap:18px;margin-bottom:20px;}
-.profile-avatar{width:90px;height:90px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:700;color:white;border:4px solid var(--bg);position:relative;z-index:1;}
-.profile-name{font-size:24px;font-weight:700;margin-bottom:2px;}
-.profile-handle{font-size:13px;color:var(--muted);margin-bottom:8px;}
-.profile-stats-row{display:flex;gap:24px;}
-.profile-stat-num{font-size:22px;font-weight:700;color:var(--accent);}
-.profile-stat-label{font-size:11px;color:var(--muted);}
-.profile-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:20px;}
-.profile-tab{padding:12px 20px;cursor:pointer;font-size:14px;font-weight:700;color:var(--muted);border-bottom:2px solid transparent;transition:all 0.2s;}
-.profile-tab:hover{color:var(--text);}
-.profile-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
-
-/* LIVE */
-.live-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
-.live-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all 0.3s;}
-.live-card:hover{border-color:var(--accent);transform:translateY(-3px);}
-.live-thumb{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;font-size:48px;position:relative;}
-.viewers-badge{position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,0.8);color:white;font-size:11px;padding:2px 8px;border-radius:4px;}
-.live-info{padding:12px;}
-.live-title-text{font-size:14px;font-weight:700;margin-bottom:4px;}
-.live-channel{font-size:12px;color:var(--muted);}
-
-/* TOAST */
-.toast{position:fixed;bottom:24px;right:24px;background:var(--surface);border:1px solid var(--accent);border-radius:12px;padding:14px 20px;font-size:14px;font-weight:600;display:none;align-items:center;gap:10px;z-index:1000;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:300px;}
-.toast.show{display:flex;}
-
-::-webkit-scrollbar{width:5px;}
-::-webkit-scrollbar-track{background:var(--bg);}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
-::-webkit-scrollbar-thumb:hover{background:var(--accent);}
-
-@media(max-width:900px){.sidebar{display:none;}.watch-layout{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr;}.hero{flex-direction:column;padding:24px;}.hero h1{font-size:32px;}.hero-stats{flex-direction:row;}}
-@media(max-width:600px){header{padding:0 12px;}main{padding:12px;}.video-grid{grid-template-columns:1fr 1fr;}}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;overflow-x:hidden}
+button,input{font-family:var(--font);outline:none}
+#toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(20px);z-index:9999;
+background:var(--s3);border:1px solid #7c3aed;color:var(--text);padding:10px 22px;border-radius:50px;
+font-size:13px;font-weight:800;transition:.3s;opacity:0;pointer-events:none;box-shadow:0 8px 32px rgba(124,58,237,.4)}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+#splash{position:fixed;inset:0;background:radial-gradient(ellipse at center,rgba(124,58,237,.24),transparent 60%),var(--bg);
+z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.splash-logo{width:100px;height:100px;border-radius:32px;background:var(--acg);display:flex;align-items:center;justify-content:center;font-size:52px;margin-bottom:20px;box-shadow:0 0 50px rgba(124,58,237,.45);animation:pop .8s ease}
+.splash-name{font-size:36px;font-weight:900;font-family:var(--te);background:var(--acg);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.splash-tag{color:var(--muted);font-size:14px;margin-top:8px}
+.splash-bar{width:160px;height:3px;background:#272740;border-radius:3px;margin-top:34px;overflow:hidden}
+.splash-fill{height:100%;background:var(--acg);animation:load 2s ease forwards}
+@keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes load{from{width:0}to{width:100%}}
+#authPage{display:none;min-height:100vh;align-items:center;justify-content:center;padding:16px;background:radial-gradient(ellipse at top,rgba(124,58,237,.2),transparent 55%),var(--bg)}
+.auth-card{width:100%;max-width:410px;background:var(--s1);border:1px solid var(--border2);border-radius:28px;padding:28px 22px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.auth-brand{text-align:center;margin-bottom:22px}
+.auth-brand-logo{width:72px;height:72px;border-radius:22px;background:var(--acg);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 12px}
+.auth-brand h1{font-family:var(--te);font-size:28px;background:var(--acg);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.auth-brand p{color:var(--muted);font-size:13px}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--bg);border-radius:14px;padding:4px;margin-bottom:18px;gap:4px}
+.atab{border:0;background:transparent;color:var(--muted);padding:11px;border-radius:11px;font-weight:900;font-size:14px;cursor:pointer}
+.atab.active{background:var(--acg);color:#fff}
+.social-btn{width:100%;height:52px;border:0;border-radius:16px;margin-bottom:10px;font-size:15px;font-weight:900;cursor:pointer}
+.btn-google{background:#fff;color:#222}
+.btn-facebook{background:#1877f2;color:#fff}
+.or-line{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--muted2);font-size:12px;font-weight:800}
+.or-line:before,.or-line:after{content:"";flex:1;height:1px;background:var(--border)}
+.inp-group{margin-bottom:12px}
+.inp-group label{display:block;color:var(--muted);font-size:11px;font-weight:800;margin-bottom:6px;text-transform:uppercase}
+.inp-wrap{position:relative}
+.inp-wrap input{width:100%;background:#090912;border:1.5px solid var(--border);border-radius:13px;color:var(--text);padding:13px 16px;font-size:14px}
+.eye-btn{position:absolute;right:12px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--muted);font-size:16px}
+.btn-main{width:100%;border:0;border-radius:14px;padding:14px;background:var(--acg);color:#fff;font-size:15px;font-weight:900;cursor:pointer;margin-top:4px}
+.btn-ghost{width:100%;border:1.5px solid var(--border2);border-radius:14px;padding:12px;background:var(--s2);color:var(--muted);font-size:13px;font-weight:800;cursor:pointer;margin-top:10px}
+.auth-links{display:flex;justify-content:space-between;margin-top:12px}
+.alink{border:0;background:transparent;color:#a78bfa;font-size:12px;font-weight:800}
+.amsg{display:none;margin-top:10px;padding:10px 13px;border-radius:11px;font-size:13px;line-height:1.5}
+.aerr{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);color:#fca5a5}
+.aok{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);color:#6ee7b7}
+#appPage{display:none;min-height:100vh;padding-bottom:68px}
+.hdr{height:58px;display:flex;align-items:center;gap:10px;padding:0 14px;background:rgba(10,10,15,.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.hbrand{display:flex;align-items:center;gap:8px;cursor:pointer}.hlogo{width:36px;height:36px;border-radius:12px;background:var(--acg);display:flex;align-items:center;justify-content:center}.hname{font-family:var(--te);font-size:17px;font-weight:900}
+.hsearch{flex:1;display:flex;align-items:center;background:var(--s2);border:1px solid var(--border2);border-radius:50px;overflow:hidden;max-width:360px}
+.hsearch input{flex:1;background:transparent;border:0;color:var(--text);padding:9px 16px}.hsearch button{background:transparent;border:0;color:var(--muted);padding:9px 13px}
+.hactions{margin-left:auto;display:flex;gap:6px;align-items:center}.hbtn,.havatar{width:36px;height:36px;border-radius:50%;background:var(--s2);border:1px solid var(--border);color:var(--text);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative}.havatar{background:var(--acg);font-weight:900}
+.hbadge{position:absolute;top:-3px;right:-3px;background:var(--red);color:#fff;border-radius:50%;width:16px;height:16px;font-size:9px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.wallet-badge{display:flex;align-items:center;gap:5px;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);border-radius:50px;padding:6px 11px;color:var(--gold);font-size:13px;font-weight:900}
+.bnav{position:fixed;bottom:0;left:0;right:0;height:62px;background:rgba(10,10,15,.97);backdrop-filter:blur(22px);border-top:1px solid var(--border);z-index:100;display:grid;grid-template-columns:repeat(5,1fr)}
+.bni{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--muted2);font-size:10px;font-weight:800;border:0;background:transparent;cursor:pointer}.bni .ico{font-size:22px}.bni.active{color:#a78bfa}
+.bni-center{background:var(--acg);border-radius:50%;width:48px;height:48px;display:flex;align-items:center;justify-content:center;font-size:24px;margin:-20px auto 0;color:white;border:0}
+.feed-wrap{max-width:620px;margin:0 auto}.stories-bar{display:flex;gap:10px;overflow-x:auto;padding:14px;border-bottom:1px solid var(--border)}
+.story-item{flex-shrink:0;text-align:center;width:68px;cursor:pointer}.story-ring{width:60px;height:60px;border-radius:50%;padding:2.5px;background:var(--acg);margin:auto}.story-av{width:100%;height:100%;border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:26px;border:2.5px solid var(--bg)}.story-name{font-size:10px;color:var(--muted);margin-top:5px}
+.ad-unit,.post-card,.card{background:var(--s1);border:1px solid var(--border);border-radius:16px;margin:12px 14px;overflow:hidden}
+.demo-ad{min-height:72px;display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,rgba(124,58,237,.22),rgba(219,39,119,.12));font-weight:900}
+.earn-banner{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(251,191,36,.14),rgba(124,58,237,.10));border:1px solid rgba(251,191,36,.25);border-radius:16px;margin:12px 14px;padding:14px;cursor:pointer}.earn-icon{font-size:32px}.et{font-weight:900;color:var(--gold)}.es{font-family:var(--te);font-size:12px;color:var(--muted)}
+.post-card{border-radius:0;margin:0;border-left:0;border-right:0}.post-hdr{display:flex;align-items:center;gap:10px;padding:12px 14px}.post-av{width:40px;height:40px;border-radius:50%;background:var(--acg);display:flex;align-items:center;justify-content:center}.post-info{flex:1}.post-name{font-weight:900}.post-time{color:var(--muted);font-size:11px}.post-body{padding:0 14px 10px;font-family:var(--te);line-height:1.7}.post-media{height:260px;background:#111;display:flex;align-items:center;justify-content:center;font-size:72px;position:relative;cursor:pointer}.post-play{position:absolute;width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center}.post-stats{padding:8px 14px;color:var(--muted);font-size:12px;border-bottom:1px solid var(--border)}.post-actions{display:grid;grid-template-columns:repeat(4,1fr)}.pact{padding:11px 4px;border:0;background:transparent;color:var(--muted);font-weight:800}.pact.liked{color:#ef4444}
+#pg-reels{display:none;height:calc(100vh - 68px);overflow:hidden}.reel-viewer{height:100%;background:#000;position:relative}.reel-bg{height:100%;display:flex;align-items:center;justify-content:center;font-size:150px;background:linear-gradient(135deg,#1a001a,#001a14)}.reel-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8),transparent 45%,rgba(0,0,0,.3))}.reel-right{position:absolute;right:12px;bottom:100px;display:flex;flex-direction:column;gap:16px}.reel-action{text-align:center;color:#fff;font-size:11px;font-weight:900}.ra-icon{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:20px}.reel-bottom{position:absolute;bottom:0;left:0;right:0;padding:16px;color:#fff}.reel-user{display:flex;align-items:center;gap:8px;margin-bottom:8px}.reel-av{width:38px;height:38px;border-radius:50%;background:var(--acg);display:flex;align-items:center;justify-content:center}.reel-follow{padding:4px 14px;border-radius:50px;border:1.5px solid #fff;background:transparent;color:white;font-weight:800}
+.vid-hero{height:360px;background:#000;position:relative;overflow:hidden}.vid-hero-bg{height:100%;display:flex;align-items:center;justify-content:center;font-size:140px;background:linear-gradient(135deg,#1a0010,#001018)}.vid-hero-grad{position:absolute;inset:0;background:linear-gradient(to top,var(--bg),transparent 55%)}.vid-hero-content{position:absolute;bottom:0;padding:24px}.vid-hero-title{font-family:var(--te);font-size:25px;font-weight:900}.vid-hero-meta{font-size:12px;color:var(--muted);margin:6px 0 12px}.vhb-play,.vhb-info{border:0;border-radius:50px;padding:10px 22px;font-weight:900}.vhb-info{background:rgba(255,255,255,.15);color:#fff;margin-left:8px}
+.vid-cats,.vid-scroll{display:flex;gap:10px;overflow-x:auto;padding:14px}.vcat{padding:8px 18px;border-radius:50px;border:1px solid var(--border2);background:var(--s2);color:var(--muted);font-weight:800}.vcat.active{background:var(--acg);color:#fff}.vid-row-title{font-size:16px;font-weight:900;padding:12px 14px 0}.vid-card{flex-shrink:0;width:180px;background:var(--s2);border-radius:13px;overflow:hidden}.vid-thumb{height:100px;display:flex;align-items:center;justify-content:center;font-size:38px;position:relative}.vid-dur{position:absolute;right:5px;bottom:5px;background:#000;padding:1px 6px;border-radius:4px;font-size:10px}.vid-body{padding:8px}.vid-title{font-size:12px;font-weight:900;font-family:var(--te)}.vid-meta{font-size:10px;color:var(--muted)}
+.earn-hero{background:linear-gradient(135deg,#1a0800,#0a001a);padding:28px 18px;text-align:center}.earn-hero-title{font-size:28px;font-weight:900;font-family:var(--te);color:var(--gold)}.earn-hero-sub{font-family:var(--te);color:var(--muted)}.coin-balance{background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);border-radius:20px;padding:20px;margin-top:14px}.cb-amount{font-size:38px;font-weight:900;color:var(--gold)}.cb-actions{display:flex;gap:10px;margin-top:14px}.cb-act{flex:1;border:0;border-radius:50px;padding:10px;font-weight:900}.cb-withdraw{background:linear-gradient(135deg,#fbbf24,#f97316)}.cb-buy{background:var(--s3);color:white;border:1px solid var(--border2)}.ew-card,.eh-item{display:flex;gap:12px;align-items:center;background:var(--s2);border:1px solid var(--border);border-radius:16px;padding:14px;margin:10px 14px}.ew-icon,.eh-icon{width:46px;height:46px;border-radius:14px;background:rgba(124,58,237,.15);display:flex;align-items:center;justify-content:center;font-size:23px}.ew-info,.eh-info{flex:1}.ew-title2,.eh-action{font-weight:900}.ew-desc,.eh-time{font-family:var(--te);font-size:12px;color:var(--muted)}.ew-coins,.eh-plus{color:var(--gold);font-weight:900}.eh-minus{color:var(--red);font-weight:900}
+.prof-cover2{height:160px;background:linear-gradient(135deg,#1a0010,#0a001a,#001a10)}.prof-top2{padding:0 16px;margin-top:-42px;display:flex;gap:14px;align-items:flex-end}.prof-av2{width:84px;height:84px;border-radius:50%;background:var(--acg);border:4px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:900}.prof-name2{font-size:20px;font-weight:900}.prof-handle2{color:var(--muted)}.prof-stats2{display:grid;grid-template-columns:repeat(4,1fr);background:var(--s2);margin:14px 0}.ps2{text-align:center;padding:14px 4px}.ps2-n{font-weight:900;font-size:18px}.ps2-l{font-size:10px;color:var(--muted)}.prof-acts2{display:flex;gap:8px;padding:0 14px 12px}.pa2-main,.pa2-sec,.pa2-icon{border:0;border-radius:50px;padding:10px;font-weight:900}.pa2-main{background:var(--acg);color:#fff;flex:1}.pa2-sec{background:var(--s2);color:#fff;border:1px solid var(--border2);flex:1}.pa2-icon{background:var(--s2);color:#fff;border:1px solid var(--border2);width:42px}.prof-tabs2{display:flex;border-bottom:1px solid var(--border);overflow-x:auto}.ptab2{padding:12px 16px;border:0;background:transparent;color:var(--muted);font-weight:900}.ptab2.active{color:#a78bfa;border-bottom:2px solid #7c3aed}
+#videoModal,#storyModal,#createModal,#interstitialAd{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.94)}#videoModal.open,#storyModal.open,#createModal.open,#interstitialAd.show{display:block}.vm-close{position:fixed;top:12px;right:12px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:white;z-index:301}.vm-screen{width:100%;aspect-ratio:16/9;background:#000;display:flex;align-items:center;justify-content:center;font-size:100px}.vm-controls{display:flex;align-items:center;gap:10px;background:#111;padding:10px 14px}.vmc{border:0;background:transparent;color:white}.vm-prog{height:4px;background:#333;flex:1;border-radius:4px}.vm-fill{height:100%;width:30%;border-radius:4px;background:var(--acg)}.vm-body{padding:16px;max-width:680px;margin:auto}.vm-title{font-family:var(--te);font-size:18px;font-weight:900}.vm-meta{color:var(--muted);font-size:12px}.vm-acts{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.vm-act{padding:7px 14px;border-radius:50px;border:1px solid var(--border2);background:var(--s2);color:white;font-weight:800}.vm-act.on{background:var(--acg)}.vm-ch,.vm-cmt{display:flex;align-items:center;gap:10px;margin:10px 0}.vm-ch-av,.vm-cmt-av{width:40px;height:40px;border-radius:50%;background:var(--acg);display:flex;align-items:center;justify-content:center}.vm-sub{margin-left:auto;background:var(--red);color:#fff;border:0;border-radius:50px;padding:8px 16px;font-weight:900}.vm-cmt-input{display:flex;gap:8px;margin:14px 0}.vm-cmt-inp{flex:1;background:var(--s2);border:1px solid var(--border2);border-radius:50px;color:#fff;padding:10px 14px}.vm-cmt-send{border:0;background:var(--acg);color:#fff;border-radius:50px;padding:10px 16px;font-weight:900}
+.story-view{height:100%;display:flex;align-items:center;justify-content:center;font-size:120px;position:relative}.story-close-btn{position:absolute;top:18px;right:16px;background:transparent;border:0;color:white;font-size:24px}.story-user-info{position:absolute;top:22px;left:16px;display:flex;gap:8px;align-items:center}.story-user-av{width:32px;height:32px;border-radius:50%;background:var(--acg);display:flex;align-items:center;justify-content:center}.story-prog-bar{position:absolute;top:12px;left:12px;right:12px;height:3px;background:rgba(255,255,255,.3)}.story-prog-fill{height:100%;background:white;animation:storyFill 5s linear forwards}@keyframes storyFill{to{width:100%}}
+#createModal{align-items:flex-end;justify-content:center}#createModal.open{display:flex}.create-sheet{width:100%;max-width:480px;background:var(--s1);border-radius:24px 24px 0 0;padding:20px 16px 32px}.create-title{text-align:center;font-weight:900;margin-bottom:18px}.create-options{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.create-opt{background:var(--s2);border:1px solid var(--border2);border-radius:16px;padding:18px 10px;text-align:center}.co-icon{font-size:28px}.co-label{font-size:12px;font-weight:900;color:var(--muted)}
+.intad-box{background:var(--s1);border:1px solid var(--border2);border-radius:20px;max-width:380px;margin:18vh auto;overflow:hidden}.intad-top{padding:14px;display:flex;justify-content:space-between;border-bottom:1px solid var(--border)}.intad-close{background:transparent;border:0;color:var(--muted)}.intad-content{text-align:center;padding:20px}.intad-emoji{font-size:56px}.intad-title{font-weight:900;font-size:18px}.intad-desc{font-family:var(--te);color:var(--muted);margin:8px 0 14px}.intad-cta{width:100%;padding:13px;border:0;border-radius:14px;background:var(--acg);color:#fff;font-weight:900}.intad-timer{font-size:12px;color:var(--muted);margin-top:8px}
+@media(max-width:600px){.hname,.hsearch{display:none}.hbtn{display:none}.vid-hero{height:330px}}
 </style>
 </head>
+
 <body>
+<div id="toast"></div>
 
-<div class="toast" id="toast">🌊 <span id="toast-msg"></span></div>
+<div id="splash">
+  <div class="splash-logo">🌊</div>
+  <div class="splash-name">తరంగం</div>
+  <div class="splash-tag">Telugu Super App — Videos · Social · Earn</div>
+  <div class="splash-bar"><div class="splash-fill"></div></div>
+</div>
 
-<!-- AUTH -->
-<div class="page active" id="auth-page">
-  <div class="auth-box">
-    <div class="auth-logo">
-      <div class="auth-logo-icon">🌊</div>
-      <h1>తెలుగు తరంగం</h1>
-      <p>తెలుగు వారి సొంత వీడియో ప్లాట్‌ఫామ్</p>
+<div id="storyModal">
+  <div class="story-view" id="storyEmoji">🌊
+    <div class="story-prog-bar"><div class="story-prog-fill" id="storyFill"></div></div>
+    <div class="story-user-info"><div class="story-user-av" id="storyAv">A</div><span id="storyUname">User</span></div>
+    <button class="story-close-btn" onclick="closeStory()">✕</button>
+  </div>
+</div>
+
+<div id="videoModal">
+  <button class="vm-close" onclick="closeVideo()">✕</button>
+  <div class="vm-screen" id="vmScreen" onclick="toggleVPlay()"><span id="vmEmoji">🎬</span></div>
+  <div class="vm-controls">
+    <button class="vmc" id="vmPlayBtn" onclick="toggleVPlay()">⏸</button>
+    <div class="vm-prog" onclick="seekV(event)"><div class="vm-fill" id="vmFill"></div></div>
+    <span class="vm-time" id="vmTime">1:20 / 5:42</span>
+    <button class="vmc">🔊</button>
+    <button class="vmc" onclick="toggleVFS()">⛶</button>
+  </div>
+  <div class="vm-body">
+    <div class="vm-title" id="vmTitle">Video Title</div>
+    <div class="vm-meta" id="vmMeta">0 views · Today</div>
+    <div class="vm-acts">
+      <button class="vm-act" id="vmLike" onclick="toggleVLike()">👍 <span id="vmLikeN">4.2K</span></button>
+      <button class="vm-act" onclick="toast('👎')">👎</button>
+      <button class="vm-act" onclick="shareApp()">↗ Share</button>
+      <button class="vm-act" onclick="toast('🔖 Saved!')">🔖 Save</button>
+      <button class="vm-act" onclick="toast('💰 Creator support చేశారు!')">💰 Tip</button>
     </div>
-    <div class="auth-tabs">
-      <div class="auth-tab active" onclick="switchTab('login')">లాగిన్</div>
-      <div class="auth-tab" onclick="switchTab('register')">రిజిస్టర్</div>
+    <div class="vm-ch">
+      <div class="vm-ch-av" id="vmChAv">🎬</div>
+      <div><div style="font-weight:900" id="vmChName">Channel</div><div style="color:var(--muted);font-size:12px" id="vmChSubs">0 subscribers</div></div>
+      <button class="vm-sub" id="vmSubBtn" onclick="toggleVSub(this)">Subscribe</button>
     </div>
-    <div id="login-form">
-      <div class="form-group"><label>ఇమెయిల్</label><input type="email" id="login-email" placeholder="మీ ఇమెయిల్..."></div>
-      <div class="form-group"><label>పాస్‌వర్డ్</label><input type="password" id="login-pass" placeholder="••••••••"></div>
-      <button class="auth-btn" onclick="doLogin()">లాగిన్ చేయండి 🌊</button>
-      <div style="text-align:right;margin-top:8px;">
-        <span onclick="showForgotPassword()" style="font-size:13px;color:var(--accent);cursor:pointer;text-decoration:underline;">పాస్‌వర్డ్ మర్చిపోయారా?</span>
-      </div>
-      <div id="forgot-form" style="display:none;margin-top:16px;background:var(--card);border-radius:10px;padding:16px;">
-        <div style="font-size:14px;font-weight:700;margin-bottom:10px;">🔑 పాస్‌వర్డ్ రీసెట్</div>
-        <div class="form-group"><label>ఇమెయిల్ చెప్పండి</label><input type="email" id="reset-email" placeholder="మీ ఇమెయిల్..."></div>
-        <button onclick="sendResetEmail()" style="width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border:none;border-radius:8px;padding:10px;font-family:'Noto Sans Telugu',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">📧 Reset Link పంపండి</button>
-        <div style="text-align:center;margin-top:8px;"><span onclick="hideForgotPassword()" style="font-size:12px;color:var(--muted);cursor:pointer;">← వెనక్కి వెళ్ళండి</span></div>
-      </div>
-      <div class="auth-divider">— లేదా —</div>
-      <button class="google-btn" onclick="doLogin()">🌐 Google తో లాగిన్</button>
+    <div style="font-weight:900;margin-bottom:10px">💬 Comments (<span id="vmCmtCount">3</span>)</div>
+    <div class="vm-cmt-input">
+      <input class="vm-cmt-inp" id="vmCmtInp" placeholder="Comment రాయండి..." onkeydown="if(event.key==='Enter')addVCmt()">
+      <button class="vm-cmt-send" onclick="addVCmt()">Post</button>
     </div>
-    <div id="register-form" style="display:none;">
-      <div class="form-group"><label>పూర్తి పేరు</label><input type="text" id="reg-name" placeholder="మీ పేరు..."></div>
-      <div class="form-group"><label>ఇమెయిల్</label><input type="email" id="reg-email" placeholder="మీ ఇమెయిల్..."></div>
-      <div class="form-group"><label>పాస్‌వర్డ్</label><input type="password" id="reg-pass" placeholder="పాస్‌వర్డ్..."></div>
-      <button class="auth-btn" onclick="doRegister()">అకౌంట్ తయారు చేయండి 🌊</button>
+    <div id="vmCmtList"></div>
+  </div>
+</div>
+
+<div id="createModal">
+  <div class="create-sheet">
+    <div class="create-title">✨ Create చేయండి</div>
+    <div class="create-options">
+      <div class="create-opt" onclick="closeCreate();toast('📹 Video upload option')"><div class="co-icon">📹</div><div class="co-label">Video</div></div>
+      <div class="create-opt" onclick="closeCreate();toast('⚡ Short upload option')"><div class="co-icon">⚡</div><div class="co-label">Short</div></div>
+      <div class="create-opt" onclick="closeCreate();toast('⏱ Story upload option')"><div class="co-icon">⏱</div><div class="co-label">Story</div></div>
+      <div class="create-opt" onclick="closeCreate();toast('📝 Post create option')"><div class="co-icon">📝</div><div class="co-label">Post</div></div>
+      <div class="create-opt" onclick="closeCreate();toast('🔴 Live start option')"><div class="co-icon">🔴</div><div class="co-label">Live</div></div>
+      <div class="create-opt" onclick="closeCreate();toast('🎵 Audio upload option')"><div class="co-icon">🎵</div><div class="co-label">Audio</div></div>
     </div>
   </div>
 </div>
 
-<!-- MAIN APP -->
-<div id="main-app" style="display:none;">
-<header>
-  <div class="logo" onclick="navigate('home')">
-    <div class="logo-icon">🌊</div>
-    <div>
-      <div class="logo-name">తెలుగు తరంగం</div>
-      <div class="logo-sub">Telugu Tarangam</div>
+<div id="authPage">
+  <div class="auth-card">
+    <div class="auth-brand"><div class="auth-brand-logo">🌊</div><h1>తరంగం</h1><p>Telugu Super App — Videos · Social · Earn Money</p></div>
+    <div class="auth-tabs"><button class="atab active" id="loginTab" onclick="switchAuth('login')">లాగిన్</button><button class="atab" id="regTab" onclick="switchAuth('reg')">రిజిస్టర్</button></div>
+    <div id="loginBox">
+      <button class="social-btn btn-google" onclick="gLogin()">Continue with Google</button>
+      <button class="social-btn btn-facebook" onclick="fbLogin()">Continue with Facebook</button>
+      <div class="or-line">లేదా email తో</div>
+      <div class="inp-group"><label>Email</label><div class="inp-wrap"><input id="lEmail" type="email" placeholder="yourname@gmail.com"></div></div>
+      <div class="inp-group"><label>Password</label><div class="inp-wrap"><input id="lPass" type="password" placeholder="••••••••"><button class="eye-btn" onclick="toggleEye('lPass',this)">👁</button></div></div>
+      <button class="btn-main" onclick="doLogin()">Login చేయండి</button>
+      <button class="btn-ghost" onclick="guestMode()">⏭ Guest గా చూడు</button>
+      <div class="auth-links"><button class="alink" onclick="resetPwd()">Forgot password?</button><button class="alink" onclick="switchAuth('reg')">New account →</button></div>
+      <div class="amsg aerr" id="lErr"></div><div class="amsg aok" id="lOk"></div>
+    </div>
+    <div id="regBox" style="display:none">
+      <button class="social-btn btn-google" onclick="gLogin()">Google తో Register</button>
+      <div class="or-line">లేదా email తో</div>
+      <div class="inp-group"><label>పేరు</label><div class="inp-wrap"><input id="rName" placeholder="మీ పూర్తి పేరు"></div></div>
+      <div class="inp-group"><label>Email</label><div class="inp-wrap"><input id="rEmail" type="email" placeholder="yourname@gmail.com"></div></div>
+      <div class="inp-group"><label>Password</label><div class="inp-wrap"><input id="rPass" type="password" placeholder="6+ characters"><button class="eye-btn" onclick="toggleEye('rPass',this)">👁</button></div></div>
+      <button class="btn-main" onclick="doRegister()">Account Create చేయండి</button>
+      <button class="btn-ghost" onclick="switchAuth('login')">Already have account? →</button>
+      <div class="amsg aerr" id="rErr"></div><div class="amsg aok" id="rOk"></div>
     </div>
   </div>
-  <div class="search-wrap">
-    <input type="text" placeholder="తెలుగు వీడియోలు వెతకండి..." id="search-input">
-    <button onclick="doSearch()">🔍</button>
-  </div>
-  <div class="hdr-actions">
-    <button class="hdr-btn primary" onclick="navigate('upload')">＋ అప్లోడ్</button>
-    <button class="hdr-btn" onclick="navigate('live')">🔴 లైవ్</button>
-    <div style="position:relative;">
-      <button class="avatar-btn" id="avatar-btn" onclick="toggleMenu()">మ</button>
-      <div class="avatar-menu" id="avatar-menu">
-        <div class="menu-item" onclick="navigate('profile')">👤 నా చానెల్</div>
-        <div class="menu-item" onclick="navigate('upload')">📤 వీడియో అప్లోడ్</div>
-        <div class="menu-item danger" onclick="doLogout()">🚪 లాగౌట్</div>
-      </div>
-    </div>
-  </div>
-</header>
-
-<div class="app-layout">
-  <div class="sidebar">
-    <div class="nav-item active" onclick="navigate('home')" id="nav-home"><span class="nav-icon">🏠</span> హోమ్</div>
-    <div class="nav-item" onclick="navigate('live')" id="nav-live"><span class="nav-icon">🔴</span> లైవ్</div>
-    <div class="nav-item" onclick="navigate('shorts')" id="nav-shorts"><span class="nav-icon">📱</span> షార్ట్స్</div>
-    <div class="nav-divider"></div>
-    <div class="nav-section">లైబ్రరీ</div>
-    <div class="nav-item" onclick="navigate('profile')" id="nav-profile"><span class="nav-icon">📚</span> నా చానెల్</div>
-    <div class="nav-item"><span class="nav-icon">🕐</span> చూసిన వీడియోలు</div>
-    <div class="nav-item"><span class="nav-icon">👍</span> నచ్చిన వీడియోలు</div>
-    <div class="nav-divider"></div>
-    <div class="nav-section">అన్వేషించండి</div>
-    <div class="nav-item"><span class="nav-icon">🎬</span> సినిమా</div>
-    <div class="nav-item"><span class="nav-icon">🎵</span> సంగీతం</div>
-    <div class="nav-item"><span class="nav-icon">🏏</span> క్రీడలు</div>
-    <div class="nav-item"><span class="nav-icon">📰</span> వార్తలు</div>
-    <div class="nav-item"><span class="nav-icon">💡</span> విద్య</div>
-    <div class="nav-item"><span class="nav-icon">🍳</span> వంటకాలు</div>
-    <div class="nav-item"><span class="nav-icon">😂</span> కామెడీ</div>
-    <div class="nav-item"><span class="nav-icon">✈️</span> పర్యటన</div>
-  </div>
-
-  <main>
-    <!-- HOME -->
-    <div id="page-home">
-      <div class="hero">
-        <div class="hero-content">
-          <div class="hero-badge">🌊 తెలుగు వారి సొంత Platform</div>
-          <h1>తెలుగు తరంగం</h1>
-          <p>8 కోట్ల తెలుగు వారి కోసం — మన భాషలో, మన సంస్కృతిలో, మన వీడియోలు!</p>
-          <div class="hero-btns">
-            <button class="btn-primary" onclick="navigate('home')">▶️ వీడియోలు చూడండి</button>
-            <button class="btn-secondary" onclick="navigate('upload')">＋ Creator అవ్వండి</button>
-          </div>
-        </div>
-        <div class="hero-stats">
-          <div class="stat"><div class="stat-num">8 కోట్లు</div><div class="stat-label">తెలుగు వినియోగదారులు</div></div>
-          <div class="stat"><div class="stat-num">100%</div><div class="stat-label">తెలుగు కంటెంట్</div></div>
-          <div class="stat"><div class="stat-num">Free</div><div class="stat-label">అందరికీ ఉచితం</div></div>
-        </div>
-      </div>
-      <div class="category-tabs">
-        <div class="tab active" onclick="setTab(this)">అన్నీ</div>
-        <div class="tab" onclick="setTab(this)">🎬 సినిమా</div>
-        <div class="tab" onclick="setTab(this)">🎵 సంగీతం</div>
-        <div class="tab" onclick="setTab(this)">🏏 క్రీడలు</div>
-        <div class="tab" onclick="setTab(this)">😂 కామెడీ</div>
-        <div class="tab" onclick="setTab(this)">💡 విద్య</div>
-        <div class="tab" onclick="setTab(this)">🍳 వంటకాలు</div>
-        <div class="tab" onclick="setTab(this)">✈️ పర్యటన</div>
-        <div class="tab" onclick="setTab(this)">📰 వార్తలు</div>
-      </div>
-      <div class="section-title">🔥 ట్రెండింగ్</div>
-      <div class="video-grid" id="home-grid"></div>
-      <div class="section-title">📱 షార్ట్స్</div>
-      <div class="shorts-scroll" id="shorts-row"></div>
-      <div class="section-title">💡 మీకు నచ్చేవి</div>
-      <div class="video-grid" id="rec-grid"></div>
-    </div>
-
-    <!-- WATCH -->
-    <div id="page-watch" style="display:none;">
-      <div class="watch-layout">
-        <div>
-          <div class="video-player" id="watch-player" onclick="togglePlay()">
-            <div id="watch-emoji">🎬</div>
-            <div class="player-overlay" id="player-overlay"><div class="big-play">▶️</div></div>
-          </div>
-          <div class="video-title-big" id="watch-title"></div>
-          <div class="video-meta-row">
-            <div class="video-stats" id="watch-stats"></div>
-            <div class="action-btns">
-              <div class="action-btn" id="like-btn" onclick="toggleLike()">👍 <span id="like-count">0</span></div>
-              <div class="action-btn" onclick="showToast('షేర్ చేయబడింది!')">📤 షేర్</div>
-              <div class="action-btn" onclick="showToast('సేవ్ చేయబడింది!')">🔖 సేవ్</div>
-            </div>
-          </div>
-          <div class="channel-row">
-            <div class="channel-info">
-              <div class="channel-pic" id="watch-ch-pic"></div>
-              <div><div class="channel-name" id="watch-ch-name"></div><div class="channel-subs" id="watch-ch-subs"></div></div>
-            </div>
-            <button class="sub-btn" id="sub-btn" onclick="toggleSub()">సభ్యత్వం</button>
-          </div>
-          <div class="video-desc" id="watch-desc"></div>
-          <div class="comments-section">
-            <h3>💬 వ్యాఖ్యలు</h3>
-            <div class="comment-input-row">
-              <input class="comment-input" placeholder="మీ వ్యాఖ్య రాయండి..." id="comment-input">
-              <button class="comment-submit" onclick="addComment()">పోస్ట్</button>
-            </div>
-            <div id="comments-list"></div>
-          </div>
-        </div>
-        <div>
-          <div class="rec-title-head">తర్వాత చూడండి</div>
-          <div id="rec-list"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- UPLOAD -->
-    <div id="page-upload" style="display:none;">
-      <div class="upload-page">
-        <h2>📤 వీడియో అప్లోడ్ చేయండి</h2>
-        <div class="upload-zone" id="upload-zone" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
-          <div class="upload-icon">🌊</div>
-          <h3>మీ వీడియో ఇక్కడ వదలండి</h3>
-          <p>MP4, MOV, AVI · గరిష్టంగా 2GB</p>
-          <button class="upload-zone-btn" onclick="document.getElementById('file-input').click()">ఫైల్ ఎంచుకోండి</button>
-          <input type="file" id="file-input" style="display:none;" accept="video/*" onchange="handleFileSelect(this)">
-        </div>
-        <div class="progress-bar-wrap" id="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
-        <div id="upload-status" style="font-size:12px;color:var(--muted);margin-bottom:16px;"></div>
-        <div class="input-group"><label>వీడియో శీర్షిక *</label><input type="text" id="vid-title" placeholder="మీ వీడియో పేరు..."></div>
-        <div class="input-group"><label>వివరణ</label><textarea id="vid-desc" placeholder="వీడియో గురించి చెప్పండి..."></textarea></div>
-        <div class="form-row">
-          <div class="input-group"><label>వర్గం</label>
-            <select id="vid-cat"><option>సినిమా</option><option>సంగీతం</option><option>క్రీడలు</option><option>కామెడీ</option><option>విద్య</option><option>వంటకాలు</option><option>పర్యటన</option><option>వార్తలు</option></select>
-          </div>
-          <div class="input-group"><label>దృశ్యమానత</label>
-            <select id="vid-vis"><option>పబ్లిక్</option><option>అన్‌లిస్టెడ్</option><option>ప్రైవేట్</option></select>
-          </div>
-        </div>
-        <button class="submit-btn" onclick="publishVideo()">🌊 వీడియో పబ్లిష్ చేయండి</button>
-      </div>
-    </div>
-
-    <!-- PROFILE -->
-    <div id="page-profile" style="display:none;">
-      <div class="profile-banner">🌊</div>
-      <div class="profile-info">
-        <div class="profile-avatar" id="profile-avatar">మ</div>
-        <div>
-          <div class="profile-name" id="profile-name">మీ పేరు</div>
-          <div class="profile-handle" id="profile-handle">@username</div>
-          <div class="profile-stats-row">
-            <div><div class="profile-stat-num" id="p-subs">0</div><div class="profile-stat-label">సభ్యులు</div></div>
-            <div><div class="profile-stat-num" id="p-vids">0</div><div class="profile-stat-label">వీడియోలు</div></div>
-            <div><div class="profile-stat-num" id="p-views">0</div><div class="profile-stat-label">వీక్షణలు</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="profile-tabs">
-        <div class="profile-tab active">వీడియోలు</div>
-        <div class="profile-tab">ప్లేలిస్ట్‌లు</div>
-        <div class="profile-tab">గురించి</div>
-      </div>
-      <div class="video-grid" id="profile-grid"></div>
-    </div>
-
-    <!-- LIVE -->
-    <div id="page-live" style="display:none;">
-      <div class="section-title">🔴 ఇప్పుడు లైవ్</div>
-      <div class="live-grid" id="live-grid"></div>
-    </div>
-
-    <!-- SHORTS -->
-    <div id="page-shorts" style="display:none;">
-      <div class="section-title">📱 షార్ట్స్</div>
-      <div style="display:flex;flex-wrap:wrap;gap:16px;" id="shorts-grid"></div>
-    </div>
-  </main>
 </div>
+
+<div id="appPage">
+  <header class="hdr">
+    <div class="hbrand" onclick="goPage('feed')"><div class="hlogo">🌊</div><span class="hname">తరంగం</span></div>
+    <div class="hsearch"><input id="searchQ" placeholder="వెతకండి..." onkeydown="if(event.key==='Enter')doSearch()"><button onclick="doSearch()">🔍</button></div>
+    <div class="hactions">
+      <div class="wallet-badge" onclick="goPage('earn')">🪙 <span id="walletAmt">240</span></div>
+      <div class="hbtn" onclick="toast('💬 Messages')">💬<span class="hbadge">3</span></div>
+      <div class="hbtn" onclick="toast('🔔 Notifications')">🔔<span class="hbadge">7</span></div>
+      <div class="havatar" id="hAvatar" onclick="goPage('profile')">A</div>
+    </div>
+  </header>
+
+  <div id="interstitialAd">
+    <div class="intad-box">
+      <div class="intad-top"><span>ADVERTISEMENT</span><button class="intad-close" id="intAdClose" onclick="closeIntAd()" disabled>✕</button></div>
+      <div class="intad-content">
+        <div class="intad-emoji" id="intAdEmoji">🛍️</div>
+        <div class="intad-title" id="intAdTitle">Special Offer!</div>
+        <div class="intad-desc" id="intAdDesc">తెలుగు products కోసం best deals మీ కోసం!</div>
+        <button class="intad-cta" onclick="closeIntAd()">Visit Now →</button>
+        <div class="intad-timer" id="intAdTimer">5 seconds లో skip చేయవచ్చు</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="pg-feed" style="display:none">
+    <div class="feed-wrap">
+      <div class="stories-bar" id="storiesBar"></div>
+      <div class="ad-unit"><div class="demo-ad">🛍️ Telugu Shopping App — Download Now! <span style="background:var(--acg);padding:5px 12px;border-radius:50px">Get it →</span></div></div>
+      <div class="earn-banner" onclick="goPage('earn')"><div class="earn-icon">🪙</div><div><div class="et">Today 50 coins earn చేయండి!</div><div class="es">Videos చూసినా, posts చేసినా money earn అవుతుంది</div></div><div style="margin-left:auto">›</div></div>
+      <div id="postsFeed"></div>
+      <div class="ad-unit"><div class="demo-ad" style="min-height:210px;flex-direction:column">📱<b>New Telugu App!</b><span style="font-family:var(--te);color:var(--muted)">మీ friends కి share చేయండి</span></div></div>
+    </div>
+  </div>
+
+  <div id="pg-reels" style="display:none">
+    <div class="reel-viewer">
+      <div class="reel-bg" id="reelBg">💃</div><div class="reel-overlay"></div>
+      <div class="reel-right">
+        <div class="reel-action" onclick="toggleReelLike()"><div class="ra-icon" id="reelLikeBtn">❤️</div><div id="reelLikeN">12.4K</div></div>
+        <div class="reel-action" onclick="toast('💬 Comments')"><div class="ra-icon">💬</div><div>843</div></div>
+        <div class="reel-action" onclick="shareApp()"><div class="ra-icon">↗</div><div>Share</div></div>
+        <div class="reel-action" onclick="toast('💰 Tipped creator!')"><div class="ra-icon">💰</div><div>Tip</div></div>
+      </div>
+      <div class="reel-bottom">
+        <div class="reel-user"><div class="reel-av" id="reelAv">A</div><span id="reelUname">@creator</span><button class="reel-follow" onclick="toast('✅ Following!')">Follow</button><span style="color:var(--gold)">+5 🪙</span></div>
+        <div id="reelCaption" style="font-family:var(--te)">తెలుగు short video 🌊</div>
+        <div style="font-size:12px;margin-top:8px">🎵 <span id="reelMusic">Original Sound</span></div>
+      </div>
+      <button onclick="prevReel()" style="position:absolute;left:8px;top:50%;width:40px;height:40px;border-radius:50%;border:0;background:rgba(0,0,0,.4);color:white;font-size:28px">‹</button>
+      <button onclick="nextReel()" style="position:absolute;right:8px;top:50%;width:40px;height:40px;border-radius:50%;border:0;background:rgba(0,0,0,.4);color:white;font-size:28px">›</button>
+    </div>
+  </div>
+
+  <div id="pg-explore" style="display:none"><div class="vid-cats"><button class="vcat active">All</button><button class="vcat">Cinema</button><button class="vcat">Music</button><button class="vcat">Comedy</button></div><div id="exploreGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px"></div></div>
+
+  <div id="pg-videos" style="display:none">
+    <div class="vid-hero"><div class="vid-hero-bg" id="vidHeroBg">🎬</div><div class="vid-hero-grad"></div><div class="vid-hero-content"><div class="vid-hero-title" id="vidHeroTitle">Pushpa 2 — The Rule</div><div class="vid-hero-meta">2024 · Action · 12.4M views</div><button class="vhb-play" onclick="openVideo('v1')">▶ Play</button><button class="vhb-info" onclick="toast('More info')">ℹ Info</button></div></div>
+    <div class="vid-cats" id="vidCats"></div>
+    <div class="vid-row-title">🔥 Trending</div><div class="vid-scroll" id="vidScroll1"></div>
+    <div class="vid-row-title">🎵 Music</div><div class="vid-scroll" id="vidScroll2"></div>
+    <div class="vid-row-title">😂 Comedy</div><div class="vid-scroll" id="vidScroll3"></div>
+    <div class="vid-row-title">🏏 Sports</div><div class="vid-scroll" id="vidScroll4"></div>
+    <div class="ad-unit"><div class="demo-ad">🎬 Telugu OTT Premium — Try Free →</div></div>
+  </div>
+
+  <div id="pg-earn" style="display:none">
+    <div class="earn-hero"><div class="earn-hero-title">💰 తరంగం Earn</div><div class="earn-hero-sub">Videos చూసి, Content create చేసి, Friends refer చేసి — Money Earn చేయండి!</div><div class="coin-balance"><div>మీ Wallet Balance</div><div class="cb-amount">🪙 <span id="earnCoins">240</span></div><div>≈ ₹<span id="earnRupees">12</span></div><div class="cb-actions"><button class="cb-act cb-withdraw" onclick="withdraw()">💳 Withdraw</button><button class="cb-act cb-buy" onclick="toast('🪙 Buy coins coming!')">🪙 Buy Coins</button></div></div></div>
+    <div id="earnWays"></div><div style="font-weight:900;padding:14px">📋 Transaction History</div><div id="earnHistory"></div>
+  </div>
+
+  <div id="pg-profile" style="display:none">
+    <div class="prof-cover2"></div><div class="prof-top2"><div class="prof-av2" id="profAv2">A</div><div><div class="prof-name2" id="profName2">Your Name</div><div class="prof-handle2" id="profHandle2">@handle</div></div></div>
+    <div class="prof-stats2"><div class="ps2"><div class="ps2-n">0</div><div class="ps2-l">Posts</div></div><div class="ps2"><div class="ps2-n">0</div><div class="ps2-l">Followers</div></div><div class="ps2"><div class="ps2-n">0</div><div class="ps2-l">Following</div></div><div class="ps2"><div class="ps2-n" id="profCoins2">240</div><div class="ps2-l">🪙 Coins</div></div></div>
+    <div class="prof-acts2"><button class="pa2-main" onclick="openCreate()">＋ Create</button><button class="pa2-sec" onclick="toast('✏️ Edit profile')">✏️ Edit</button><button class="pa2-icon" onclick="shareApp()">↗</button><button class="pa2-icon" onclick="doLogout()">🚪</button></div>
+    <div class="prof-tabs2"><button class="ptab2 active">📝 Posts</button><button class="ptab2">📹 Videos</button><button class="ptab2">⚡ Reels</button><button class="ptab2">🔖 Saved</button></div>
+    <div style="text-align:center;padding:40px;color:var(--muted)"><div style="font-size:48px">📝</div><div style="font-weight:900">ఇంకా posts లేవు</div><button class="btn-main" style="width:auto;padding:10px 24px;margin-top:10px" onclick="openCreate()">+ Create Post</button></div>
+  </div>
+
+  <nav class="bnav">
+    <button class="bni active" id="bn-feed" onclick="goPage('feed')"><span class="ico">🏠</span>హోమ్</button>
+    <button class="bni" id="bn-reels" onclick="goPage('reels')"><span class="ico">⚡</span>Reels</button>
+    <button class="bni-center" onclick="openCreate()">＋</button>
+    <button class="bni" id="bn-videos" onclick="goPage('videos')"><span class="ico">📹</span>Videos</button>
+    <button class="bni" id="bn-profile" onclick="goPage('profile')"><span class="ico">👤</span>Profile</button>
+  </nav>
 </div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
-let currentUser=null,isPlaying=false,isLiked=false,isSubscribed=false,likeCount=0;
-let userVideos=[];
+const fbConfig={
+  apiKey:"AIzaSyBlyi5hI-jSSyIf-H9rnpP_4Ldj6Cfpqu8",
+  authDomain:"hfgm-ministry.firebaseapp.com",
+  projectId:"hfgm-ministry",
+  storageBucket:"hfgm-ministry.firebasestorage.app",
+  messagingSenderId:"1079389581104",
+  appId:"1:1079389581104:web:c6eb77c5567368897fe2f5",
+  measurementId:"G-WH5RDYMMTV"
+};
 
-const videos=[
-  {id:1,title:"పుష్పా 2 — అన్ని పాటలు ఒకే వీడియోలో!",ch:"తెలుగు సినిమా",views:"52 లక్షలు",time:"3 రోజుల క్రితం",emoji:"🎬",bg:"linear-gradient(135deg,#1a0820,#0a0a30)",chColor:"linear-gradient(135deg,#ff6b00,#ffb347)",chInitial:"సి",duration:"8:24",subs:"12 లక్షలు",desc:"పుష్పా 2 అన్ని అద్భుతమైన పాటలు ఒకే చోట చూడండి!",likes:52000,comments:[]},
-  {id:2,title:"హైదరాబాద్ బిర్యానీ — ఇంట్లో రెస్టారెంట్ స్టైల్!",ch:"తెలుగు వంటలు",views:"28 లక్షలు",time:"1 రోజు క్రితం",emoji:"🍛",bg:"linear-gradient(135deg,#1a1000,#2a2000)",chColor:"linear-gradient(135deg,#ffd700,#ff6b35)",chInitial:"వం",duration:"18:07",subs:"5 లక్షలు",desc:"ఇంట్లో చేసే అసలైన హైదరాబాద్ బిర్యానీ రెసిపీ!",likes:28000,comments:[]},
-  {id:3,title:"IPL 2026 — చెన్నై vs ముంబై ఫైనల్ హైలైట్స్",ch:"క్రీడా కేంద్రం",views:"84 లక్షలు",time:"2 రోజుల క్రితం",emoji:"🏏",bg:"linear-gradient(135deg,#0a1a0a,#0a300a)",chColor:"linear-gradient(135deg,#2dc653,#208b3a)",chInitial:"క్రీ",duration:"45:22",subs:"42 లక్షలు",desc:"IPL 2026 అత్యంత రోమాంచకమైన ఫైనల్ మ్యాచ్!",likes:84000,comments:[]},
-  {id:4,title:"తెలుగు కామెడీ — పొట్ట చెక్కలయ్యే జోకులు 😂",ch:"నవ్వుల నగరం",views:"41 లక్షలు",time:"4 రోజుల క్రితం",emoji:"😂",bg:"linear-gradient(135deg,#1a1500,#252000)",chColor:"linear-gradient(135deg,#ffeb3b,#ff9800)",chInitial:"న",duration:"12:30",subs:"18 లక్షలు",desc:"తెలుగు లో అత్యంత నవ్వించే కామెడీ వీడియో!",likes:41000,comments:[]},
-  {id:5,title:"విశాఖపట్నం — అందమైన బీచ్ నగరం ట్రావెల్ వ్లాగ్",ch:"తెలుగు పర్యటన",views:"14 లక్షలు",time:"5 రోజుల క్రితం",emoji:"🌊",bg:"linear-gradient(135deg,#001a1a,#002a2a)",chColor:"linear-gradient(135deg,#00c9a7,#1b9aaa)",chInitial:"ప",duration:"22:55",subs:"3 లక్షలు",desc:"విశాఖపట్నం అందమైన బీచ్‌లు, కొండలు, తిండి అన్నీ చూద్దాం!",likes:14000,comments:[]},
-  {id:6,title:"10వ తరగతి గణితం — సులభంగా నేర్చుకోండి",ch:"తెలుగు విద్య",views:"9 లక్షలు",time:"1 వారం క్రితం",emoji:"📚",bg:"linear-gradient(135deg,#001020,#001530)",chColor:"linear-gradient(135deg,#4361ee,#3a0ca3)",chInitial:"వి",duration:"35:00",subs:"7 లక్షలు",desc:"10వ తరగతి గణితం చాలా సులభంగా తెలుగులో నేర్చుకోండి!",likes:9000,comments:[]},
-];
-
-const shorts=[
-  {emoji:"🎤",title:"వీధిలో పాడిన అబ్బాయి — అందరినీ ఆశ్చర్యపరిచాడు!",views:"42 లక్షలు",bg:"linear-gradient(135deg,#1a0a0f,#3a0a1f)"},
-  {emoji:"🏏",title:"అద్భుతమైన సిక్సర్ — గ్యాలరీ మొత్తం ఆశ్చర్యపోయింది",views:"1.2 కోట్లు",bg:"linear-gradient(135deg,#0a1a0a,#0a3a0a)"},
-  {emoji:"😂",title:"తెలుగు అమ్మ — చాలా నవ్వు వస్తుంది!",views:"2.1 కోట్లు",bg:"linear-gradient(135deg,#1a1500,#252000)"},
-  {emoji:"🍜",title:"30 సెకన్లలో పర్ఫెక్ట్ పెసరట్టు!",views:"31 లక్షలు",bg:"linear-gradient(135deg,#1a1a0a,#2a2a0a)"},
-  {emoji:"🌊",title:"అరకు లోయ — అద్భుతమైన దృశ్యాలు",views:"72 లక్షలు",bg:"linear-gradient(135deg,#001a1a,#002a2a)"},
-  {emoji:"🎬",title:"పుష్పా 3 ట్రైలర్ రియాక్షన్!",views:"95 లక్షలు",bg:"linear-gradient(135deg,#1a0820,#200820)"},
-];
-
-const liveStreams=[
-  {title:"తెలుగు సినిమా అవార్డ్స్ 2026 — లైవ్!",ch:"తెలుగు సినిమా",viewers:"1.42 లక్షలు",emoji:"🎬",bg:"linear-gradient(135deg,#1a0820,#200820)"},
-  {title:"IPL Final — లైవ్ మ్యాచ్ కామెంటరీ తెలుగులో!",ch:"క్రీడా కేంద్రం",viewers:"89 వేలు",emoji:"🏏",bg:"linear-gradient(135deg,#0a1a0a,#102010)"},
-  {title:"తెలుగు వార్తలు — తాజా అప్‌డేట్స్",ch:"వార్తా తరంగం",viewers:"2.34 లక్షలు",emoji:"📺",bg:"linear-gradient(135deg,#1a0a00,#201000)"},
-  {title:"లైవ్ కుకింగ్ — అమ్మ చేతి వంట!",ch:"తెలుగు వంటలు",viewers:"56 వేలు",emoji:"🍳",bg:"linear-gradient(135deg,#1a1000,#202000)"},
-];
-
-const sampleComments=[
-  {author:"రవి కుమార్",text:"తెలుగు తరంగం అద్భుతంగా ఉంది! మన భాషలో platform చాలా అవసరం ఉంది 🌊"},
-  {author:"లక్ష్మి దేవి",text:"ఎట్టకేలకు తెలుగు వారికి సొంత platform వచ్చింది! చాలా సంతోషంగా ఉంది!"},
-  {author:"వెంకటేశ్",text:"YouTube కంటే ఇది చాలా బాగుంది. తెలుగు content అన్నీ ఒకే చోట!"},
-];
-
-function switchTab(tab){
-  document.querySelectorAll('.auth-tab').forEach(t=>t.classList.remove('active'));
-  event.target.classList.add('active');
-  document.getElementById('login-form').style.display=tab==='login'?'block':'none';
-  document.getElementById('register-form').style.display=tab==='register'?'block':'none';
+let fbReady=false,auth=null,db=null;
+try{
+  firebase.initializeApp(fbConfig);
+  fbReady=true;
+  auth=firebase.auth();
+  db=firebase.firestore();
+  console.log("Firebase connected");
+}catch(e){
+  console.warn("Firebase not connected:", e);
 }
+
+let me=null,coins=240,subs=[],vProg=25,vPlaying=true,vProgTimer=null,curVid=null,vmCmts=[],earnTx=[],reelIdx=0,pageViewCount=0,intAdTimer=5,intAdInterval=null,intAdIdx=0;
+
+const $=id=>document.getElementById(id);
+const esc=s=>String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+function toast(t){const el=$("toast");if(!el)return;el.textContent=t;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2500)}
+function showMsg(id,t){const el=$(id);if(!el)return;el.textContent=t;el.style.display="block";setTimeout(()=>el.style.display="none",5000)}
+function nameOf(){return me?.displayName||me?.email?.split("@")[0]||"Guest"}
+function ini(n){return n?n[0].toUpperCase():"G"}
+
+const STORIES=[{e:"🌅",n:"రవి"},{e:"🎬",n:"అనిత"},{e:"🏏",n:"వేణు"},{e:"🎵",n:"సుమ"},{e:"🌺",n:"ప్రీతి"},{e:"🎭",n:"కిరణ్"},{e:"🍛",n:"శ్రీను"},{e:"💃",n:"లావణ్య"}];
+const POSTS=[
+{id:"p1",n:"రవి కుమార్",e:"😊",t:"1h",txt:"తెలుగు తరంగం లో స్వాగతం! 🌊 ఇది మన తెలుగు వారి సొంత platform — share చేయండి!",media:"🌊",likes:142,comments:38,liked:false,type:"post"},
+{id:"p2",n:"అనిత రెడ్డి",e:"👩",t:"3h",txt:"Pushpa 2 review — ఈ movie చూడకుండా miss అవ్వకండి! 🔥",media:"🎬",likes:890,comments:156,liked:false,type:"video"},
+{id:"p3",n:"సంగీత రావు",e:"🎵",t:"5h",txt:"SPB గారి పాటలు వినడం ఎప్పుడూ అద్భుతంగా అనిపిస్తుంది 💙",media:null,likes:2341,comments:445,liked:false,type:"post"},
+{id:"p4",n:"వేణు గోపాల్",e:"🧑",t:"8h",txt:"Hyderabad Biryani recipe — ఇంట్లోనే చేయవచ్చు! 🍛",media:"🍛",likes:567,comments:89,liked:false,type:"reel"},
+{id:"p5",n:"క్రికెట్ Fan",e:"🏏",t:"12h",txt:"India won! 🏆 తెలుగు వాళ్ళంతా celebrate చేద్దాం! 🎉",media:"🏏",likes:4521,comments:678,liked:false,type:"post"}
+];
+const VIDS=[
+{id:"v1",e:"🎬",t:"Pushpa 2 Full Review",ch:"తెలుగు సినిమా",bg:"linear-gradient(135deg,#3d0000,#000020)",v:"12.4M",dur:"18:42",cat:"Cinema"},
+{id:"v2",e:"🎵",t:"Srivalli Official Video",ch:"సంగీత లహరి",bg:"linear-gradient(135deg,#001a14,#14000a)",v:"89M",dur:"4:23",cat:"Music"},
+{id:"v3",e:"😂",t:"Telugu Comedy Best Scenes",ch:"కామెడీ King",bg:"linear-gradient(135deg,#0a1400,#140010)",v:"5.6M",dur:"22:15",cat:"Comedy"},
+{id:"v4",e:"📰",t:"AP News Live",ch:"Telugu News 24",bg:"linear-gradient(135deg,#001420,#0a0014)",v:"892K",dur:"LIVE",cat:"News"},
+{id:"v5",e:"🏏",t:"India Highlights",ch:"Cricket Telugu",bg:"linear-gradient(135deg,#001a00,#140008)",v:"3.2M",dur:"28:44",cat:"Sports"},
+{id:"v6",e:"🍛",t:"Gongura Chicken Recipe",ch:"Cooking Corner",bg:"linear-gradient(135deg,#1a1400,#001414)",v:"1.8M",dur:"15:22",cat:"Cooking"},
+{id:"v7",e:"💃",t:"Kuchipudi Dance",ch:"Culture Channel",bg:"linear-gradient(135deg,#140010,#001410)",v:"456K",dur:"35:10",cat:"Culture"},
+{id:"v8",e:"🎶",t:"Nuvvu Nuvvu Lyrical",ch:"సంగీత లహరి",bg:"linear-gradient(135deg,#001814,#140010)",v:"34M",dur:"5:12",cat:"Music"}
+];
+const REELS=[
+{e:"😂",n:"kiran_comedy",cap:"తెలుగు comedy 😂 like చేయండి!",music:"Comedy Beat",bg:"linear-gradient(135deg,#1a0020,#200800)",likes:"8.2M"},
+{e:"💃",n:"dance_queen",cap:"Trending step నేర్చుకోండి 💃",music:"Trending Song 2024",bg:"linear-gradient(135deg,#001a10,#100018)",likes:"12M"},
+{e:"🎵",n:"music_lover",cap:"New Telugu song 🎵 🔥",music:"Latest Hit",bg:"linear-gradient(135deg,#0a1800,#18000a)",likes:"6.5M"},
+{e:"🍛",n:"recipe_queen",cap:"Quick recipe tip 👨‍🍳",music:"Cooking Vibe",bg:"linear-gradient(135deg,#1a1000,#001a14)",likes:"3.1M"},
+{e:"🔥",n:"pushpa_fan",cap:"Pushpa dialogue 🔥",music:"Srivalli Remix",bg:"linear-gradient(135deg,#200800,#0a0020)",likes:"45M"},
+{e:"🌅",n:"vizag_vibes",cap:"Vizag beach sunrise 🌅",music:"Peaceful Melody",bg:"linear-gradient(135deg,#001020,#100010)",likes:"2.4M"}
+];
+const VM_CMTS=[{e:"😊",n:"రవి కుమార్",t:"చాలా బావుంది! ❤️"},{e:"👩",n:"అనిత రెడ్డి",t:"Superb quality! More upload చేయండి 🙏"},{e:"🧑",n:"వేణు",t:"Subscribe చేశాను 🔔"}];
+const EARN_HISTORY=[{ico:"📹",action:"Video watch చేశారు",time:"2 mins ago",amt:+5},{ico:"📝",action:"Post create చేశారు",time:"1 hour ago",amt:+20},{ico:"📅",action:"Daily login bonus",time:"Today",amt:+10},{ico:"🤝",action:"Friend refer చేశారు",time:"Yesterday",amt:+50},{ico:"💳",action:"Withdraw to UPI",time:"3 days ago",amt:-100}];
+const INT_ADS=[{e:"🎬",title:"Telugu Cinema Pass",desc:"అన్ని latest Telugu movies ఒకే subscription లో చూడండి!"},{e:"🛒",title:"Telugu Market App",desc:"Local Telugu businesses నుండి direct purchase చేయండి!"},{e:"💰",title:"Earn More with Tarangam!",desc:"మీ friends ని invite చేయండి!"}];
+
+function switchAuth(t){$("loginTab").classList.toggle("active",t==="login");$("regTab").classList.toggle("active",t==="reg");$("loginBox").style.display=t==="login"?"block":"none";$("regBox").style.display=t==="reg"?"block":"none"}
+function toggleEye(id,b){const i=$(id);i.type=i.type==="password"?"text":"password";b.textContent=i.type==="password"?"👁":"🙈"}
+
 function doLogin(){
-  const email=document.getElementById('login-email').value||'user@tarangam.com';
-  const name=email.split('@')[0];
-  currentUser={name,email,handle:'@'+name.toLowerCase()};
-  document.getElementById('avatar-btn').textContent=name[0].toUpperCase();
-  document.getElementById('auth-page').style.display='none';
-  document.getElementById('main-app').style.display='block';
-  renderHome();showToast('స్వాగతం '+name+'! తెలుగు తరంగంలోకి రండి! 🌊');
+ if(!auth){toast("Firebase config problem");return}
+ const e=$("lEmail").value.trim(),p=$("lPass").value;
+ if(!e||!p){showMsg("lErr","Email & Password రాయండి");return}
+ auth.signInWithEmailAndPassword(e,p).then(()=>{toast("✅ Login Success");openApp(false)}).catch(err=>showMsg("lErr",err.message));
 }
 function doRegister(){
-  const name=document.getElementById('reg-name').value||'కొత్త వినియోగదారు';
-  const email=document.getElementById('reg-email').value||'user@tarangam.com';
-  currentUser={name,email,handle:'@'+name.toLowerCase().replace(/\s/g,'')};
-  document.getElementById('avatar-btn').textContent=name[0].toUpperCase();
-  document.getElementById('auth-page').style.display='none';
-  document.getElementById('main-app').style.display='block';
-  renderHome();showToast('అకౌంట్ తయారైంది! స్వాగతం '+name+'! 🌊');
+ if(!auth){toast("Firebase config problem");return}
+ const n=$("rName").value.trim(),e=$("rEmail").value.trim(),p=$("rPass").value;
+ if(!n||!e||!p){showMsg("rErr","అన్నీ fill చేయండి");return}
+ if(p.length<6){showMsg("rErr","Password 6+ characters");return}
+ auth.createUserWithEmailAndPassword(e,p).then(r=>r.user.updateProfile({displayName:n})).then(()=>{toast("✅ Account Created");openApp(false)}).catch(err=>showMsg("rErr",err.message));
 }
-function doLogout(){
-  document.getElementById('main-app').style.display='none';
-  document.getElementById('auth-page').style.display='flex';
-  currentUser=null;
-  document.getElementById('avatar-menu').classList.remove('open');
-  showToast('లాగౌట్ అయ్యారు. మళ్ళీ రండి!');
+function gLogin(){
+ if(!auth){guestMode();return}
+ const p=new firebase.auth.GoogleAuthProvider();p.setCustomParameters({prompt:"select_account"});
+ auth.signInWithPopup(p).then(()=>{toast("✅ Google Login");openApp(false)}).catch(e=>{toast("Google login enable చేయాలి");console.warn(e)});
 }
-function toggleMenu(){document.getElementById('avatar-menu').classList.toggle('open');}
-document.addEventListener('click',e=>{if(!e.target.closest('.avatar-btn')&&!e.target.closest('.avatar-menu'))document.getElementById('avatar-menu').classList.remove('open');});
-
-function navigate(page){
-  document.querySelectorAll('[id^="page-"]').forEach(p=>p.style.display='none');
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('page-'+page).style.display='block';
-  const el=document.getElementById('nav-'+page);if(el)el.classList.add('active');
-  document.getElementById('avatar-menu').classList.remove('open');
-  if(page==='home')renderHome();if(page==='profile')renderProfile();
-  if(page==='live')renderLive();if(page==='shorts')renderShortsPage();
-  window.scrollTo(0,0);
+function fbLogin(){
+ if(!auth){guestMode();return}
+ const p=new firebase.auth.FacebookAuthProvider();
+ auth.signInWithPopup(p).then(()=>{toast("✅ Facebook Login");openApp(false)}).catch(e=>{toast("Facebook login enable చేయాలి");console.warn(e)});
 }
-function renderHome(){renderGrid('home-grid',videos.slice(0,6));renderGrid('rec-grid',[...videos].reverse().slice(0,3));renderShortsRow();}
-function renderGrid(id,vids){
-  document.getElementById(id).innerHTML=vids.map((v,i)=>`
-    <div class="video-card" style="animation-delay:${i*0.05}s" onclick="watchVideo(${v.id})">
-      <div class="thumb" style="background:${v.bg}">${v.emoji}
-        <div class="thumb-overlay"><div class="play-btn">▶️</div></div>
-        <div class="duration">${v.duration}</div>
-      </div>
-      <div class="card-info">
-        <div class="ch-avatar" style="background:${v.chColor}">${v.chInitial}</div>
-        <div class="card-meta">
-          <div class="card-title">${v.title}</div>
-          <div class="card-ch">${v.ch}</div>
-          <div class="card-stats">${v.views} వీక్షణలు · ${v.time}</div>
-        </div>
-      </div>
-    </div>`).join('');
+function resetPwd(){if(!auth){toast("Firebase config problem");return}const e=$("lEmail").value.trim();if(!e){showMsg("lErr","Email రాయండి");return}auth.sendPasswordResetEmail(e).then(()=>showMsg("lOk","✅ Reset link sent")).catch(err=>showMsg("lErr",err.message))}
+function guestMode(){me=null;openApp(true);toast("👋 Guest mode")}
+function doLogout(){if(auth)auth.signOut();$("appPage").style.display="none";$("authPage").style.display="flex";toast("Logged out")}
+
+if(auth){
+ auth.onAuthStateChanged(u=>{me=u;if(u){openApp(false)}else if($("appPage").style.display!=="block"){$("authPage").style.display="flex";$("appPage").style.display="none"}});
 }
-function renderShortsRow(){
-  document.getElementById('shorts-row').innerHTML=shorts.map(s=>`
-    <div class="short-card" onclick="showToast('షార్ట్ ప్లే అవుతోంది! 🌊')">
-      <div class="short-thumb" style="background:${s.bg}">${s.emoji}</div>
-      <div class="short-title">${s.title}</div>
-      <div class="short-views">${s.views} వీక్షణలు</div>
-    </div>`).join('');
+
+setTimeout(()=>{$("splash").style.transition="opacity .5s";$("splash").style.opacity="0";setTimeout(()=>{$("splash").style.display="none";if(!$("appPage").style.display||$("appPage").style.display==="none")$("authPage").style.display="flex"},500)},2200);
+
+function openApp(guest){$("authPage").style.display="none";$("appPage").style.display="block";if($("hAvatar"))$("hAvatar").textContent=ini(nameOf());renderAll();goPage("feed");earnCoins(10,"Daily login bonus")}
+function goPage(p){
+ pageViewCount++;if(pageViewCount%5===0)setTimeout(showInterstitialAd,300);
+ document.querySelectorAll("[id^='pg-']").forEach(el=>el.style.display="none");
+ const pg=$(p==="feed"?"pg-feed":"pg-"+p);if(pg)pg.style.display="block";
+ document.querySelectorAll(".bni:not(.bni-center)").forEach(b=>b.classList.remove("active"));
+ const bn=$("bn-"+p);if(bn)bn.classList.add("active");
+ if(p==="profile"){ $("profAv2").textContent=ini(nameOf()); $("profName2").textContent=nameOf(); $("profHandle2").textContent="@"+(me?.email?.split("@")[0]||"guest"); $("profCoins2").textContent=coins; }
+ if(p==="earn"){ $("earnCoins").textContent=coins; $("earnRupees").textContent=Math.floor(coins*0.05); renderEarnHistory(); renderEarnWays(); }
+ if(p==="reels")loadReel(reelIdx);
 }
-function renderShortsPage(){
-  document.getElementById('shorts-grid').innerHTML=shorts.map(s=>`
-    <div class="short-card" onclick="showToast('షార్ట్ ప్లే అవుతోంది! 🌊')">
-      <div class="short-thumb" style="background:${s.bg}">${s.emoji}</div>
-      <div class="short-title">${s.title}</div>
-      <div class="short-views">${s.views} వీక్షణలు</div>
-    </div>`).join('');
-}
-function renderProfile(){
-  if(!currentUser)return;
-  document.getElementById('profile-name').textContent=currentUser.name;
-  document.getElementById('profile-handle').textContent=currentUser.handle;
-  document.getElementById('profile-avatar').textContent=currentUser.name[0].toUpperCase();
-  document.getElementById('p-vids').textContent=userVideos.length;
-  document.getElementById('p-subs').textContent='0';
-  document.getElementById('p-views').textContent=userVideos.length>0?'1.2K':'0';
-  if(userVideos.length>0)renderGrid('profile-grid',userVideos);
-  else document.getElementById('profile-grid').innerHTML='<p style="color:var(--muted);font-size:14px;padding:20px 0;">ఇంకా వీడియోలు లేవు. మీ మొదటి వీడియో అప్లోడ్ చేయండి! 🌊</p>';
-}
-function renderLive(){
-  document.getElementById('live-grid').innerHTML=liveStreams.map(l=>`
-    <div class="live-card" onclick="showToast('లైవ్ స్ట్రీమ్ లోకి వెళ్తున్నారు...')">
-      <div class="live-thumb" style="background:${l.bg}">${l.emoji}
-        <div class="live-badge">● లైవ్</div>
-        <div class="viewers-badge">👁️ ${l.viewers}</div>
-      </div>
-      <div class="live-info"><div class="live-title-text">${l.title}</div><div class="live-channel">${l.ch}</div></div>
-    </div>`).join('');
-}
-function watchVideo(id){
-  const v=videos.find(x=>x.id===id)||videos[0];
-  navigate('watch');isPlaying=false;isLiked=false;isSubscribed=false;likeCount=v.likes;
-  document.getElementById('watch-emoji').textContent=v.emoji;
-  document.getElementById('watch-player').style.background=v.bg;
-  document.getElementById('watch-title').textContent=v.title;
-  document.getElementById('watch-stats').textContent=v.views+' వీక్షణలు · '+v.time;
-  document.getElementById('like-count').textContent=likeCount.toLocaleString();
-  document.getElementById('watch-ch-name').textContent=v.ch;
-  document.getElementById('watch-ch-subs').textContent=v.subs+' సభ్యులు';
-  document.getElementById('watch-desc').textContent=v.desc;
-  document.getElementById('watch-ch-pic').style.background=v.chColor;
-  document.getElementById('watch-ch-pic').textContent=v.chInitial;
-  document.getElementById('like-btn').className='action-btn';
-  document.getElementById('sub-btn').className='sub-btn';
-  document.getElementById('sub-btn').textContent='సభ్యత్వం';
-  document.getElementById('player-overlay').style.opacity='1';
-  renderComments(v.comments||[]);renderRec(id);
-}
-function togglePlay(){isPlaying=!isPlaying;document.getElementById('player-overlay').style.opacity=isPlaying?'0':'1';}
-function toggleLike(){
-  isLiked=!isLiked;likeCount+=isLiked?1:-1;
-  document.getElementById('like-count').textContent=likeCount.toLocaleString();
-  document.getElementById('like-btn').className='action-btn'+(isLiked?' liked':'');
-  if(isLiked)showToast('నచ్చిన వీడియోలకు జోడించబడింది! 👍');
-}
-function toggleSub(){
-  isSubscribed=!isSubscribed;
-  document.getElementById('sub-btn').className='sub-btn'+(isSubscribed?' subscribed':'');
-  document.getElementById('sub-btn').textContent=isSubscribed?'✓ సభ్యత్వం తీసుకున్నారు':'సభ్యత్వం';
-  showToast(isSubscribed?'సభ్యత్వం తీసుకున్నారు! 🌊':'సభ్యత్వం రద్దు చేయబడింది');
-}
-function renderComments(extra){
-  const colors=['linear-gradient(135deg,#ff6b00,#ffb347)','linear-gradient(135deg,#4361ee,#3a0ca3)','linear-gradient(135deg,#2dc653,#208b3a)','linear-gradient(135deg,#00c9a7,#1b9aaa)'];
-  const all=[...sampleComments,...extra];
-  document.getElementById('comments-list').innerHTML=all.map((c,i)=>`
-    <div class="comment">
-      <div class="comment-avatar" style="background:${colors[i%colors.length]}">${c.author[0]}</div>
-      <div><div class="comment-author">${c.author}</div><div class="comment-text">${c.text}</div></div>
-    </div>`).join('');
-}
-function addComment(){
-  const input=document.getElementById('comment-input');
-  if(!input.value.trim())return;
-  sampleComments.unshift({author:currentUser?currentUser.name:'మీరు',text:input.value});
-  renderComments([]);input.value='';showToast('వ్యాఖ్య పోస్ట్ చేయబడింది! 🌊');
-}
-function renderRec(currentId){
-  document.getElementById('rec-list').innerHTML=videos.filter(v=>v.id!==currentId).slice(0,5).map(v=>`
-    <div class="rec-card" onclick="watchVideo(${v.id})">
-      <div class="rec-thumb" style="background:${v.bg}">${v.emoji}</div>
-      <div><div class="rec-title-sm">${v.title}</div><div class="rec-ch">${v.ch}</div><div class="rec-views">${v.views} వీక్షణలు</div></div>
-    </div>`).join('');
-}
-function handleDragOver(e){e.preventDefault();document.getElementById('upload-zone').classList.add('dragover');}
-function handleDragLeave(){document.getElementById('upload-zone').classList.remove('dragover');}
-function handleDrop(e){e.preventDefault();handleDragLeave();const f=e.dataTransfer.files[0];if(f)simulateUpload(f.name);}
-function handleFileSelect(input){if(input.files[0])simulateUpload(input.files[0].name);}
-function simulateUpload(filename){
-  const wrap=document.getElementById('progress-wrap'),bar=document.getElementById('progress-bar'),status=document.getElementById('upload-status');
-  wrap.style.display='block';bar.style.width='0%';status.textContent=filename+' అప్లోడ్ అవుతోంది...';
-  let p=0;const iv=setInterval(()=>{p+=Math.random()*15;if(p>=100){p=100;clearInterval(iv);status.textContent='✅ అప్లోడ్ పూర్తయింది!';}bar.style.width=p+'%';},200);
-}
-function publishVideo(){
-  const title=document.getElementById('vid-title').value;
-  if(!title){showToast('❌ వీడియో శీర్షిక రాయండి!');return;}
-  const newVid={id:Date.now(),title,ch:currentUser?currentUser.name:'మీ చానెల్',views:'0',time:'ఇప్పుడే',emoji:'🌊',bg:'linear-gradient(135deg,#001a1a,#002a2a)',chColor:'linear-gradient(135deg,#ff6b00,#ffb347)',chInitial:(currentUser?currentUser.name[0]:'మ').toUpperCase(),duration:'0:00',subs:'0',desc:document.getElementById('vid-desc').value,likes:0,comments:[]};
-  userVideos.unshift(newVid);videos.unshift(newVid);
-  showToast('🌊 వీడియో విజయవంతంగా పబ్లిష్ అయింది!');
-  document.getElementById('vid-title').value='';document.getElementById('vid-desc').value='';
-  document.getElementById('progress-wrap').style.display='none';document.getElementById('upload-status').textContent='';
-  navigate('home');
-}
-function doSearch(){
-  const q=document.getElementById('search-input').value.toLowerCase();if(!q)return;
-  const results=videos.filter(v=>v.title.toLowerCase().includes(q)||v.ch.toLowerCase().includes(q));
-  navigate('home');
-  if(results.length===0)document.getElementById('home-grid').innerHTML='<p style="color:var(--muted);padding:20px 0;">"'+q+'" కోసం వీడియోలు కనుగొనబడలేదు</p>';
-  else{renderGrid('home-grid',results);showToast(results.length+' వీడియోలు కనుగొనబడ్డాయి! 🌊');}
-}
-document.getElementById('search-input').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch();});
-function setTab(el){document.querySelectorAll('.category-tabs .tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
-function showToast(msg){
-  const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;
-  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);
-}
-}
-</script>
 
-<!-- FIREBASE -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-analytics.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-  import { getFirestore, collection, addDoc, getDocs, orderBy, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-  import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-storage.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBlyi5hI-jSSyIf-H9rnpP_4Ldj6Cfpqu8",
-    authDomain: "hfgm-ministry.firebaseapp.com",
-    projectId: "hfgm-ministry",
-    storageBucket: "hfgm-ministry.firebasestorage.app",
-    messagingSenderId: "1079389581104",
-    appId: "1:1079389581104:web:c6eb77c5567368897fe2f5",
-    measurementId: "G-WH5RDYMMTV"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-  const storage = getStorage(app);
-  const googleProvider = new GoogleAuthProvider();
-
-  // ===== REAL LOGIN =====
-  window.firebaseLogin = async function() {
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-pass').value;
-    if(!email || !password) { showToast('❌ ఇమెయిల్ మరియు పాస్‌వర్డ్ రాయండి!'); return; }
-    try {
-      const result = await signInWithEmailAndPassword(auth, email, password);
-      handleUser(result.user);
-    } catch(e) {
-      showToast('❌ లాగిన్ విఫలమైంది: ' + e.message);
-    }
-  }
-
-  // ===== REAL REGISTER =====
-  window.firebaseRegister = async function() {
-    const name = document.getElementById('reg-name').value;
-    const email = document.getElementById('reg-email').value;
-    const password = document.getElementById('reg-pass').value;
-    if(!name || !email || !password) { showToast('❌ అన్నీ fill చేయండి!'); return; }
-    try {
-      const result = await createUserWithEmailAndPassword(auth, email, password);
-      handleUser(result.user, name);
-    } catch(e) {
-      showToast('❌ రిజిస్ట్రేషన్ విఫలమైంది: ' + e.message);
-    }
-  }
-
-  // ===== GOOGLE LOGIN =====
-  window.googleLogin = async function() {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      handleUser(result.user);
-    } catch(e) {
-      showToast('❌ Google లాగిన్ విఫలమైంది!');
-    }
-  }
-
-  // ===== LOGOUT =====
-  // ===== FORGOT PASSWORD =====
-  window.showForgotPassword = function() {
-    document.getElementById('forgot-form').style.display='block';
-    document.getElementById('reset-email').value = document.getElementById('login-email').value || '';
-  }
-  window.hideForgotPassword = function() {
-    document.getElementById('forgot-form').style.display='none';
-  }
-  window.sendResetEmail = async function() {
-    const email = document.getElementById('reset-email').value;
-    if(!email) { showToast('❌ ఇమెయిల్ రాయండి!'); return; }
-    try {
-      await sendPasswordResetEmail(auth, email);
-      showToast('✅ Reset link మీ ఇమెయిల్ కి పంపబడింది!');
-      hideForgotPassword();
-    } catch(e) {
-      showToast('❌ Error: ' + e.message);
-    }
-  }
-
-  window.firebaseLogout = async function() {
-    await signOut(auth);
-    document.getElementById('main-app').style.display='none';
-    document.getElementById('auth-page').style.display='flex';
-    showToast('లాగౌట్ అయ్యారు. మళ్ళీ రండి!');
-  }
-
-  function handleUser(user, name) {
-    const displayName = name || user.displayName || user.email.split('@')[0];
-    currentUser = { name: displayName, email: user.email, handle: '@' + displayName.toLowerCase().replace(/\s/g,''), uid: user.uid };
-    document.getElementById('avatar-btn').textContent = displayName[0].toUpperCase();
-    document.getElementById('auth-page').style.display='none';
-    document.getElementById('main-app').style.display='block';
-    renderHome();
-    loadFirebaseVideos();
-    showToast('స్వాగతం ' + displayName + '! తెలుగు తరంగంలోకి రండి! 🌊');
-  }
-
-  // ===== AUTH STATE =====
-  onAuthStateChanged(auth, (user) => {
-    if(user) handleUser(user);
-  });
-
-  // ===== REAL VIDEO UPLOAD =====
-  window.firebasePublish = async function() {
-    const title = document.getElementById('vid-title').value;
-    const desc = document.getElementById('vid-desc').value;
-    const cat = document.getElementById('vid-cat').value;
-    const fileInput = document.getElementById('file-input');
-
-    if(!title) { showToast('❌ వీడియో శీర్షిక రాయండి!'); return; }
-    if(!currentUser) { showToast('❌ ముందు లాగిన్ చేయండి!'); return; }
-
-    if(fileInput.files[0]) {
-      const file = fileInput.files[0];
-      const storageRef = ref(storage, 'videos/' + currentUser.uid + '/' + Date.now() + '_' + file.name);
-      const wrap = document.getElementById('progress-wrap');
-      const bar = document.getElementById('progress-bar');
-      const status = document.getElementById('upload-status');
-      wrap.style.display = 'block';
-      status.textContent = 'వీడియో upload అవుతోంది...';
-
-      const uploadTask = uploadBytesResumable(storageRef, file);
-      uploadTask.on('state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          bar.style.width = progress + '%';
-          status.textContent = Math.round(progress) + '% upload అయింది...';
-        },
-        (error) => { showToast('❌ Upload విఫలమైంది!'); },
-        async () => {
-          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-          await saveVideoToFirestore(title, desc, cat, downloadURL);
-        }
-      );
-    } else {
-      await saveVideoToFirestore(title, desc, cat, '');
-    }
-  }
-
-  async function saveVideoToFirestore(title, desc, cat, videoURL) {
-    try {
-      await addDoc(collection(db, 'telugu-tarangam-videos'), {
-        title, desc, cat, videoURL,
-        ch: currentUser.name,
-        uid: currentUser.uid,
-        views: 0, likes: 0,
-        emoji: '🎬',
-        createdAt: serverTimestamp()
-      });
-      showToast('🌊 వీడియో విజయవంతంగా పబ్లిష్ అయింది!');
-      document.getElementById('vid-title').value = '';
-      document.getElementById('vid-desc').value = '';
-      document.getElementById('progress-wrap').style.display = 'none';
-      document.getElementById('upload-status').textContent = '';
-      await loadFirebaseVideos();
-      navigate('home');
-    } catch(e) {
-      showToast('❌ Save విఫలమైంది: ' + e.message);
-    }
-  }
-
-  // ===== LOAD REAL VIDEOS =====
-  async function loadFirebaseVideos() {
-    try {
-      const q = query(collection(db, 'telugu-tarangam-videos'), orderBy('createdAt', 'desc'));
-      const snapshot = await getDocs(q);
-      const fbVideos = [];
-      snapshot.forEach(doc => {
-        const d = doc.data();
-        fbVideos.push({
-          id: doc.id, title: d.title, ch: d.ch,
-          views: d.views + ' వీక్షణలు', time: 'కొత్తగా',
-          emoji: d.emoji || '🎬',
-          bg: 'linear-gradient(135deg,#001a1a,#002a2a)',
-          chColor: 'linear-gradient(135deg,#ff6b00,#ffb347)',
-          chInitial: d.ch ? d.ch[0].toUpperCase() : 'మ',
-          duration: '0:00', subs: '0',
-          desc: d.desc, likes: d.likes || 0, comments: [],
-          videoURL: d.videoURL
-        });
-      });
-      if(fbVideos.length > 0) {
-        fbVideos.forEach(v => {
-          if(!videos.find(x => x.id === v.id)) videos.unshift(v);
-        });
-        renderHome();
-        showToast(fbVideos.length + ' real వీడియోలు load అయ్యాయి! 🌊');
-      }
-    } catch(e) {
-      console.log('Videos load error:', e);
-    }
-  }
-
-  // Override buttons to use Firebase
-  document.addEventListener('DOMContentLoaded', () => {
-    // Override login button
-    const loginBtn = document.querySelector('#login-form .auth-btn');
-    if(loginBtn) loginBtn.onclick = window.firebaseLogin;
-
-    const regBtn = document.querySelector('#register-form .auth-btn');
-    if(regBtn) regBtn.onclick = window.firebaseRegister;
-
-    const googleBtn = document.querySelector('.google-btn');
-    if(googleBtn) googleBtn.onclick = window.googleLogin;
-
-    const publishBtn = document.querySelector('.submit-btn');
-    if(publishBtn) publishBtn.onclick = window.firebasePublish;
-
-    const logoutItem = document.querySelector('.menu-item.danger');
-    if(logoutItem) logoutItem.onclick = window.firebaseLogout;
-  });
+function renderAll(){renderStories();renderFeed();renderExplore();renderVideos();renderVidCats();renderEarnWays()}
+function renderStories(){const el=$("storiesBar");if(!el)return;el.innerHTML=`<div class="story-item" onclick="openCreate()"><div class="story-ring"><div class="story-av">➕</div></div><div class="story-name">Story</div></div>`+STORIES.map(s=>`<div class="story-item" onclick="openStory('${s.e}','${s.n}')"><div class="story-ring"><div class="story-av">${s.e}</div></div><div class="story-name">${s.n}</div></div>`).join("")}
+function renderFeed(){const el=$("postsFeed");if(!el)return;let html="";POSTS.forEach((p,i)=>{html+=`<div class="post-card"><div class="post-hdr"><div class="post-av">${p.e}</div><div class="post-info"><div class="post-name">${esc(p.n)} ✓</div><div class="post-time">${p.t} ago · ${p.type}</div></div><button class="pact" onclick="toast('Options')">⋯</button></div><div class="post-body">${esc(p.txt)}</div>${p.media?`<div class="post-media" onclick="${p.type==='video'||p.type==='reel'?`openVideo('v${(i%8)+1}')`:''}"><div>${p.media}</div>${p.type==='video'||p.type==='reel'?`<div class="post-play">▶</div>`:''}</div>`:''}<div class="post-stats">${p.likes.toLocaleString()} likes · ${p.comments} comments</div><div class="post-actions"><button class="pact ${p.liked?'liked':''}" onclick="likePost(${i})">${p.liked?'❤️':'🤍'} Like</button><button class="pact" onclick="toast('💬 Comments')">💬 Comment</button><button class="pact" onclick="shareApp()">↗ Share</button><button class="pact" onclick="earnCoins(2,'Post interact');toast('+2 🪙')">🪙 Earn</button></div></div>`;if((i+1)%2===0)html+=`<div class="ad-unit"><div class="demo-ad">🛍️ Sponsored — Telugu deals <span style="background:var(--acg);padding:5px 12px;border-radius:50px">Open →</span></div></div>`});el.innerHTML=html}
+function likePost(i){POSTS[i].liked=!POSTS[i].liked;POSTS[i].likes+=POSTS[i].liked?1:-1;if(POSTS[i].liked){earnCoins(1,"Post liked");toast("+1 🪙")}renderFeed()}
+function renderExplore(){const el=$("exploreGrid");if(!el)return;el.innerHTML=["🎬","🎵","😂","🏏","💃","🍛","🌅","📰","🎭","🔥","🎶","🤸"].map((e,i)=>`<div onclick="openVideo('v${(i%8)+1}')" style="height:125px;background:linear-gradient(135deg,hsl(${i*30},50%,10%),#050508);display:flex;align-items:center;justify-content:center;font-size:38px">${e}</div>`).join("")}
+function renderVidCats(){const el=$("vidCats");if(!el)return;el.innerHTML=["All","Cinema","Music","Comedy","News","Sports","Cooking"].map((c,i)=>`<button class="vcat ${i===0?'active':''}" onclick="filterVids(this,'${c}')">${c}</button>`).join("")}
+function vidCard(v){return`<div class="vid-card" onclick="openVideo('${v.id}')"><div class="vid-thumb" style="background:${v.bg}">${v.e}<div class="vid-dur">${v.dur}</div></div><div class="vid-body"><div class="vid-title">${esc(v.t)}</div><div class="vid-meta">${v.ch} · ${v.v}</div></div></div>`}
+function renderVideos(){["vidScroll1","vidScroll2","vidScroll3","vidScroll4"].forEach((id,i)=>{const el=$(id);if(el)el.innerHTML=VIDS.slice(i*2,i*2+4).concat(VIDS).slice(0,4).map(vidCard).join("")}); if($("vidHeroBg"))$("vidHeroBg").textContent=VIDS[0].e; if($("vidHeroTitle"))$("vidHeroTitle").textContent=VIDS[0].t}
+function filterVids(btn,cat){document.querySelectorAll(".vcat").forEach(b=>b.classList.remove("active"));btn.classList.add("active");const list=cat==="All"?VIDS:VIDS.filter(v=>v.cat===cat);$("vidScroll1").innerHTML=(list.length?list:VIDS).map(vidCard).join("")}
+function loadReel(idx){const r=REELS[idx%REELS.length];$("reelBg").textContent=r.e;$("reelBg").style.background=r.bg;$("reelAv").textContent=r.e;$("reelUname").textContent="@"+r.n;$("reelCaption").textContent=r.cap;$("reelMusic").textContent=r.music;$("reelLikeN").textContent=r.likes;$("reelLikeBtn").textContent="❤️";earnCoins(5,"Reel watched")}
+function nextReel(){reelIdx=(reelIdx+1)%REELS.length;loadReel(reelIdx);toast("+5 🪙")}
+function prevReel(){reelIdx=(reelIdx-1+REELS.length)%REELS.length;loadReel(reelIdx)}
+function toggleReelLike(){const b=$("reelLikeBtn");b.textContent=b.textContent==="❤️"?"🤍":"❤️";earnCoins(1,"Reel liked");toast("+1 🪙")}
+function openVideo(id){const v=VIDS.find(x=>x.id===id)||VIDS[0];curVid=v;$("vmEmoji").textContent=v.e;$("vmTitle").textContent=v.t;$("vmMeta").textContent=v.v+" views";$("vmChAv").textContent=v.e;$("vmChName").textContent=v.ch;$("vmLike").classList.remove("on");vmCmts=[...VM_CMTS];renderVmCmts();$("videoModal").classList.add("open");document.body.style.overflow="hidden";startVProg();earnCoins(5,"Video watched");toast("+5 🪙")}
+function closeVideo(){$("videoModal").classList.remove("open");document.body.style.overflow="";stopVProg();vPlaying=false;$("vmPlayBtn").textContent="▶"}
+function startVProg(){stopVProg();vPlaying=true;$("vmPlayBtn").textContent="⏸";vProgTimer=setInterval(()=>{vProg+=.2;if(vProg>=100)vProg=0;$("vmFill").style.width=vProg+"%"},100)}
+function stopVProg(){clearInterval(vProgTimer)}
+function toggleVPlay(){vPlaying=!vPlaying;$("vmPlayBtn").textContent=vPlaying?"⏸":"▶";vPlaying?startVProg():stopVProg()}
+function seekV(e){const r=e.currentTarget.getBoundingClientRect();vProg=(e.clientX-r.left)/r.width*100;$("vmFill").style.width=vProg+"%"}
+function toggleVFS(){const s=$("vmScreen");if(!document.fullscreenElement)s.requestFullscreen?.().catch(()=>toast("Fullscreen not available"));else document.exitFullscreen()}
+function toggleVLike(){$("vmLike").classList.toggle("on");earnCoins(1,"Video liked");toast("+1 🪙")}
+function toggleVSub(btn){btn.classList.toggle("on");btn.textContent=btn.classList.contains("on")?"✓ Subscribed":"Subscribe"}
+function renderVmCmts(){const el=$("vmCmtList");$("vmCmtCount").textContent=vmCmts.length;el.innerHTML=vmCmts.map(c=>`<div class="vm-cmt"><div class="vm-cmt-av">${c.e}</div><div><b>${esc(c.n)}</b><div style="color:var(--muted);font-family:var(--te)">${esc(c.t)}</div></div></div>`).join("")}
+function addVCmt(){const inp=$("vmCmtInp"),val=inp.value.trim();if(!val)return;vmCmts.unshift({e:"😊",n:nameOf(),t:val});inp.value="";renderVmCmts();earnCoins(2,"Commented");toast("+2 🪙")}
+function openStory(e,n){$("storyEmoji").firstChild.textContent=e;$("storyAv").textContent=e;$("storyUname").textContent=n;$("storyModal").classList.add("open");setTimeout(closeStory,5000)}
+function closeStory(){$("storyModal").classList.remove("open")}
+function openCreate(){$("createModal").classList.add("open")}
+function closeCreate(){$("createModal").classList.remove("open")}
+$("createModal").addEventListener("click",e=>{if(e.target===$("createModal"))closeCreate()})
+function earnCoins(amt,reason){coins+=amt;if($("walletAmt"))$("walletAmt").textContent=coins;if($("earnCoins"))$("earnCoins").textContent=coins;if($("earnRupees"))$("earnRupees").textContent=Math.floor(coins*0.05);if($("profCoins2"))$("profCoins2").textContent=coins;earnTx.unshift({ico:"🪙",action:reason,time:"Just now",amt:+amt});if(earnTx.length>20)earnTx.pop()}
+function renderEarnWays(){const el=$("earnWays");if(!el)return;const ways=[["📹","Videos చూడండి","ప్రతి video చూసినందుకు coins earn అవుతాయి",5],["📝","Post Create చేయండి","కొత్త post చేసినందుకు coins earn అవుతాయి",20],["🤝","Friends Refer చేయండి","మీ link తో friend join అయితే coins earn అవుతాయి",50],["🔴","Live Stream చేయండి","Live లో viewers tips పంపిస్తే real money!",100],["⬆️","Videos Upload చేయండి","Views వచ్చినందుకు ad revenue share",200],["📅","Daily Login Bonus","రోజూ login అయినందుకు bonus coins",10]];el.innerHTML=ways.map(w=>`<div class="ew-card" onclick="earnCoins(${w[3]},'${w[1]}');toast('+${w[3]} 🪙')"><div class="ew-icon">${w[0]}</div><div class="ew-info"><div class="ew-title2">${w[1]}</div><div class="ew-desc">${w[2]}</div></div><div class="ew-coins">+${w[3]} 🪙</div></div>`).join("")}
+function renderEarnHistory(){const el=$("earnHistory");const list=earnTx.length?earnTx:EARN_HISTORY;el.innerHTML=list.map(h=>`<div class="eh-item"><div class="eh-icon">${h.ico}</div><div class="eh-info"><div class="eh-action">${h.action}</div><div class="eh-time">${h.time}</div></div><div class="${h.amt>0?'eh-plus':'eh-minus'}">${h.amt>0?'+':''}${h.amt} 🪙</div></div>`).join("")}
+function withdraw(){if(coins<100){toast("Minimum 100 🪙 కావాలి");return}toast("💳 Withdrawal request sent!")}
+function showInterstitialAd(){const ad=INT_ADS[intAdIdx%INT_ADS.length];intAdIdx++;$("intAdEmoji").textContent=ad.e;$("intAdTitle").textContent=ad.title;$("intAdDesc").textContent=ad.desc;$("intAdClose").disabled=true;$("intAdClose").textContent="✕";$("intAdTimer").textContent="5 seconds లో skip చేయవచ్చు";$("interstitialAd").classList.add("show");intAdTimer=5;clearInterval(intAdInterval);intAdInterval=setInterval(()=>{intAdTimer--;$("intAdTimer").textContent=`${intAdTimer} seconds లో skip చేయవచ్చు`;if(intAdTimer<=0){clearInterval(intAdInterval);$("intAdClose").disabled=false;$("intAdClose").textContent="✕ Skip";$("intAdTimer").textContent="Ad చూసినందుకు +3 🪙";earnCoins(3,"Ad watched")}},1000)}
+function closeIntAd(){$("interstitialAd").classList.remove("show");clearInterval(intAdInterval)}
+function doSearch(){toast("🔍 Search feature: Firebase తో connect చేయాలి")}
+function shareApp(){if(navigator.share)navigator.share({title:"తరంగం",text:"Telugu Super App",url:location.href}).catch(()=>{});else toast("🔗 Link copied!")}
 </script>
 </body>
 </html>
