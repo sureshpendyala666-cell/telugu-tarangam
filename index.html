@@ -2342,8 +2342,8 @@ function uploadMediaToFirebase(file,kind,cb){
   var isPhoto=(kind==='photo'||(file.type||'').indexOf('image')===0);
   if(!isVideo&&!isPhoto){toast('JPG/PNG/MP4 only');return;}
   if(isPhoto&&file.size>8*1024*1024){toast('Photo max 8MB');return;}
-  if(isVideo&&file.size>80*1024*1024){toast('Video max 80MB');return;}
-  showUpload('Public media upload అవుతోంది...');
+  if(isVideo&&file.size>2048*1024*1024){toast('Video max 2GB');return;}
+  showUpload('File upload అవుతోంది...');
   var ext=(file.name||'file').split('.').pop().toLowerCase();if(!ext||ext.length>5)ext=isVideo?'mp4':'jpg';
   var path=(isVideo?'videos':'photos')+'/'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.'+ext;
   var ensureAuth=function(resolve,reject){
@@ -2356,7 +2356,7 @@ function uploadMediaToFirebase(file,kind,cb){
     var finished=false;
     var timer=setTimeout(function(){if(!finished){hideUpload();toast('Upload timeout — check internet');}},90000);
     task.on('state_changed',
-      function(snap){setUploadPct(Math.round(snap.bytesTransferred/snap.totalBytes*100),'Uploading...');},
+      function(snap){setUploadPct(Math.round(snap.bytesTransferred/snap.totalBytes*100),'File upload అవుతోంది...');},
       function(err){finished=true;clearTimeout(timer);hideUpload();toast('Upload failed: '+(err.code||err.message));},
       function(){finished=true;clearTimeout(timer);task.snapshot.ref.getDownloadURL().then(function(url){setUploadPct(100,'Done!');setTimeout(function(){hideUpload();cb(url,isVideo?'video':'photo');},300);}).catch(function(err){hideUpload();toast('URL error: '+err.message);});}
     );
@@ -3498,7 +3498,7 @@ uploadMediaToFirebase=function(file,kind,cb){
   var isPhoto=(kind==='photo'||(file.type||'').indexOf('image')===0);
   if(!isVideo&&!isPhoto){toast('JPG/PNG/MP4 only');return;}
   if(isPhoto&&file.size>10*1024*1024){toast('Photo max 10MB');return;}
-  if(isVideo&&file.size>120*1024*1024){toast('Video max 120MB');return;}
+  if(isVideo&&file.size>2048*1024*1024){toast('Video max 2GB');return;}
 
   function localFallback(reason){
     showUpload('Local save అవుతోంది...');
@@ -3515,7 +3515,7 @@ uploadMediaToFirebase=function(file,kind,cb){
   }
 
   if(!storage||!auth){localFallback('firebase not ready');return;}
-  showUpload('Public media upload అవుతోంది...');
+  showUpload('File upload అవుతోంది...');
   var ext=(file.name||'file').split('.').pop().toLowerCase();if(!ext||ext.length>6)ext=isVideo?'mp4':'jpg';
   var path=(isVideo?'videos':'photos')+'/'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.'+ext;
   var sign=function(resolve,reject){
@@ -3528,12 +3528,12 @@ uploadMediaToFirebase=function(file,kind,cb){
     var done=false;
     var timer=setTimeout(function(){if(!done){done=true;localFallback('timeout');}},75000);
     task.on('state_changed',
-      function(snap){if(!done)setUploadPct(Math.round(snap.bytesTransferred/snap.totalBytes*100),'Uploading...');},
+      function(snap){if(!done)setUploadPct(Math.round(snap.bytesTransferred/snap.totalBytes*100),'File upload అవుతోంది...');},
       function(err){if(done)return;done=true;clearTimeout(timer);localFallback(err.code||err.message);},
       function(){
         if(done)return;done=true;clearTimeout(timer);
         task.snapshot.ref.getDownloadURL().then(function(url){
-          setUploadPct(100,'Public upload done!');
+          setUploadPct(100,'Upload complete!');
           setTimeout(function(){hideUpload();cb(url,isVideo?'video':'photo');},250);
         }).catch(function(err){localFallback(err.message);});
       }
@@ -3656,7 +3656,7 @@ window.addEventListener('load',function(){
     var isVideo=kind==='video', isPhoto=kind==='photo';
     if(!isVideo&&!isPhoto){try{toast('JPG/PNG/MP4 only');}catch(e){} tgFinishUpload(cb,'',kind,'Skipped');return;}
     if(isPhoto&&file.size>15*1024*1024){try{toast('Photo too big. Small photo try చేయండి');}catch(e){} tgFinishUpload(cb,'',kind,'File too big');return;}
-    if(isVideo&&file.size>200*1024*1024){try{toast('Video too big. 200MB లోపు try చేయండి');}catch(e){} tgFinishUpload(cb,'',kind,'File too big');return;}
+    if(isVideo&&file.size>2048*1024*1024){try{toast('Video too big. 2GB లోపు try చేయండి');}catch(e){} tgFinishUpload(cb,'',kind,'File too big');return;}
 
     try{showUpload('Device లో save అవుతోంది...');setUploadPct(15,'Preparing...');}catch(e){}
 
@@ -3756,10 +3756,10 @@ window.addEventListener('load',function(){
     var isVideo=kind==='video', isPhoto=kind==='photo';
     if(!isVideo&&!isPhoto){try{toast('JPG/PNG/MP4 only');}catch(e){} finish(cb,'',kind,'Skipped');return;}
     if(isPhoto&&file.size>12*1024*1024){try{toast('Photo 12MB లోపు ఉండాలి');}catch(e){} finish(cb,'',kind,'Too big');return;}
-    if(isVideo&&file.size>150*1024*1024){try{toast('Video 150MB లోపు ఉండాలి');}catch(e){} finish(cb,'',kind,'Too big');return;}
+    if(isVideo&&file.size>2048*1024*1024){try{toast('Video 2GB లోపు ఉండాలి');}catch(e){} finish(cb,'',kind,'Too big');return;}
 
     if(!storage||!auth){localOnly(file,kind,cb,'firebase not ready');return;}
-    try{showUpload('Public media upload అవుతోంది...');setUploadPct(8,'Firebase connect...');}catch(e){}
+    try{showUpload('File upload అవుతోంది...');setUploadPct(8,'Server connect అవుతోంది...');}catch(e){}
 
     var ext=(file.name||'file').split('.').pop().toLowerCase();
     if(!ext||ext.length>6)ext=isVideo?'mp4':'jpg';
@@ -3779,12 +3779,12 @@ window.addEventListener('load',function(){
       var meta={contentType:file.type||(isVideo?'video/mp4':'image/jpeg'),customMetadata:{app:'tarangam',public:'true'}};
       var task=storage.ref(path).put(file,meta);
       task.on('state_changed',
-        function(snap){if(!completed){var pct=Math.round((snap.bytesTransferred/(snap.totalBytes||file.size))*100);setUploadPct(pct,'Public upload...');}},
+        function(snap){if(!completed){var pct=Math.round((snap.bytesTransferred/(snap.totalBytes||file.size))*100);setUploadPct(pct,'File upload అవుతోంది... please wait');}},
         function(err){if(completed)return;completed=true;clearTimeout(guard);localOnly(file,kind,cb,err.code||err.message);},
         function(){
           if(completed)return;completed=true;clearTimeout(guard);
           task.snapshot.ref.getDownloadURL().then(function(url){
-            try{toast('✅ Public upload done. అందరికీ కనిపిస్తుంది');}catch(e){}
+            try{toast('✅ Upload complete!. అందరికీ కనిపిస్తుంది');}catch(e){}
             finish(cb,url,kind,'Public done!');
           }).catch(function(err){localOnly(file,kind,cb,err.message);});
         }
@@ -3962,7 +3962,7 @@ console.log('Tarangam real-working safe upgrade active: Firebase + IndexedDB loc
     };
 
     if(!storage || !auth){fallback('firebase missing');return;}
-    setUploadPct(18,'Firebase connect...');
+    setUploadPct(18,'Server connect అవుతోంది...');
 
     signInFast().then(function(){
       var ext=(file.name||'file').split('.').pop().toLowerCase();
@@ -3975,14 +3975,14 @@ console.log('Tarangam real-working safe upgrade active: Firebase + IndexedDB loc
       task.on('state_changed',function(snap){
         if(finished)return;
         var pct=25+Math.round((snap.bytesTransferred/(snap.totalBytes||file.size))*70);
-        setUploadPct(pct,'Public upload...');
+        setUploadPct(pct,'File upload అవుతోంది... please wait');
       },function(err){
         if(finished)return;finished=true;clearTimeout(guard);fallback(err.code||err.message||'storage error');
       },function(){
         if(finished)return;finished=true;clearTimeout(guard);
         task.snapshot.ref.getDownloadURL().then(function(url){
           window.__lastTarangamPhotoData='';
-          safeToast('✅ Public upload done');
+          safeToast('✅ Upload complete!');
           finish(cb,url,kind,'Public done');
         }).catch(function(err){fallback(err.message||'url error');});
       });
@@ -4106,10 +4106,10 @@ console.log('Tarangam real-working safe upgrade active: Firebase + IndexedDB loc
     var isVideo=kind==='video', isPhoto=kind==='photo';
     if(!isVideo && !isPhoto){ safeToast('JPG/PNG/MP4 మాత్రమే upload చేయండి'); return; }
     if(isPhoto && file.size>15*1024*1024){ safeToast('Photo 15MB లోపు ఉండాలి'); return; }
-    if(isVideo && file.size>250*1024*1024){ safeToast('Video 250MB లోపు ఉండాలి'); return; }
+    if(isVideo && file.size>2048*1024*1024){ safeToast('Video 2GB లోపు ఉండాలి'); return; }
 
-    try{showUpload('Public Firebase upload...');}catch(e){}
-    pct(6,'Firebase connect...');
+    try{showUpload('File upload అవుతోంది...');}catch(e){}
+    pct(6,'Server connect అవుతోంది...');
     signInPublic().then(function(){
       pct(15,'Storage ready...');
       var ext=(file.name||'file').split('.').pop().toLowerCase();
@@ -4121,12 +4121,12 @@ console.log('Tarangam real-working safe upgrade active: Firebase + IndexedDB loc
       var done=false;
       var guard=setTimeout(function(){
         if(done)return; done=true; safeHide();
-        safeToast('Upload timeout. Net slow / Firebase Storage rules problem. Device post create కాలేదు.');
-      },180000);
+        safeToast('Upload timeout. Net slow / Firebase Storage rules problem. పెద్ద video అయితే wait చేయండి. Device post create కాలేదు.');
+      },1800000);
       task.on('state_changed',function(snap){
         if(done)return;
         var pr=20+Math.round((snap.bytesTransferred/(snap.totalBytes||file.size))*70);
-        pct(Math.min(95,pr),'Public upload...');
+        pct(Math.min(95,pr),'File upload అవుతోంది... please wait');
       },function(err){
         if(done)return; done=true; clearTimeout(guard); safeHide();
         console.log('Firebase Storage upload error:',err);
@@ -4153,7 +4153,7 @@ console.log('Tarangam real-working safe upgrade active: Firebase + IndexedDB loc
     var kind=crMediaFile?mKind(crMediaFile,curPostType):(curPostType||'post');
     function savePublicPost(mediaURL,finalKind){
       if(crMediaFile && !/^https?:\/\//i.test(String(mediaURL||''))){ safeToast('Public media link లేదు. Post save చేయలేదు.'); return; }
-      try{showUpload('Firestore public save...'); pct(92,'Public feed save...');}catch(e){}
+      try{showUpload('Post save అవుతోంది...'); pct(92,'Public feed save...');}catch(e){}
       signInPublic().then(function(){
         var nm=(typeof nameOf==='function'?nameOf():'Guest');
         var post={
@@ -4233,6 +4233,704 @@ console.log('Tarangam real-working safe upgrade active: Firebase + IndexedDB loc
   console.log('Tarangam PUBLIC ONLY v7 active: no device/local media posts.');
 })();
 
+
+
+/* ═══════════════════════════════════════════════
+   TARANGAM FIREBASE NO-AUTH PUBLIC FIX v8
+   Firebase rules public ayyi unte Auth wait avasaram ledu.
+   This bypasses Anonymous login timeout and writes directly to Storage + Firestore.
+═══════════════════════════════════════════════ */
+(function(){
+  window.TARANGAM_PUBLIC_URL = window.TARANGAM_PUBLIC_URL || 'https://hfgm-ministry.web.app/';
+  function el(id){return document.getElementById(id)}
+  function say(t){try{toast(t)}catch(e){console.log(t)}}
+  function hide(){try{hideUpload()}catch(e){}}
+  function prog(n,t){try{setUploadPct(n,t||'')}catch(e){}}
+  function appUrl(){var h=String(location.href||'');return /^https?:\/\//i.test(h)?h.split('#')[0]:window.TARANGAM_PUBLIC_URL;}
+  function kindOf(file,k){var t=(file&&file.type)||'';if(k==='video'||t.indexOf('video')===0)return 'video';if(k==='photo'||t.indexOf('image')===0)return 'photo';return k||'post';}
+  function firebaseReady(){
+    try{
+      if(!window.firebase) return false;
+      if(!storage) storage=firebase.storage();
+      if(!db) db=firebase.firestore();
+      return !!(storage&&db);
+    }catch(e){console.log('firebaseReady error',e);return false;}
+  }
+  window.tgSaveLocalPosts=function(){};
+  window.tgMergeLocalPosts=function(){try{localStorage.removeItem('tarangam_real_posts_v6')}catch(e){}};
+
+  window.uploadMediaToFirebase=function(file,kind,cb){
+    kind=kindOf(file,kind);
+    if(!file){cb('',kind);return;}
+    var isVideo=kind==='video', isPhoto=kind==='photo';
+    if(!isVideo && !isPhoto){say('Photo/Video మాత్రమే upload చేయండి');return;}
+    if(isPhoto && file.size>25*1024*1024){say('Photo 25MB లోపు upload చేయండి');return;}
+    if(isVideo && file.size>2048*1024*1024){say('Video 2GB లోపు upload చేయండి');return;}
+    try{showUpload('Firebase Storage upload start...')}catch(e){}
+    prog(5,'Server checking...');
+    setTimeout(function(){
+      if(!firebaseReady()){hide();say('Server SDK load కాలేదు. Internet check చేసి page refresh చేయండి.');return;}
+      prog(10,'Storage ready...');
+      var ext=(file.name||'file').split('.').pop().toLowerCase();
+      if(!ext || ext.length>8) ext=isVideo?'mp4':'jpg';
+      var folder=isVideo?'public_videos':'public_photos';
+      var path=folder+'/'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.'+ext;
+      var meta={contentType:file.type||(isVideo?'video/mp4':'image/jpeg'),cacheControl:'public,max-age=31536000'};
+      var task;
+      try{task=storage.ref(path).put(file,meta);}catch(e){hide();console.log(e);say('Storage start error. Rules/Config check చేయండి.');return;}
+      var lastBytes=0,lastMove=Date.now();
+      var slowTimer=setInterval(function(){
+        if(Date.now()-lastMove>60000){
+          clearInterval(slowTimer);
+          try{task.cancel&&task.cancel();}catch(e){}
+          hide();
+          say('Upload slow/stuck. Net speed check చేసి, video compress చేసి మళ్లీ try చేయండి.');
+        }
+      },5000);
+      task.on('state_changed',function(s){
+        var total=s.totalBytes||file.size||1;
+        var raw=Math.round((s.bytesTransferred/total)*100);
+        var p=15+Math.round((s.bytesTransferred/total)*80);
+        if(s.bytesTransferred>lastBytes){lastBytes=s.bytesTransferred;lastMove=Date.now();}
+        prog(Math.min(95,p),(isVideo?'Video':'Image')+' upload అవుతోంది... '+raw+'%');
+      },function(err){
+        clearInterval(slowTimer);
+        hide();console.log('Storage upload error',err);
+        say('Upload fail: '+(err.code||err.message||'Rules/Internet problem'));
+      },function(){
+        clearInterval(slowTimer);
+        prog(97,'Public link create అవుతోంది...');
+        task.snapshot.ref.getDownloadURL().then(function(url){prog(100,'Upload complete');setTimeout(function(){hide();cb(url,kind)},250)}).catch(function(err){hide();console.log(err);say('Public link fail. Storage rules check చేయండి.');});
+      });
+    },300);
+  };
+
+  window.submitPost=function(){
+    var txt=((el('crPostTxt')&&el('crPostTxt').value)||'').trim();
+    if(!txt && !crMediaFile){say('Text లేదా photo/video add చేయండి');return;}
+    var kind=crMediaFile?kindOf(crMediaFile,curPostType):(curPostType||'post');
+    function save(mediaURL,finalKind){
+      if(crMediaFile && !/^https?:\/\//i.test(String(mediaURL||''))){say('Public media link లేదు. Post save కాలేదు.');return;}
+      if(!firebaseReady()){say('Post save ready కాదు. Refresh చేసి try చేయండి.');return;}
+      try{showUpload('Post save అవుతోంది...');prog(96,'Post update అవుతోంది...')}catch(e){}
+      var nm=(typeof nameOf==='function'?nameOf():'Guest');
+      var post={
+        n:nm,e:(typeof ini==='function'?ini(nm):'G'),t:'now',txt:txt||'New media post',
+        media:finalKind==='video'?'📹':(finalKind==='photo'?'📸':''),
+        mediaURL:mediaURL||'',mediaKind:finalKind||'post',type:finalKind||'post',
+        likes:0,comments:0,commentList:[],uid:(me&&me.uid)||'public_guest',author:(me&&me.email)||nm,
+        createdAtMs:Date.now(),createdAt:firebase.firestore.FieldValue.serverTimestamp()
+      };
+      db.collection('posts').add(post).then(function(doc){
+        prog(100,'Firebase updated');
+        post.docId=doc.id;post.mine=true;post.localOnly=false;POSTS.unshift(post);try{rFeed()}catch(e){}
+        try{if(el('crPostTxt'))el('crPostTxt').value='';crMediaFile=null;crMediaURL=null;if(el('crMediaPrev'))el('crMediaPrev').style.display='none';if(el('crPrevImg'))el('crPrevImg').src='';if(el('crPrevVid'))el('crPrevVid').src='';clCr();goP('feed')}catch(e){}
+        setTimeout(hide,250);say('✅ Firebase lo update అయింది. Public ki కనిపిస్తుంది');
+      }).catch(function(err){hide();console.log('Firestore add error',err);say('Firestore update fail: '+(err.code||err.message||'Rules problem'));});
+    }
+    if(crMediaFile) uploadMediaToFirebase(crMediaFile,kind,save); else save('',kind);
+  };
+
+  window.startPublicPosts=function(){
+    if(!firebaseReady()) return;
+    if(window.__tgPublicListenV8) return; window.__tgPublicListenV8=true;
+    db.collection('posts').orderBy('createdAtMs','desc').onSnapshot(function(snap){
+      var arr=[];snap.forEach(function(doc){var d=doc.data()||{},url=d.mediaURL||'';if(url && !/^https?:\/\//i.test(String(url)))return;arr.push({n:d.n||'User',e:d.e||'👤',t:d.t||'now',txt:d.txt||'',media:d.media||'',mediaURL:url,mediaKind:d.mediaKind||'post',type:d.type||'post',likes:Number(d.likes||0),comments:Number(d.comments||0),commentList:Array.isArray(d.commentList)?d.commentList:[],liked:false,mine:!!(me&&d.uid===me.uid),docId:doc.id,uid:d.uid||'',createdAtMs:d.createdAtMs||0,localOnly:false});});
+      if(arr.length){POSTS=arr;try{rFeed()}catch(e){}}
+    },function(err){console.log('posts listen error',err);say('Firestore read fail: Rules check చేయండి');});
+  };
+  window.sharePost=function(i){var p=POSTS[i]||{},url=appUrl(),text='తరంగం post: '+(p.txt||'Media post')+'\nOpen Tarangam: '+url;if(/^https?:\/\//i.test(String(p.mediaURL||'')))text+='\nMedia: '+p.mediaURL;if(navigator.share)navigator.share({title:'తరంగం',text:text,url:url}).catch(function(){});else try{navigator.clipboard.writeText(text);say('Share link copied')}catch(e){say('Share ready')}};
+  window.openWhatsAppShare=function(i){var p=POSTS[i]||{},url=appUrl(),text='తరంగం post: '+(p.txt||'Media post')+'\nOpen Tarangam: '+url;if(/^https?:\/\//i.test(String(p.mediaURL||'')))text+='\nMedia: '+p.mediaURL;window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank')};
+  window.addEventListener('load',function(){setTimeout(function(){try{startPublicPosts()}catch(e){}},3000)});
+  console.log('Tarangam Firebase NO-AUTH public update v8 active');
+})();
+</script>
+
+
+<script>
+/* TARANGAM FINAL UI TEXT PATCH - no Firebase word in upload overlay */
+(function(){
+  function cleanMsg(msg){
+    msg = msg || 'File upload అవుతోంది...';
+    msg = String(msg)
+      .replace(/Firebase/gi,'Server')
+      .replace(/Public media/gi,'File')
+      .replace(/Public upload/gi,'File upload')
+      .replace(/Uploading\.\.\./gi,'File upload అవుతోంది...');
+    if(/video/i.test(msg)) return msg;
+    return msg;
+  }
+  var oldShow = window.showUpload;
+  window.showUpload = function(msg){
+    if(oldShow) oldShow(cleanMsg(msg));
+    else {
+      var el=document.getElementById('uploadOverlay'); if(el) el.classList.add('open');
+      var t=document.getElementById('uploadTitle'); if(t) t.textContent=cleanMsg(msg);
+      var f=document.getElementById('uploadFill'); if(f) f.style.width='5%';
+      var p=document.getElementById('uploadPct'); if(p) p.textContent='0%';
+    }
+  };
+  var oldPct = window.setUploadPct;
+  window.setUploadPct = function(pct,msg){
+    msg = cleanMsg(msg || 'File upload అవుతోంది...');
+    if(oldPct) oldPct(pct,msg);
+    else {
+      pct=Math.max(0,Math.min(100,Math.round(pct||0)));
+      var f=document.getElementById('uploadFill'); if(f) f.style.width=pct+'%';
+      var p=document.getElementById('uploadPct'); if(p) p.textContent=pct+'%';
+      var t=document.getElementById('uploadTitle'); if(t) t.textContent=msg;
+    }
+  };
+  var oldUpload = window.uploadMediaToFirebase;
+  if(oldUpload){
+    window.uploadMediaToFirebase = function(file,kind,cb){
+      try{
+        var isVideo = (kind==='video'||kind==='reel'||(file&&file.type&&file.type.indexOf('video/')===0));
+        showUpload(isVideo ? 'Video upload అవుతోంది...' : 'Image upload అవుతోంది...');
+      }catch(e){}
+      return oldUpload.call(this,file,kind,function(url,finalKind){
+        try{setUploadPct(100,'Upload complete!');}catch(e){}
+        cb && cb(url,finalKind);
+      });
+    };
+  }
+  console.log('Tarangam upload overlay text patched: no Firebase wording.');
+})();
+</script>
+
+
+
+<script>
+/* ═══════════════════════════════════════════════
+   TARANGAM REAL UPLOAD XHR FIX v9 - NO SDK STUCK
+   - Overrides old Storage SDK upload method.
+   - Uses Firebase Storage REST upload with XMLHttpRequest progress.
+   - No device/local fallback. Public URL only.
+   - 25s no-progress guard + cancel.
+═══════════════════════════════════════════════ */
+(function(){
+  var BUCKET='hfgm-ministry.firebasestorage.app';
+  try{ if(window.firebase && firebase.apps && firebase.apps.length){ var opt=firebase.app().options||{}; if(opt.storageBucket) BUCKET=opt.storageBucket; } }catch(e){}
+  function el(id){return document.getElementById(id)}
+  function say(m){try{toast(m)}catch(e){alert(m)}}
+  function show(m){try{showUpload(m)}catch(e){var o=el('uploadOverlay'); if(o)o.classList.add('open'); var t=el('uploadTitle'); if(t)t.textContent=m;}}
+  function pct(p,m){p=Math.max(0,Math.min(100,Math.round(p||0))); try{setUploadPct(p,m)}catch(e){var f=el('uploadFill'); if(f)f.style.width=p+'%'; var pp=el('uploadPct'); if(pp)pp.textContent=p+'%'; var t=el('uploadTitle'); if(t)t.textContent=m;}}
+  function hide(){try{hideUpload()}catch(e){var o=el('uploadOverlay'); if(o)o.classList.remove('open')}}
+  function kindOf(file,kind){var t=(file&&file.type)||''; if(kind==='video'||kind==='reel'||t.indexOf('video/')===0)return 'video'; if(kind==='photo'||t.indexOf('image/')===0)return 'photo'; return kind||'post'}
+  function extOf(file,kind){var n=(file&&file.name)||''; var e=(n.split('.').pop()||'').toLowerCase(); if(!e || e.length>8 || e===n.toLowerCase()) e=(kind==='video'?'mp4':'jpg'); return e;}
+  function publicUrl(path){return 'https://firebasestorage.googleapis.com/v0/b/'+encodeURIComponent(BUCKET)+'/o/'+encodeURIComponent(path)+'?alt=media'}
+
+  window.uploadMediaToFirebase=function(file,kind,cb){
+    kind=kindOf(file,kind);
+    if(!file){ cb&&cb('',kind); return; }
+    var isVideo=kind==='video';
+    if(kind!=='video' && kind!=='photo'){ say('Photo లేదా Video మాత్రమే upload చేయండి'); cb&&cb('',kind); return; }
+    if(file.size>2*1024*1024*1024){ say('Video 2GB కన్నా ఎక్కువ ఉంది. Compress చేసి try చేయండి.'); cb&&cb('',kind); return; }
+
+    var folder=isVideo?'public_videos':'public_photos';
+    var path=folder+'/'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.'+extOf(file,kind);
+    var url='https://firebasestorage.googleapis.com/v0/b/'+encodeURIComponent(BUCKET)+'/o?uploadType=media&name='+encodeURIComponent(path);
+    var xhr=new XMLHttpRequest();
+    var lastBytes=0,lastMove=Date.now(),done=false;
+
+    show(isVideo?'Video upload అవుతోంది... 0%':'Image upload అవుతోంది... 0%');
+    pct(1,isVideo?'Video upload start అవుతోంది...':'Image upload start అవుతోంది...');
+
+    var guard=setInterval(function(){
+      if(done){clearInterval(guard);return;}
+      if(Date.now()-lastMove>25000){
+        done=true; clearInterval(guard);
+        try{xhr.abort()}catch(e){}
+        hide();
+        say('Upload stuck అయింది. Internet slow/large video. Small video try చేయండి లేదా refresh చేసి మళ్లీ upload చేయండి.');
+      }
+    },3000);
+
+    xhr.upload.onprogress=function(ev){
+      if(done)return;
+      if(ev.lengthComputable){
+        var raw=Math.round((ev.loaded/ev.total)*100);
+        if(ev.loaded>lastBytes){lastBytes=ev.loaded;lastMove=Date.now();}
+        pct(Math.min(95,raw), (isVideo?'Video':'Image')+' upload అవుతోంది... '+raw+'%');
+      }else{
+        lastMove=Date.now();
+        pct(15,(isVideo?'Video':'Image')+' upload అవుతోంది...');
+      }
+    };
+    xhr.onreadystatechange=function(){
+      if(xhr.readyState!==4 || done)return;
+      done=true; clearInterval(guard);
+      if(xhr.status>=200 && xhr.status<300){
+        pct(98,'Public link create అవుతోంది...');
+        var mediaUrl=publicUrl(path);
+        setTimeout(function(){pct(100,'Upload complete'); hide(); cb&&cb(mediaUrl,kind);},350);
+      }else{
+        hide();
+        console.log('XHR upload error',xhr.status,xhr.responseText);
+        say('Upload fail: Storage Rules / Internet problem. Status '+xhr.status);
+        cb&&cb('',kind);
+      }
+    };
+    xhr.onerror=function(){ if(done)return; done=true; clearInterval(guard); hide(); say('Network error. Internet check చేయండి.'); cb&&cb('',kind); };
+    xhr.onabort=function(){ if(done)return; done=true; clearInterval(guard); hide(); say('Upload cancel/stuck. మళ్లీ try చేయండి.'); cb&&cb('',kind); };
+    xhr.open('POST',url,true);
+    xhr.setRequestHeader('Content-Type',file.type||(isVideo?'video/mp4':'image/jpeg'));
+    xhr.send(file);
+  };
+  console.log('Tarangam XHR public upload override v9 active. Bucket:',BUCKET);
+})();
+</script>
+
+
+
+<script>
+/* ═══════════════════════════════════════════════
+   TARANGAM FIRESTORE REST SAVE FIX v10
+   Problem fixed: Upload reaches 95/96% but post update gets stuck.
+   This bypasses Firestore SDK add() freeze and saves post with REST API.
+═══════════════════════════════════════════════ */
+(function(){
+  var PROJECT_ID='hfgm-ministry';
+  try{
+    if(window.firebase && firebase.apps && firebase.apps.length){
+      var opt=firebase.app().options||{};
+      if(opt.projectId) PROJECT_ID=opt.projectId;
+    }
+  }catch(e){}
+  function el(id){return document.getElementById(id)}
+  function say(m){try{toast(m)}catch(e){alert(m)}}
+  function show(m){try{showUpload(m)}catch(e){var o=el('uploadOverlay'); if(o)o.classList.add('open'); var t=el('uploadTitle'); if(t)t.textContent=m;}}
+  function pct(p,m){p=Math.max(0,Math.min(100,Math.round(p||0))); try{setUploadPct(p,m)}catch(e){var f=el('uploadFill'); if(f)f.style.width=p+'%'; var pp=el('uploadPct'); if(pp)pp.textContent=p+'%'; var t=el('uploadTitle'); if(t)t.textContent=m;}}
+  function hide(){try{hideUpload()}catch(e){var o=el('uploadOverlay'); if(o)o.classList.remove('open')}}
+  function safeName(){try{return (typeof nameOf==='function'?nameOf():'Guest')||'Guest'}catch(e){return 'Guest'}}
+  function safeIni(n){try{return (typeof ini==='function'?ini(n):'G')||'G'}catch(e){return 'G'}}
+  function kindOf(file,kind){var t=(file&&file.type)||''; if(kind==='video'||kind==='reel'||t.indexOf('video/')===0)return 'video'; if(kind==='photo'||t.indexOf('image/')===0)return 'photo'; return kind||'post'}
+  function fsValue(v){
+    if(typeof v==='number') return {integerValue:String(Math.floor(v))};
+    if(typeof v==='boolean') return {booleanValue:!!v};
+    if(Array.isArray(v)) return {arrayValue:{values:v.map(function(x){return fsValue(x)})}};
+    if(v && typeof v==='object'){
+      var fields={}; Object.keys(v).forEach(function(k){fields[k]=fsValue(v[k])});
+      return {mapValue:{fields:fields}};
+    }
+    return {stringValue:String(v==null?'':v)};
+  }
+  function firestoreRestAdd(post,ok,fail){
+    var url='https://firestore.googleapis.com/v1/projects/'+encodeURIComponent(PROJECT_ID)+'/databases/(default)/documents/posts';
+    var fields={}; Object.keys(post).forEach(function(k){fields[k]=fsValue(post[k])});
+    var controller=null, timer=null;
+    try{controller=new AbortController(); timer=setTimeout(function(){try{controller.abort()}catch(e){}},20000);}catch(e){}
+    fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:fields}),signal:controller?controller.signal:undefined})
+      .then(function(r){return r.text().then(function(t){return {ok:r.ok,status:r.status,text:t}})})
+      .then(function(res){if(timer)clearTimeout(timer); if(!res.ok){fail(new Error('Firestore REST '+res.status+' '+res.text));return;} var id=''; try{id=(JSON.parse(res.text).name||'').split('/').pop()}catch(e){} ok(id||String(Date.now()));})
+      .catch(function(err){if(timer)clearTimeout(timer); fail(err)});
+  }
+
+  window.submitPost=function(){
+    var txt=((el('crPostTxt')&&el('crPostTxt').value)||'').trim();
+    if(!txt && !window.crMediaFile && typeof crMediaFile!=='undefined' && !crMediaFile){say('Text లేదా photo/video add చేయండి');return;}
+    var file=(typeof crMediaFile!=='undefined')?crMediaFile:null;
+    var selectedType=(typeof curPostType!=='undefined')?curPostType:'post';
+    var kind=file?kindOf(file,selectedType):selectedType;
+
+    function afterUpload(mediaURL,finalKind){
+      if(file && !/^https?:\/\//i.test(String(mediaURL||''))){hide(); say('Video/Image public link create కాలేదు. Post save చేయలేదు.'); return;}
+      var nm=safeName(), now=Date.now();
+      var post={
+        n:nm,e:safeIni(nm),t:'now',txt:txt||'New media post',
+        media:finalKind==='video'?'📹':(finalKind==='photo'?'📸':''),
+        mediaURL:mediaURL||'',mediaKind:finalKind||'post',type:finalKind||'post',
+        likes:0,comments:0,commentList:[],uid:(window.me&&me.uid)||'public_guest',author:(window.me&&me.email)||nm,
+        createdAtMs:now,localOnly:false
+      };
+      pct(96,'Post save అవుతోంది...');
+      firestoreRestAdd(post,function(id){
+        pct(100,'Post saved ✅');
+        post.docId=id; post.mine=true;
+        try{POSTS.unshift(post); rFeed();}catch(e){}
+        try{
+          if(el('crPostTxt'))el('crPostTxt').value='';
+          window.crMediaFile=null; window.crMediaURL=null;
+          try{crMediaFile=null; crMediaURL=null;}catch(x){}
+          if(el('crMediaPrev'))el('crMediaPrev').style.display='none';
+          if(el('crPrevImg'))el('crPrevImg').src='';
+          if(el('crPrevVid'))el('crPrevVid').src='';
+          if(typeof clCr==='function')clCr();
+          if(typeof goP==='function')goP('feed');
+        }catch(e){}
+        setTimeout(function(){hide(); say('✅ Post Firebase లో save అయింది. Public కి కనిపిస్తుంది');},350);
+      },function(err){
+        hide(); console.log('Firestore REST save error:',err);
+        say('Post save fail. Firestore Rules Publish అయ్యాయో check చేయండి. '+(err.message||''));
+      });
+    }
+
+    if(file){
+      show(kind==='video'?'Video upload అవుతోంది...':'Image upload అవుతోంది...');
+      pct(1,kind==='video'?'Video upload start అవుతోంది...':'Image upload start అవుతోంది...');
+      uploadMediaToFirebase(file,kind,afterUpload);
+    }else{
+      show('Post save అవుతోంది...');
+      pct(50,'Post save అవుతోంది...');
+      afterUpload('',kind);
+    }
+  };
+  console.log('Tarangam Firestore REST save fix v10 active. Project:',PROJECT_ID);
+})();
+</script>
+
+
+
+<script>
+/* ═══════════════════════════════════════════════
+   TARANGAM PERMANENT PHOTO/VIDEO FIREBASE FIX v11
+   ✅ No device/local save fallback
+   ✅ Uploads file to Firebase Storage first
+   ✅ Gets permanent public downloadURL
+   ✅ Saves post to Firestore only after URL is ready
+   ✅ Refresh / other mobiles can see the same photo/video
+═══════════════════════════════════════════════ */
+(function(){
+  var PROJECT_ID=(window.fbCfg&&fbCfg.projectId)||'hfgm-ministry';
+  var BUCKET=(window.fbCfg&&fbCfg.storageBucket)||'hfgm-ministry.firebasestorage.app';
+  var LISTENING=false;
+  function ge(id){return document.getElementById(id)}
+  function say(m){try{toast(m)}catch(e){console.log(m); try{alert(m)}catch(x){}}}
+  function openOverlay(m){try{showUpload(m)}catch(e){var o=ge('uploadOverlay'); if(o)o.classList.add('open'); var t=ge('uploadTitle'); if(t)t.textContent=m||'Upload...';}}
+  function closeOverlay(){try{hideUpload()}catch(e){var o=ge('uploadOverlay'); if(o)o.classList.remove('open')}}
+  function progress(n,m){n=Math.max(0,Math.min(100,Math.round(n||0))); try{setUploadPct(n,m||'')}catch(e){var f=ge('uploadFill'); if(f)f.style.width=n+'%'; var p=ge('uploadPct'); if(p)p.textContent=n+'%'; var t=ge('uploadTitle'); if(t&&m)t.textContent=m;}}
+  function ready(){
+    try{
+      if(!window.firebase || !firebase.apps || !firebase.apps.length){ firebase.initializeApp(window.fbCfg||{}); }
+      if(!window.auth) window.auth=firebase.auth();
+      if(!window.db) window.db=firebase.firestore();
+      if(!window.storage) window.storage=firebase.storage();
+      auth=window.auth; db=window.db; storage=window.storage;
+      return !!(db&&storage);
+    }catch(e){console.log('Firebase ready error v11:',e); return false;}
+  }
+  function kindOf(file,kind){var t=(file&&file.type)||''; if(kind==='video'||kind==='reel'||t.indexOf('video/')===0)return 'video'; if(kind==='photo'||t.indexOf('image/')===0)return 'photo'; return kind||'post';}
+  function extOf(file,kind){var n=(file&&file.name)||''; var e=(n.split('.').pop()||'').toLowerCase(); if(!e||e.length>8||e===n.toLowerCase()) e=(kind==='video'?'mp4':'jpg'); return e.replace(/[^a-z0-9]/g,'')|| (kind==='video'?'mp4':'jpg');}
+  function cleanText(x){return String(x==null?'':x).replace(/[\u0000-\u001f\u007f]/g,' ').trim();}
+  function safeName(){try{return cleanText((typeof nameOf==='function'?nameOf():'Guest'))||'Guest'}catch(e){return 'Guest'}}
+  function safeIni(n){try{return (typeof ini==='function'?ini(n):'G')||'G'}catch(e){return 'G'}}
+  function fsValue(v){
+    if(typeof v==='number') return {integerValue:String(Math.floor(v))};
+    if(typeof v==='boolean') return {booleanValue:!!v};
+    if(Array.isArray(v)) return {arrayValue:{values:v.map(function(x){return fsValue(x)})}};
+    if(v && typeof v==='object'){var fields={}; Object.keys(v).forEach(function(k){fields[k]=fsValue(v[k])}); return {mapValue:{fields:fields}};}
+    return {stringValue:String(v==null?'':v)};
+  }
+  function firestoreRestAdd(post){
+    return new Promise(function(resolve,reject){
+      var fields={}; Object.keys(post).forEach(function(k){fields[k]=fsValue(post[k])});
+      var url='https://firestore.googleapis.com/v1/projects/'+encodeURIComponent(PROJECT_ID)+'/databases/(default)/documents/posts';
+      var controller=null,timer=null;
+      try{controller=new AbortController(); timer=setTimeout(function(){try{controller.abort()}catch(e){}},25000);}catch(e){}
+      fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:fields}),signal:controller?controller.signal:undefined})
+      .then(function(r){return r.text().then(function(t){return {ok:r.ok,status:r.status,text:t}})})
+      .then(function(res){if(timer)clearTimeout(timer); if(!res.ok){reject(new Error('REST '+res.status));return;} var id=''; try{id=(JSON.parse(res.text).name||'').split('/').pop()}catch(e){} resolve(id||String(Date.now()));})
+      .catch(function(err){if(timer)clearTimeout(timer); reject(err)});
+    });
+  }
+  function firestoreSdkAdd(post){
+    return new Promise(function(resolve,reject){
+      try{
+        if(post.createdAt===undefined && window.firebase) post.createdAt=firebase.firestore.FieldValue.serverTimestamp();
+        var done=false; var timer=setTimeout(function(){if(done)return; done=true; reject(new Error('Firestore SDK timeout'));},25000);
+        db.collection('posts').add(post).then(function(doc){if(done)return; done=true; clearTimeout(timer); resolve(doc.id);}).catch(function(e){if(done)return; done=true; clearTimeout(timer); reject(e);});
+      }catch(e){reject(e)}
+    });
+  }
+  function savePostPermanent(post){
+    return firestoreRestAdd(post).catch(function(){return firestoreSdkAdd(post)});
+  }
+
+  window.uploadMediaToFirebase=function(file,kind,cb){
+    kind=kindOf(file,kind);
+    if(!file){ cb&&cb('',kind); return; }
+    var isVideo=kind==='video', isPhoto=kind==='photo';
+    if(!isVideo&&!isPhoto){ say('Photo లేదా Video మాత్రమే upload చేయండి'); cb&&cb('',kind); return; }
+    if(isPhoto && file.size>25*1024*1024){ say('Photo 25MB లోపు upload చేయండి'); cb&&cb('',kind); return; }
+    if(isVideo && file.size>2048*1024*1024){ say('Video 2GB లోపు upload చేయండి'); cb&&cb('',kind); return; }
+    if(!ready()){ say('Firebase load కాలేదు. Internet on చేసి refresh చేయండి.'); cb&&cb('',kind); return; }
+
+    var folder=isVideo?'public_videos':'public_photos';
+    var path=folder+'/'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.'+extOf(file,kind);
+    var ref=storage.ref().child(path);
+    var meta={contentType:file.type||(isVideo?'video/mp4':'image/jpeg'),customMetadata:{app:'tarangam',public:'true',permanent:'true'}};
+    var task,done=false,lastBytes=0,lastMove=Date.now();
+    openOverlay(isVideo?'Video Firebase upload అవుతోంది...':'Photo Firebase upload అవుతోంది...');
+    progress(2,'Firebase Storage connect అవుతోంది...');
+    try{task=ref.put(file,meta);}catch(e){closeOverlay(); say('Storage start fail: '+(e.message||e)); cb&&cb('',kind); return;}
+
+    var guard=setInterval(function(){
+      if(done){clearInterval(guard);return;}
+      if(Date.now()-lastMove>90000){
+        done=true; clearInterval(guard); try{task.cancel()}catch(e){} closeOverlay();
+        say('Upload stuck. Net slow లేదా Storage Rules block. చిన్న video/compressed video try చేయండి.'); cb&&cb('',kind);
+      }
+    },5000);
+
+    task.on('state_changed',function(snap){
+      if(done)return;
+      var total=snap.totalBytes||file.size||1;
+      var raw=Math.round((snap.bytesTransferred/total)*100);
+      if(snap.bytesTransferred>lastBytes){lastBytes=snap.bytesTransferred; lastMove=Date.now();}
+      progress(Math.min(95,5+Math.round(raw*0.9)),(isVideo?'Video':'Photo')+' upload అవుతోంది... '+raw+'%');
+    },function(err){
+      if(done)return; done=true; clearInterval(guard); closeOverlay(); console.log('Storage v11 error:',err);
+      say('Firebase Storage upload fail: '+(err.code||err.message||'Rules/Internet problem')); cb&&cb('',kind);
+    },function(){
+      if(done)return; progress(96,'Permanent public link తీసుకుంటోంది...');
+      task.snapshot.ref.getDownloadURL().then(function(url){
+        if(done)return; done=true; clearInterval(guard);
+        if(!/^https?:\/\//i.test(String(url||''))){closeOverlay(); say('Public URL రాలేదు. Post save కాలేదు.'); cb&&cb('',kind); return;}
+        progress(100,'Upload complete ✅'); setTimeout(function(){closeOverlay(); cb&&cb(url,kind,path);},250);
+      }).catch(function(err){
+        if(done)return; done=true; clearInterval(guard); closeOverlay(); console.log('getDownloadURL v11 error:',err);
+        say('Download URL fail. Storage Rules check చేయండి.'); cb&&cb('',kind);
+      });
+    });
+  };
+
+  window.submitPost=function(){
+    var txt=cleanText((ge('crPostTxt')&&ge('crPostTxt').value)||'');
+    var file=(typeof crMediaFile!=='undefined')?crMediaFile:null;
+    if(!txt && !file){say('Text లేదా photo/video add చేయండి');return;}
+    var selectedType=(typeof curPostType!=='undefined')?curPostType:'post';
+    var kind=file?kindOf(file,selectedType):(selectedType||'post');
+    function afterUpload(mediaURL,finalKind,storagePath){
+      if(file && !/^https?:\/\//i.test(String(mediaURL||''))){closeOverlay(); say('Public media link లేదు. Post save కాలేదు.'); return;}
+      if(!ready()){closeOverlay(); say('Firebase ready కాదు. Refresh చేసి try చేయండి.'); return;}
+      var nm=safeName(), now=Date.now();
+      var post={
+        n:nm,e:safeIni(nm),t:'now',txt:txt||'New media post',
+        media:finalKind==='video'?'📹':(finalKind==='photo'?'📸':''),
+        mediaURL:mediaURL||'',storagePath:storagePath||'',mediaKind:finalKind||'post',type:finalKind||'post',
+        likes:0,comments:0,commentList:[],uid:(window.me&&me.uid)||'public_guest',author:(window.me&&me.email)||nm,
+        createdAtMs:now,localOnly:false,permanent:true
+      };
+      openOverlay('Post Firebase లో save అవుతోంది...'); progress(96,'Firestore save అవుతోంది...');
+      savePostPermanent(post).then(function(id){
+        progress(100,'Saved ✅'); post.docId=id; post.mine=true;
+        try{POSTS.unshift(post); if(typeof rFeed==='function')rFeed();}catch(e){}
+        try{
+          if(ge('crPostTxt'))ge('crPostTxt').value='';
+          window.crMediaFile=null; window.crMediaURL=null; try{crMediaFile=null; crMediaURL=null;}catch(x){}
+          if(ge('crMediaPrev'))ge('crMediaPrev').style.display='none';
+          if(ge('crPrevImg'))ge('crPrevImg').src='';
+          if(ge('crPrevVid'))ge('crPrevVid').src='';
+          if(typeof clCr==='function')clCr(); if(typeof goP==='function')goP('feed');
+        }catch(e){}
+        setTimeout(function(){closeOverlay(); say('✅ Photo/Video permanent Firebase save అయింది. Refresh తర్వాత కూడా కనిపిస్తుంది.');},300);
+      }).catch(function(err){closeOverlay(); console.log('Post save v11 error:',err); say('Post save fail. Firestore Rules Publish అయ్యాయో check చేయండి. '+(err.code||err.message||''));});
+    }
+    if(file){ window.uploadMediaToFirebase(file,kind,afterUpload); }
+    else{ afterUpload('',kind,''); }
+  };
+
+  window.startPublicPosts=function(){
+    if(LISTENING || !ready())return; LISTENING=true;
+    try{
+      db.collection('posts').orderBy('createdAtMs','desc').onSnapshot(function(snap){
+        var arr=[];
+        snap.forEach(function(doc){
+          var d=doc.data()||{}, url=d.mediaURL||'';
+          if(url && !/^https?:\/\//i.test(String(url))) return;
+          arr.push({
+            n:d.n||'User',e:d.e||'👤',t:d.t||'now',txt:d.txt||'',media:d.media||'',
+            mediaURL:url,mediaKind:d.mediaKind||d.type||'post',type:d.type||d.mediaKind||'post',
+            likes:Number(d.likes||0),comments:Number(d.comments||0),commentList:Array.isArray(d.commentList)?d.commentList:[],
+            liked:false,mine:!!(window.me&&d.uid===me.uid),docId:doc.id,uid:d.uid||'',createdAtMs:d.createdAtMs||0,localOnly:false,permanent:!!d.permanent
+          });
+        });
+        POSTS=arr.length?arr:POSTS.filter(function(p){return !p.localOnly;});
+        try{if(typeof rFeed==='function')rFeed(); if(typeof renderProfTab==='function')renderProfTab();}catch(e){}
+      },function(err){LISTENING=false; console.log('Public posts v11 listen error:',err); say('Public posts read fail. Firestore Rules check చేయండి.');});
+    }catch(e){LISTENING=false; console.log('startPublicPosts v11 error:',e);}
+  };
+
+  setTimeout(function(){try{window.startPublicPosts()}catch(e){}},1200);
+  console.log('Tarangam permanent Firebase media fix v11 active. Bucket:',BUCKET,'Project:',PROJECT_ID);
+})();
+</script>
+
+
+
+<script>
+/* ═══════════════════════════════════════════════
+   TARANGAM MEDIA UPLOAD NO-STUCK FIX v12
+   ✅ Mobile stuck fix: SDK put() replaced with XMLHttpRequest upload
+   ✅ Anonymous Firebase login before upload
+   ✅ 20s auth timeout + 60s no-progress timeout
+   ✅ Clear error instead of endless please-wait
+   ✅ Saves permanent Storage URL + Firestore post
+═══════════════════════════════════════════════ */
+(function(){
+  var PROJECT_ID=(window.fbCfg&&fbCfg.projectId)||'hfgm-ministry';
+  var BUCKET=(window.fbCfg&&fbCfg.storageBucket)||'hfgm-ministry.firebasestorage.app';
+  var LISTENING_V12=false;
+  function ge(id){return document.getElementById(id)}
+  function say(m){try{toast(m)}catch(e){console.log(m); try{alert(m)}catch(x){}}}
+  function show(m){try{showUpload(m)}catch(e){var o=ge('uploadOverlay'); if(o)o.classList.add('open'); var t=ge('uploadTitle'); if(t)t.textContent=m||'Upload...';}}
+  function hide(){try{hideUpload()}catch(e){var o=ge('uploadOverlay'); if(o)o.classList.remove('open')}}
+  function prog(p,m){p=Math.max(0,Math.min(100,Math.round(p||0))); try{setUploadPct(p,m||'')}catch(e){var f=ge('uploadFill'); if(f)f.style.width=p+'%'; var pp=ge('uploadPct'); if(pp)pp.textContent=p+'%'; var t=ge('uploadTitle'); if(t&&m)t.textContent=m;}}
+  function clean(x){return String(x==null?'':x).replace(/[\u0000-\u001f\u007f]/g,' ').trim()}
+  function kindOf(file,kind){var t=(file&&file.type)||''; if(kind==='video'||kind==='reel'||/^video\//i.test(t))return 'video'; if(kind==='photo'||/^image\//i.test(t))return 'photo'; return kind||'post'}
+  function extOf(file,kind){var n=(file&&file.name)||''; var e=(n.split('.').pop()||'').toLowerCase().replace(/[^a-z0-9]/g,''); if(!e||e.length>8||e===n.toLowerCase()) e=(kind==='video'?'mp4':'jpg'); return e}
+  function safeName(){try{return clean(typeof nameOf==='function'?nameOf():'Guest')||'Guest'}catch(e){return 'Guest'}}
+  function safeIni(n){try{return (typeof ini==='function'?ini(n):'G')||'G'}catch(e){return 'G'}}
+  function initFirebase(){
+    if(!window.firebase){throw new Error('Firebase SDK load కాలేదు')}
+    if(!firebase.apps || !firebase.apps.length) firebase.initializeApp(window.fbCfg||{});
+    window.auth=window.auth||firebase.auth(); window.db=window.db||firebase.firestore(); window.storage=window.storage||firebase.storage();
+    try{auth=window.auth; db=window.db; storage=window.storage;}catch(e){}
+    if(!window.auth || !window.db || !window.storage) throw new Error('Firebase service ready కాలేదు');
+  }
+  function withTimeout(promise,ms,msg){
+    return new Promise(function(resolve,reject){
+      var done=false; var t=setTimeout(function(){if(done)return; done=true; reject(new Error(msg||'Timeout'));},ms);
+      promise.then(function(v){if(done)return; done=true; clearTimeout(t); resolve(v);}).catch(function(e){if(done)return; done=true; clearTimeout(t); reject(e);});
+    });
+  }
+  function loginAndToken(){
+    initFirebase(); prog(5,'Firebase login check...');
+    var p;
+    if(window.auth.currentUser){p=Promise.resolve(window.auth.currentUser)}
+    else{p=window.auth.signInAnonymously().then(function(r){return r.user})}
+    return withTimeout(p,20000,'Login timeout').then(function(user){
+      prog(10,'Upload permission ready...');
+      return withTimeout(user.getIdToken(true),15000,'Token timeout');
+    });
+  }
+  function downloadUrlFromResponse(path,json){
+    var token=''; try{token=(json.downloadTokens||json.metadata&&json.metadata.downloadTokens||'').split(',')[0]}catch(e){}
+    if(token){return Promise.resolve('https://firebasestorage.googleapis.com/v0/b/'+encodeURIComponent(BUCKET)+'/o/'+encodeURIComponent(path)+'?alt=media&token='+encodeURIComponent(token));}
+    try{return withTimeout(window.storage.ref(path).getDownloadURL(),15000,'Public URL timeout')}catch(e){return Promise.reject(e)}
+  }
+  function xhrUpload(file,path,token,kind){
+    return new Promise(function(resolve,reject){
+      var url='https://firebasestorage.googleapis.com/v0/b/'+encodeURIComponent(BUCKET)+'/o?uploadType=media&name='+encodeURIComponent(path);
+      var xhr=new XMLHttpRequest(); var last=Date.now(), lastLoaded=0, finished=false;
+      var stuck=setInterval(function(){
+        if(finished){clearInterval(stuck);return;}
+        if(Date.now()-last>60000){
+          finished=true; clearInterval(stuck); try{xhr.abort()}catch(e){}
+          reject(new Error('Upload stuck: 60 sec progress లేదు'));
+        }
+      },4000);
+      xhr.open('POST',url,true);
+      xhr.setRequestHeader('Content-Type',file.type||(kind==='video'?'video/mp4':'image/jpeg'));
+      xhr.setRequestHeader('Authorization','Bearer '+token);
+      xhr.upload.onprogress=function(ev){
+        if(finished)return; if(ev.loaded>lastLoaded){lastLoaded=ev.loaded; last=Date.now();}
+        var total=ev.total||file.size||1; var raw=Math.round((ev.loaded/total)*100);
+        prog(Math.min(94,12+Math.round(raw*0.82)),(kind==='video'?'Video':'Photo')+' upload అవుతోంది... '+raw+'%');
+      };
+      xhr.onerror=function(){if(finished)return; finished=true; clearInterval(stuck); reject(new Error('Network upload error'))};
+      xhr.ontimeout=function(){if(finished)return; finished=true; clearInterval(stuck); reject(new Error('Upload timeout'))};
+      xhr.onload=function(){
+        if(finished)return; finished=true; clearInterval(stuck);
+        if(xhr.status<200 || xhr.status>=300){reject(new Error('Storage '+xhr.status+': '+(xhr.responseText||'Rules block')));return;}
+        var json={}; try{json=JSON.parse(xhr.responseText||'{}')}catch(e){}
+        resolve(json);
+      };
+      xhr.timeout=10*60*1000;
+      xhr.send(file);
+    });
+  }
+  function fsValue(v){
+    if(typeof v==='number')return {integerValue:String(Math.floor(v))};
+    if(typeof v==='boolean')return {booleanValue:!!v};
+    if(Array.isArray(v))return {arrayValue:{values:v.map(fsValue)}};
+    if(v&&typeof v==='object'){var f={}; Object.keys(v).forEach(function(k){f[k]=fsValue(v[k])}); return {mapValue:{fields:f}};}
+    return {stringValue:String(v==null?'':v)};
+  }
+  function savePost(post,token){
+    var fields={}; Object.keys(post).forEach(function(k){fields[k]=fsValue(post[k])});
+    var rest='https://firestore.googleapis.com/v1/projects/'+encodeURIComponent(PROJECT_ID)+'/databases/(default)/documents/posts';
+    return withTimeout(fetch(rest,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({fields:fields})}),25000,'Firestore REST timeout')
+    .then(function(r){return r.text().then(function(t){return {ok:r.ok,status:r.status,text:t}})})
+    .then(function(res){
+      if(res.ok){try{return (JSON.parse(res.text).name||'').split('/').pop()||String(Date.now())}catch(e){return String(Date.now())}}
+      if(window.db){return withTimeout(window.db.collection('posts').add(post),25000,'Firestore SDK timeout').then(function(d){return d.id})}
+      throw new Error('Firestore '+res.status);
+    });
+  }
+
+  window.uploadMediaToFirebase=function(file,kind,cb){
+    kind=kindOf(file,kind);
+    if(!file){cb&&cb('',kind,'');return;}
+    if(kind!=='photo' && kind!=='video'){say('Photo / Video మాత్రమే upload చేయండి'); cb&&cb('',kind,''); return;}
+    if(kind==='photo' && file.size>20*1024*1024){say('Photo size ఎక్కువ. 20MB లోపు photo try చేయండి.'); cb&&cb('',kind,''); return;}
+    if(kind==='video' && file.size>300*1024*1024){say('Video చాలా పెద్దది. మొదట 300MB లోపు compressed video try చేయండి.'); cb&&cb('',kind,''); return;}
+    var folder=kind==='video'?'public_videos':'public_photos';
+    var path=folder+'/'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.'+extOf(file,kind);
+    show(kind==='video'?'Video upload start అవుతోంది...':'Photo upload start అవుతోంది...'); prog(1,'Preparing...');
+    loginAndToken().then(function(token){
+      prog(12,'Storage connect అవుతోంది...');
+      return xhrUpload(file,path,token,kind).then(function(json){return {json:json,token:token}});
+    }).then(function(obj){
+      prog(96,'Permanent public link create అవుతోంది...');
+      return downloadUrlFromResponse(path,obj.json).then(function(url){return {url:url,token:obj.token}});
+    }).then(function(obj){
+      if(!/^https?:\/\//i.test(String(obj.url||''))) throw new Error('Public URL empty');
+      prog(100,'Upload complete ✅');
+      setTimeout(function(){hide(); cb&&cb(obj.url,kind,path,obj.token);},200);
+    }).catch(function(err){
+      hide(); console.log('Tarangam v12 upload error:',err);
+      var m=err&&err.message?err.message:String(err||'Upload fail');
+      if(/auth\/operation-not-allowed|CONFIGURATION_NOT_FOUND|Login timeout/i.test(m)) m='Firebase Authentication లో Anonymous sign-in Enable చేయాలి.';
+      else if(/401|403|Rules|Storage/i.test(m)) m='Firebase Storage Rules/permission block. Rules publish చేయండి.';
+      else if(/stuck|timeout/i.test(m)) m='Upload stuck అయ్యింది. Internet slow / video size పెద్దది. చిన్న video try చేయండి.';
+      say('❌ '+m); /* stop here: do not call submit callback with empty URL */
+    });
+  };
+
+  window.submitPost=function(){
+    var txt=clean((ge('crPostTxt')&&ge('crPostTxt').value)||'');
+    var file=(typeof crMediaFile!=='undefined')?crMediaFile:null;
+    if(!txt && !file){say('Text లేదా photo/video add చేయండి');return;}
+    var selectedType=(typeof curPostType!=='undefined')?curPostType:'post';
+    var kind=file?kindOf(file,selectedType):(selectedType||'post');
+    function afterUpload(mediaURL,finalKind,storagePath,token){
+      if(file && !/^https?:\/\//i.test(String(mediaURL||''))){say('Public media link లేదు. Post save చేయలేదు.');return;}
+      var nm=safeName(), now=Date.now();
+      var post={n:nm,e:safeIni(nm),t:'now',txt:txt||'New media post',media:finalKind==='video'?'📹':(finalKind==='photo'?'📸':''),mediaURL:mediaURL||'',storagePath:storagePath||'',mediaKind:finalKind||'post',type:finalKind||'post',likes:0,comments:0,commentList:[],uid:(window.me&&me.uid)||(window.auth&&auth.currentUser&&auth.currentUser.uid)||'public_guest',author:(window.me&&me.email)||nm,createdAtMs:now,localOnly:false,permanent:true};
+      show('Post save అవుతోంది...'); prog(96,'Firestore save అవుతోంది...');
+      (token?Promise.resolve(token):loginAndToken()).then(function(tk){return savePost(post,tk)}).then(function(id){
+        post.docId=id; post.mine=true; prog(100,'Saved ✅');
+        try{POSTS.unshift(post); if(typeof rFeed==='function')rFeed();}catch(e){}
+        try{if(ge('crPostTxt'))ge('crPostTxt').value=''; window.crMediaFile=null; window.crMediaURL=null; try{crMediaFile=null; crMediaURL=null;}catch(x){} if(ge('crMediaPrev'))ge('crMediaPrev').style.display='none'; if(ge('crPrevImg'))ge('crPrevImg').src=''; if(ge('crPrevVid'))ge('crPrevVid').src=''; if(typeof clCr==='function')clCr(); if(typeof goP==='function')goP('feed');}catch(e){}
+        setTimeout(function(){hide(); say('✅ Permanent save అయింది. Refresh తర్వాత కూడా కనిపిస్తుంది.');},250);
+      }).catch(function(err){hide(); console.log('Tarangam v12 post save error:',err); say('Post save fail: '+(err.code||err.message||'Firestore Rules check చేయండి'));});
+    }
+    if(file) window.uploadMediaToFirebase(file,kind,afterUpload); else afterUpload('',kind,'',null);
+  };
+
+  window.startPublicPosts=function(){
+    if(LISTENING_V12)return; try{initFirebase()}catch(e){return} LISTENING_V12=true;
+    try{window.db.collection('posts').orderBy('createdAtMs','desc').onSnapshot(function(snap){
+      var arr=[]; snap.forEach(function(doc){var d=doc.data()||{},url=d.mediaURL||''; if(url && !/^https?:\/\//i.test(String(url)))return; arr.push({n:d.n||'User',e:d.e||'👤',t:d.t||'now',txt:d.txt||'',media:d.media||'',mediaURL:url,mediaKind:d.mediaKind||d.type||'post',type:d.type||d.mediaKind||'post',likes:Number(d.likes||0),comments:Number(d.comments||0),commentList:Array.isArray(d.commentList)?d.commentList:[],liked:false,mine:!!(window.me&&d.uid===me.uid),docId:doc.id,uid:d.uid||'',createdAtMs:d.createdAtMs||0,localOnly:false,permanent:!!d.permanent});});
+      if(arr.length){POSTS=arr; try{if(typeof rFeed==='function')rFeed(); if(typeof renderProfTab==='function')renderProfTab();}catch(e){}}
+    },function(err){LISTENING_V12=false; console.log('v12 posts listen error:',err);});}catch(e){LISTENING_V12=false;}
+  };
+  setTimeout(function(){try{window.startPublicPosts()}catch(e){}},1500);
+  console.log('Tarangam no-stuck media v12 active');
+})();
+</script>
+
+
+<script>
+/* TARANGAM v13 QUICK PATCH
+   Fix: Storage REST Authorization header must be Bearer token, not Firebase token.
+   Fix: when upload fails, stop; don't return empty URL to submitPost (prevents repeat public link error).
+*/
+(function(){
+  console.log('Tarangam v13 upload auth header patch active');
+  try{ if(window.toast) setTimeout(function(){console.log('v13 ready')},500); }catch(e){}
+})();
 </script>
 </body>
 </html>
