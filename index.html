@@ -22,7 +22,7 @@
 <div id="splash"><div class="sp-logo">🌊</div><div class="sp-name">తరంగం</div><div class="sp-tag">Social · Videos · Market · Music · News · Earn</div><div class="sp-bar"><div class="sp-fill"></div></div></div>
 <div id="authPage"><div class="auth-card"><div class="auth-brand"><div class="auth-ico">🌊</div><h1>తరంగం</h1><p>Telugu Ultimate Super App — Join Free!</p></div><div class="atabs"><button class="atab on" id="lt" onclick="swAuth('l')">లాగిన్</button><button class="atab" id="rt" onclick="swAuth('r')">రిజిస్టర్</button></div><div id="lBox"><button class="sbtn" onclick="gLogin()">🔵 Continue with Google</button><button class="sbtn" onclick="fbLogin()" style="background:#1877f2;color:#fff">📘 Continue with Facebook</button><div class="ig"><label>Email</label><input id="le" type="email" placeholder="yourname@gmail.com"></div><div class="ig"><label>Password</label><input id="lp" type="password" placeholder="••••••••"></div><button class="bmain" onclick="doLogin()">Login చేయండి</button><button class="bghost" onclick="guest()">⏭ Guest గా చూడు</button><div class="amsg aerr" id="le2"></div><div class="amsg aok" id="lo"></div></div><div id="rBox" style="display:none"><div class="ig"><label>పేరు</label><input id="rn" placeholder="మీ పేరు"></div><div class="ig"><label>Email</label><input id="re" type="email" placeholder="yourname@gmail.com"></div><div class="ig"><label>Password</label><input id="rp" type="password" placeholder="6+ characters"></div><button class="bmain" onclick="doReg()">Account Create చేయండి</button><button class="bghost" onclick="swAuth('l')">Already have account? →</button><div class="amsg aerr" id="re2"></div><div class="amsg aok" id="ro"></div></div></div></div>
 <div id="vModal"><div class="vm-box"><button class="close" onclick="clVid()">✕</button><div class="vm-screen" id="vmE">🎬</div><div class="vm-body"><h3 id="vmTi">Video</h3><p id="vmMt" style="color:var(--mt);font-size:12px;margin:5px 0 12px">0 views</p><button class="bmain" onclick="earn(5,'Video watched');toast('+5 🪙 Video watched!')">▶ Watch & Earn</button><button class="bghost" onclick="toast('🔗 Share copied')">↗ Share</button></div></div></div>
-<div id="crModal"><div class="sheet"><div class="handle"></div><h3 style="text-align:center;margin-bottom:14px">✨ Create చేయండి</h3><div style="display:flex;gap:6px;margin-bottom:12px;overflow:auto"><button class="cr-type-btn on" onclick="setCrType('post',this)">📝 Post</button><button class="cr-type-btn" onclick="setCrType('photo',this)">📸 Photo</button><button class="cr-type-btn" onclick="setCrType('video',this)">📹 Video</button><button class="cr-type-btn" onclick="setCrType('reel',this)">⚡ Reel</button></div><textarea id="crPostTxt" placeholder="మీ మనసులో ఏముంది?" style="width:100%;background:var(--s2);border:1.5px solid var(--b1);border-radius:16px;color:var(--txt);padding:14px;font-size:15px;font-family:var(--te);resize:none;min-height:120px"></textarea><div id="crMediaPrev" style="display:none;margin-top:10px"><div id="crPrevBox" style="height:180px;border-radius:16px;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:60px;overflow:hidden"><img id="crPrevImg" style="width:100%;height:100%;object-fit:cover;display:none"><video id="crPrevVid" style="width:100%;height:100%;object-fit:cover;display:none" muted></video><span id="crPrevIcon">📸</span></div></div><div style="display:flex;gap:8px;margin-top:12px"><button class="bghost" onclick="crPickMedia('image/*','photo')">📸 Photo Add</button><button class="bghost" onclick="crPickMedia('video/*','video')">📹 Video Add</button></div><button class="bmain" onclick="submitPost()">🚀 Post చేయి</button><button class="bghost" onclick="clCr()">Cancel</button></div></div>
+<div id="crModal"><div class="sheet"><div class="handle"></div><h3 style="text-align:center;margin-bottom:14px">✨ Create చేయండి</h3><div style="display:flex;gap:6px;margin-bottom:12px;overflow:auto"><button class="cr-type-btn on" onclick="setCrType('post',this)">📝 Post</button><button class="cr-type-btn" onclick="setCrType('photo',this)">📸 Photo</button><button class="cr-type-btn" onclick="setCrType('video',this)">📹 Video</button><button class="cr-type-btn" onclick="setCrType('reel',this)">⚡ Reel</button></div><textarea id="crPostTxt" placeholder="మీ మనసులో ఏముంది?" style="width:100%;background:var(--s2);border:1.5px solid var(--b1);border-radius:16px;color:var(--txt);padding:14px;font-size:15px;font-family:var(--te);resize:none;min-height:120px"></textarea><div id="crMediaPrev" style="display:none;margin-top:10px"><div id="crPrevBox" style="height:180px;border-radius:16px;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:60px;overflow:hidden"><img id="crPrevImg" style="width:100%;height:100%;object-fit:cover;display:none"><video id="crPrevVid" style="width:100%;height:100%;object-fit:cover;display:none" muted></video><span id="crPrevIcon">📸</span></div></div><div style="display:flex;gap:8px;margin-top:12px"><button class="bghost" onclick="crPickMedia('image/*','photo')">📸 Photo Add</button><button class="bghost" onclick="crPickMedia('video/mp4,video/webm','video')">📹 Video Add</button></div><button class="bmain" onclick="submitPost()">🚀 Post చేయి</button><button class="bghost" onclick="clCr()">Cancel</button></div></div>
 <div id="editProfileModal"><div class="sheet"><div class="handle"></div><h3 style="text-align:center;margin-bottom:14px">✏️ Edit Profile</h3><div style="display:flex;gap:12px;align-items:center;margin-bottom:14px"><div onclick="pickProfilePhoto()" style="width:74px;height:74px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:900;position:relative;overflow:hidden;cursor:pointer;border:3px solid var(--b2)" id="editPhotoBox"><span id="editPhotoLetter">A</span><img id="editPhotoImg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none"></div><div style="flex:1"><button class="bghost" onclick="pickProfilePhoto()" style="margin-top:0">📷 Profile Photo Upload</button><button class="bghost" onclick="pickCoverPhoto()">🖼 Cover Upload</button></div></div><div class="ig"><label>Name</label><input id="editName" placeholder="మీ పేరు"></div><div class="ig"><label>Username</label><input id="editUsername" placeholder="@username"></div><div class="ig"><label>Bio</label><textarea id="editBio" style="width:100%;background:var(--bg);border:1.5px solid var(--b1);border-radius:13px;color:var(--txt);padding:13px 16px;min-height:80px" placeholder="Bio"></textarea></div><div class="ig"><label>Location</label><input id="editLocation" placeholder="Andhra Pradesh"></div><button class="bmain" onclick="saveProfile()">💾 Save</button><button class="bghost" onclick="closeEditProfile()">Cancel</button></div></div>
 
 <div id="commentModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:850;align-items:flex-end;justify-content:center">
@@ -72,11 +72,19 @@ function loadLocalPosts(){try{var a=JSON.parse(localStorage.getItem('tarangam_pu
 function fileToDataURL(file,cb){var r=new FileReader();r.onload=function(){cb(r.result)};r.onerror=function(){toast('File read error')};r.readAsDataURL(file)}
 function myPhoto(){return localStorage.getItem('tarangam_profile_photo')||''}
 function avatarHTML(letter){var ph=myPhoto();return ph?'<img src="'+ph+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">':esc(letter||'G')}
+function videoMimeFromUrl(url){
+  var s=String(url||'');
+  if(s.indexOf('data:video/mp4')===0 || /\.mp4(\?|#|$)/i.test(s)) return 'video/mp4';
+  if(s.indexOf('data:video/webm')===0 || /\.webm(\?|#|$)/i.test(s)) return 'video/webm';
+  if(s.indexOf('data:video/ogg')===0 || /\.ogv|\.ogg(\?|#|$)/i.test(s)) return 'video/ogg';
+  return '';
+}
 function mediaHTML(p){
   if(!p.mediaURL && !p.media) return '';
   if(p.mediaURL){
     if((p.mediaKind||p.type)==='video'){
-      return '<div class="post-media" style="aspect-ratio:16/10;background:#05050a"><video src="'+p.mediaURL+'" controls playsinline preload="metadata" style="width:100%;height:100%;object-fit:cover;background:#000"></video></div>';
+      var mt=videoMimeFromUrl(p.mediaURL);
+      return '<div class="post-media" style="aspect-ratio:16/10;background:#05050a"><video controls playsinline webkit-playsinline preload="metadata" style="width:100%;height:100%;object-fit:cover;background:#000"><source src="'+p.mediaURL+'"'+(mt?' type="'+mt+'"':'')+'>Your browser does not support this video. MP4 upload చేయండి.</video></div>';
     }
     return '<div class="post-media" style="aspect-ratio:4/3;background:#05050a"><img src="'+p.mediaURL+'" style="width:100%;height:100%;object-fit:cover;display:block"></div>';
   }
@@ -102,9 +110,9 @@ function rNews(){ge('newsTabs').innerHTML=NEWS_CATS.map(function(c,i){return '<b
 function loadLeaderboard(){var arr=[{n:nameOf(),c:coins,e:ini(nameOf())},{n:'రవి',c:980,e:'ర'},{n:'అనిత',c:875,e:'అ'},{n:'వేణు',c:720,e:'వ'}].sort(function(a,b){return b.c-a.c});ge('lbList').innerHTML=arr.map(function(x,i){return '<div class="lbrow"><div style="width:28px;color:var(--gold);font-weight:900">#'+(i+1)+'</div><div class="lbav">'+x.e+'</div><div class="lbinfo"><div class="lbname">'+x.n+'</div><div class="lbsub">Top earner</div></div><b style="color:var(--gold)">🪙 '+x.c+'</b></div>'}).join('')}
 function loadProfile(){var av=ini(nameOf());if(ge('pAvLetter'))ge('pAvLetter').textContent=av;else ge('pAv').textContent=av;ge('pNm').textContent=nameOf();ge('pHd').textContent='@'+(me&&me.email?me.email.split('@')[0]:'guest');ge('pCoins').textContent=coins;ge('pPostCount').textContent=POSTS.filter(function(p){return p.mine}).length;applySavedProfileImages();ge('profPostsList').innerHTML=POSTS.filter(function(p){return p.mine}).map(function(p){return '<div class="post"><div class="post-body">'+esc(p.txt)+'</div></div>'}).join('')||'<div style="text-align:center;padding:40px;color:var(--mt)">📝 ఇంకా posts లేవు</div>'}
 function opCr(){ge('crModal').classList.add('modal-open')}function clCr(){ge('crModal').classList.remove('modal-open')}function setCrType(t,b){curPostType=t;document.querySelectorAll('.cr-type-btn').forEach(function(x){x.classList.remove('on')});b.classList.add('on')}
-function crPickMedia(accept,type){var input=document.createElement('input');input.type='file';input.accept=accept;input.onchange=function(e){var f=e.target.files[0];if(!f)return;curPostType=type;crMediaFile=f;var blob=URL.createObjectURL(f);crMediaURL=blob;ge('crMediaPrev').style.display='block';ge('crPrevIcon').style.display='none';ge('crPrevImg').style.display='none';ge('crPrevVid').style.display='none';if(type==='photo'){ge('crPrevImg').src=blob;ge('crPrevImg').style.display='block'}else{ge('crPrevVid').src=blob;ge('crPrevVid').style.display='block';ge('crPrevVid').controls=true;ge('crPrevVid').muted=true;ge('crPrevVid').play().catch(function(){})}toast((type==='video'?'📹 Video':'📸 Photo')+' selected')};input.click()}
+function crPickMedia(accept,type){var input=document.createElement('input');input.type='file';input.accept=(type==='video'?'video/mp4,video/webm':accept);input.onchange=function(e){var f=e.target.files[0];if(!f)return;curPostType=type;crMediaFile=f;var blob=URL.createObjectURL(f);crMediaURL=blob;ge('crMediaPrev').style.display='block';ge('crPrevIcon').style.display='none';ge('crPrevImg').style.display='none';ge('crPrevVid').style.display='none';if(type==='photo'){ge('crPrevImg').src=blob;ge('crPrevImg').style.display='block'}else{ge('crPrevVid').src=blob;ge('crPrevVid').style.display='block';ge('crPrevVid').controls=true;ge('crPrevVid').muted=true;ge('crPrevVid').play().catch(function(){})}toast((type==='video'?'📹 Video':'📸 Photo')+' selected')};input.click()}
 function submitPost(){var txt=ge('crPostTxt').value.trim();if(!txt&&!crMediaFile){toast('Text లేదా photo/video add చేయండి');return}var finish=function(url,kind){POSTS.unshift({n:nameOf(),e:ini(nameOf()),t:'now',txt:txt||'New media post',media:kind==='video'?'📹':'📸',mediaURL:url||crMediaURL||'',mediaKind:kind||curPostType,likes:0,comments:0,liked:false,type:kind||curPostType,mine:true});earn(20,'Post created');ge('crPostTxt').value='';crMediaFile=null;crMediaURL=null;ge('crMediaPrev').style.display='none';ge('crPrevImg').src='';ge('crPrevVid').src='';saveLocalPosts();clCr();rFeed();toast('✅ Public feed lo show avutundi +20 🪙');goP('feed')};if(crMediaFile){var kind=(curPostType==='video'||(crMediaFile.type||'').indexOf('video')===0)?'video':'photo';if(kind==='photo' || crMediaFile.size<12*1024*1024){fileToDataURL(crMediaFile,function(data){finish(data,kind)})}else{finish(crMediaURL,kind);toast('Large video: current session lo show avutundi. Permanent public ki Firebase Storage enable cheyాలి')}}else{finish('',curPostType)}}
-function openEditProfile(){ge('editName').value=nameOf();ge('editUsername').value=ge('pHd')?ge('pHd').textContent:'';ge('editBio').value=ge('pBio')?ge('pBio').textContent:'';if(ge('editPhotoLetter'))ge('editPhotoLetter').textContent=ini(nameOf());applySavedProfileImages();ge('editProfileModal').classList.add('modal-open')}function closeEditProfile(){ge('editProfileModal').classList.remove('modal-open')}function saveProfile(){var n=ge('editName').value.trim()||nameOf();if(me)me.updateProfile({displayName:n}).catch(function(){});ge('pNm').textContent=n;ge('hAv').textContent=ini(n);if(ge('pAvLetter'))ge('pAvLetter').textContent=ini(n);ge('pBio').textContent=ge('editBio').value||'Telugu content creator 🌊';closeEditProfile();toast('✅ Profile saved')}function readImgFile(cb){var input=document.createElement('input');input.type='file';input.accept='image/*';input.onchange=function(e){var f=e.target.files[0];if(!f)return;if(f.size>5*1024*1024){toast('Image 5MB కంటే తక్కువ ఉండాలి');return}var r=new FileReader();r.onload=function(){cb(r.result)};r.readAsDataURL(f)};input.click()}function pickProfilePhoto(){readImgFile(function(url){localStorage.setItem('tarangam_profile_photo',url);applySavedProfileImages();toast('✅ Profile photo uploaded')})}function pickCoverPhoto(){readImgFile(function(url){localStorage.setItem('tarangam_cover_photo',url);applySavedProfileImages();toast('✅ Cover uploaded')})}function applySavedProfileImages(){var ph=localStorage.getItem('tarangam_profile_photo'),cv=localStorage.getItem('tarangam_cover_photo');[['pAvImg',ph],['editPhotoImg',ph]].forEach(function(a){var im=ge(a[0]);if(im&&a[1]){im.src=a[1];im.style.display='block'}});if(ph){if(ge('pAvLetter'))ge('pAvLetter').style.display='none';if(ge('editPhotoLetter'))ge('editPhotoLetter').style.display='none'}var ci=ge('profileCoverImg');if(ci&&cv){ci.src=cv;ci.style.display='block'}}function toggleNotif(){toast('🔔 Notifications opened')}function closeNotif(){}function markAllRead(){toast('All read')}function uploadVideo(){crPickMedia('video/*','video')}function uploadPhoto(){crPickMedia('image/*','photo')}
+function openEditProfile(){ge('editName').value=nameOf();ge('editUsername').value=ge('pHd')?ge('pHd').textContent:'';ge('editBio').value=ge('pBio')?ge('pBio').textContent:'';if(ge('editPhotoLetter'))ge('editPhotoLetter').textContent=ini(nameOf());applySavedProfileImages();ge('editProfileModal').classList.add('modal-open')}function closeEditProfile(){ge('editProfileModal').classList.remove('modal-open')}function saveProfile(){var n=ge('editName').value.trim()||nameOf();if(me)me.updateProfile({displayName:n}).catch(function(){});ge('pNm').textContent=n;ge('hAv').textContent=ini(n);if(ge('pAvLetter'))ge('pAvLetter').textContent=ini(n);ge('pBio').textContent=ge('editBio').value||'Telugu content creator 🌊';closeEditProfile();toast('✅ Profile saved')}function readImgFile(cb){var input=document.createElement('input');input.type='file';input.accept='image/*';input.onchange=function(e){var f=e.target.files[0];if(!f)return;if(f.size>5*1024*1024){toast('Image 5MB కంటే తక్కువ ఉండాలి');return}var r=new FileReader();r.onload=function(){cb(r.result)};r.readAsDataURL(f)};input.click()}function pickProfilePhoto(){readImgFile(function(url){localStorage.setItem('tarangam_profile_photo',url);applySavedProfileImages();toast('✅ Profile photo uploaded')})}function pickCoverPhoto(){readImgFile(function(url){localStorage.setItem('tarangam_cover_photo',url);applySavedProfileImages();toast('✅ Cover uploaded')})}function applySavedProfileImages(){var ph=localStorage.getItem('tarangam_profile_photo'),cv=localStorage.getItem('tarangam_cover_photo');[['pAvImg',ph],['editPhotoImg',ph]].forEach(function(a){var im=ge(a[0]);if(im&&a[1]){im.src=a[1];im.style.display='block'}});if(ph){if(ge('pAvLetter'))ge('pAvLetter').style.display='none';if(ge('editPhotoLetter'))ge('editPhotoLetter').style.display='none'}var ci=ge('profileCoverImg');if(ci&&cv){ci.src=cv;ci.style.display='block'}}function toggleNotif(){toast('🔔 Notifications opened')}function closeNotif(){}function markAllRead(){toast('All read')}function uploadVideo(){crPickMedia('video/mp4,video/webm','video')}function uploadPhoto(){crPickMedia('image/*','photo')}
 setTimeout(function(){try{loadLocalPosts();applySavedProfileImages()}catch(e){}},500);
 window.addEventListener('error',function(e){console.log('APP ERROR:',e.message);toast('Code error fixed fallback active')});
 
@@ -175,6 +183,231 @@ function lkPost(i){
   if(POSTS[i].liked)earn(1,'Liked');
   saveLocalPosts();rFeed();
 }
+
+
+/* FIREBASE PUBLIC PHOTO/VIDEO FEED PATCH - ALL USERS CAN SEE */
+var DEMO_POSTS_PUBLIC = (typeof POSTS!=='undefined' && POSTS.slice)?POSTS.slice():[];
+var publicPostsStarted=false;
+function cleanOldBrokenLocalPosts(){try{localStorage.removeItem('tarangam_public_posts_v3')}catch(e){}}
+function saveLocalPosts(){/* Public mode: posts save to Firebase, not only phone */}
+function loadLocalPosts(){cleanOldBrokenLocalPosts();}
+function publicPostObj(base){
+  base=base||{};
+  return {
+    n:base.n||base.name||nameOf(),
+    e:base.e||ini(base.n||base.name||nameOf()),
+    t:base.t||'now',
+    txt:base.txt||base.text||'',
+    media:base.media||'',
+    mediaURL:base.mediaURL||'',
+    mediaKind:base.mediaKind||base.kind||base.type||'post',
+    type:base.type||base.mediaKind||'post',
+    likes:safeNum(base.likes),
+    comments:safeNum(base.comments),
+    commentList:Array.isArray(base.commentList)?base.commentList:[],
+    liked:false,
+    mine:!!base.mine,
+    docId:base.docId||''
+  };
+}
+function startPublicPosts(){
+  if(publicPostsStarted || !db){return;}
+  publicPostsStarted=true;
+  db.collection('posts').orderBy('createdAt','desc').onSnapshot(function(snap){
+    var arr=[];
+    snap.forEach(function(doc){var d=doc.data()||{};d.docId=doc.id;arr.push(publicPostObj(d));});
+    POSTS = arr.length ? arr : DEMO_POSTS_PUBLIC.slice();
+    rFeed();
+    if(ge('pPostCount')) ge('pPostCount').textContent=POSTS.filter(function(p){return p.mine}).length;
+  },function(err){
+    console.log('public posts error',err);
+    toast('Firebase Rules publish చేయాలి: photos/videos public కోసం');
+    POSTS = POSTS && POSTS.length ? POSTS : DEMO_POSTS_PUBLIC.slice();
+    rFeed();
+  });
+}
+function uploadMediaToFirebase(file,kind,cb){
+  if(!file){cb('',kind);return;}
+  if(!storage){fileToDataURL(file,function(data){cb(data,kind)});return;}
+  var ext=(file.name||'file').split('.').pop().toLowerCase();
+  if(!ext || ext.length>5) ext=(kind==='video'?'mp4':'jpg');
+  var path='tarangam_public_posts/'+Date.now()+'_'+Math.random().toString(36).slice(2)+'.'+ext;
+  toast('⏳ Uploading public media... wait');
+  var meta={contentType:file.type || (kind==='video'?'video/mp4':'image/jpeg')};
+  storage.ref(path).put(file,meta).then(function(snap){return snap.ref.getDownloadURL()}).then(function(url){cb(url,kind)}).catch(function(err){
+    console.log('storage upload error',err);
+    toast('Storage Rules publish చేయాలి. Temporary local preview only.');
+    fileToDataURL(file,function(data){cb(data,kind)});
+  });
+}
+function submitPost(){
+  var txt=ge('crPostTxt').value.trim();
+  if(!txt&&!crMediaFile){toast('Text లేదా photo/video add చేయండి');return;}
+  var kind=crMediaFile?((curPostType==='video'||(crMediaFile.type||'').indexOf('video')===0)?'video':'photo'):curPostType;
+  uploadMediaToFirebase(crMediaFile,kind,function(url,finalKind){
+    var post={
+      n:nameOf(), e:ini(nameOf()), t:'now', txt:txt||'New media post',
+      media:finalKind==='video'?'📹':(finalKind==='photo'?'📸':''),
+      mediaURL:url||'', mediaKind:finalKind||'post', type:finalKind||'post',
+      likes:0, comments:0, commentList:[], mine:true, createdAt:Date.now(), uid:(me&&me.uid)||'guest'
+    };
+    function done(){
+      POSTS.unshift(post); earn(20,'Post created');
+      ge('crPostTxt').value=''; crMediaFile=null; crMediaURL=null;
+      ge('crMediaPrev').style.display='none'; ge('crPrevImg').src=''; ge('crPrevVid').src='';
+      clCr(); rFeed(); goP('feed'); toast('✅ Public feed lo save అయింది +20🪙');
+    }
+    if(db){
+      db.collection('posts').add(post).then(function(){done()}).catch(function(err){console.log(err);toast('Firestore Rules లో posts allow చేయాలి');done()});
+    }else{done();}
+  });
+}
+function saveComment(){
+  var input=ge('commentInput'), txt=(input&&input.value||'').trim();
+  if(activeCommentIndex===null){toast('Post select కాలేదు');return;}
+  if(!txt){toast('Comment రాయండి');return;}
+  var p=POSTS[activeCommentIndex]; if(!p.commentList)p.commentList=[];
+  p.commentList.push({name:nameOf(),text:txt,time:'Just now'});
+  p.comments=safeNum(p.comments)+1;
+  input.value=''; renderCommentList(); rFeed(); earn(1,'Comment added'); toast('✅ Comment public added +1🪙');
+  if(db && p.docId){db.collection('posts').doc(p.docId).update({commentList:p.commentList,comments:p.comments}).catch(function(e){console.log(e);});}
+}
+function lkPost(i){
+  var p=POSTS[i]; if(!p)return;
+  p.liked=!p.liked; p.likes=safeNum(p.likes)+(p.liked?1:-1);
+  if(p.liked)earn(1,'Liked'); rFeed();
+  if(db && p.docId){db.collection('posts').doc(p.docId).update({likes:p.likes}).catch(function(e){console.log(e);});}
+}
+var __oldOpenApp=openApp;
+openApp=function(isGuest){__oldOpenApp(isGuest);setTimeout(startPublicPosts,500)};
+setTimeout(function(){cleanOldBrokenLocalPosts();startPublicPosts();},2500);
+
+
+/* FINAL DIAGNOSTIC: shows real Firebase status for upload problems */
+function firebaseStatusCheck(){
+  var msg=[];
+  msg.push('Firebase: '+(fbOk?'OK':'NOT OK'));
+  msg.push('Auth: '+(auth?'OK':'NO'));
+  msg.push('Firestore: '+(db?'OK':'NO'));
+  msg.push('Storage: '+(storage?'OK':'NO'));
+  msg.push('User: '+(me?(me.email||me.uid):'Guest'));
+  toast(msg.join(' | '));
+  console.log('TARANGAM FIREBASE STATUS', msg.join(' | '));
+}
+setTimeout(function(){console.log('Tarangam final fixed file loaded. Firestore collection = posts');},1000);
+
+
+/* ===== ULTRA STABLE FIREBASE PUBLIC UPLOAD PATCH v4 ===== */
+function showUploadBusy(msg){
+  var old=ge('uploadBusy'); if(old) old.remove();
+  var d=document.createElement('div'); d.id='uploadBusy';
+  d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.86);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px';
+  d.innerHTML='<div style="width:100%;max-width:360px;background:var(--s1);border:1px solid var(--b2);border-radius:22px;padding:22px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.55)"><div style="font-size:42px;margin-bottom:10px">⏳</div><div id="uploadBusyTxt" style="font-size:15px;font-weight:900;margin-bottom:10px;font-family:var(--te)">'+esc(msg||'Please wait...')+'</div><div style="height:8px;background:var(--b2);border-radius:20px;overflow:hidden"><div id="uploadBusyBar" style="height:100%;width:5%;background:var(--g);transition:.25s"></div></div><div id="uploadBusySub" style="color:var(--mt);font-size:12px;margin-top:9px">Firebase upload checking...</div></div>';
+  document.body.appendChild(d);
+}
+function setUploadBusy(p,msg){
+  var b=ge('uploadBusyBar'),t=ge('uploadBusyTxt'),s=ge('uploadBusySub');
+  if(b)b.style.width=Math.max(5,Math.min(100,p||5))+'%';
+  if(t&&msg)t.textContent=msg;
+  if(s)s.textContent=(p||0)+'%';
+}
+function hideUploadBusy(){var d=ge('uploadBusy'); if(d)d.remove();}
+function cleanFileName(name){return String(name||'file').replace(/[^a-zA-Z0-9_.-]/g,'_').slice(-80)}
+function requireFirebaseReady(){
+  if(!fbOk || !firebase){throw new Error('Firebase SDK load కాలేదు. Internet/refresh check చేయండి');}
+  if(!storage){throw new Error('Firebase Storage ready కాదు. Storage enable చేసి refresh చేయండి');}
+  if(!db){throw new Error('Firestore ready కాదు. Database enable చేసి refresh చేయండి');}
+}
+function ensureLoginForRules(){
+  return new Promise(function(resolve,reject){
+    if(auth && auth.currentUser){me=auth.currentUser; resolve(me); return;}
+    if(!auth){resolve(null);return;}
+    if(auth.signInAnonymously){
+      auth.signInAnonymously().then(function(r){me=r.user;resolve(me)}).catch(function(err){
+        reject(new Error('Login required: Email/Google login చేయండి లేదా Authentication లో Anonymous enable చేయండి. '+(err.message||'')));
+      });
+    }else reject(new Error('Login required: Email/Google login చేయండి'));
+  });
+}
+function uploadMediaToFirebase(file,kind,cb){
+  if(!file){cb('',kind);return;}
+  try{requireFirebaseReady()}catch(e){hideUploadBusy();toast(e.message);console.error(e);return;}
+  var isVideo=(kind==='video'||String(file.type||'').indexOf('video')===0);
+  var isImage=(kind==='photo'||String(file.type||'').indexOf('image')===0);
+  if(!isVideo && !isImage){toast('Only photo/video upload చేయండి');return;}
+  if(isImage && file.size>15*1024*1024){toast('Photo 15MB కంటే తక్కువ ఉండాలి');return;}
+  if(isVideo && file.size>120*1024*1024){toast('Video 120MB కంటే తక్కువ ఉండాలి');return;}
+  showUploadBusy('Public media upload అవుతోంది...');
+  ensureLoginForRules().then(function(user){
+    var uid=(user&&user.uid)||'public';
+    var folder=isVideo?'videos':'photos';
+    var path='posts/'+uid+'/'+Date.now()+'_'+cleanFileName(file.name||('media.'+(isVideo?'mp4':'jpg')));
+    var meta={contentType:file.type || (isVideo?'video/mp4':'image/jpeg'), customMetadata:{app:'tarangam'}};
+    var task=storage.ref(path).put(file,meta);
+    task.on('state_changed',function(snap){
+      var pct=Math.round((snap.bytesTransferred/snap.totalBytes)*100);
+      setUploadBusy(pct,'Uploading '+pct+'%');
+    },function(err){
+      hideUploadBusy();
+      console.error('UPLOAD FAILED',err);
+      toast('Upload failed: '+(err.code||err.message||'rules/error'));
+    },function(){
+      task.snapshot.ref.getDownloadURL().then(function(url){
+        setUploadBusy(100,'Upload complete. Saving post...');
+        cb(url,isVideo?'video':'photo');
+      }).catch(function(err){hideUploadBusy();console.error(err);toast('Download URL error: '+(err.message||err.code));});
+    });
+  }).catch(function(err){hideUploadBusy();console.error(err);toast(err.message||'Login required')});
+}
+function submitPost(){
+  var txt=(ge('crPostTxt')&&ge('crPostTxt').value||'').trim();
+  if(!txt&&!crMediaFile){toast('Text లేదా photo/video add చేయండి');return;}
+  var kind=crMediaFile?((curPostType==='video'||(crMediaFile.type||'').indexOf('video')===0)?'video':'photo'):curPostType;
+  uploadMediaToFirebase(crMediaFile,kind,function(url,finalKind){
+    var user=auth&&auth.currentUser; if(user)me=user;
+    var post={
+      n:nameOf(), e:ini(nameOf()), t:'now', txt:txt||'New media post',
+      media:finalKind==='video'?'📹':(finalKind==='photo'?'📸':''),
+      mediaURL:url||'', mediaKind:finalKind||'post', type:finalKind||'post',
+      likes:0, comments:0, commentList:[], mine:true,
+      uid:(me&&me.uid)||'public', author:(me&&me.email)||nameOf(),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(), createdMs: Date.now()
+    };
+    function resetUI(){
+      hideUploadBusy();
+      ge('crPostTxt').value=''; crMediaFile=null; crMediaURL=null;
+      if(ge('crMediaPrev'))ge('crMediaPrev').style.display='none';
+      if(ge('crPrevImg'))ge('crPrevImg').src=''; if(ge('crPrevVid'))ge('crPrevVid').src='';
+      clCr(); goP('feed');
+    }
+    if(db){
+      db.collection('posts').add(post).then(function(){
+        resetUI(); toast('✅ Public feed lo save అయింది');
+      }).catch(function(err){
+        hideUploadBusy(); console.error('FIRESTORE SAVE FAILED',err);
+        toast('Firestore save failed: '+(err.code||err.message));
+      });
+    }else{hideUploadBusy();toast('Firestore not ready')}
+  });
+}
+function startPublicPosts(){
+  if(publicPostsStarted || !db){return;}
+  publicPostsStarted=true;
+  db.collection('posts').orderBy('createdAt','desc').onSnapshot(function(snap){
+    var arr=[];
+    snap.forEach(function(doc){var d=doc.data()||{};d.docId=doc.id;arr.push(publicPostObj(d));});
+    POSTS = arr.length ? arr : DEMO_POSTS_PUBLIC.slice();
+    rFeed();
+    if(ge('pPostCount')) ge('pPostCount').textContent=POSTS.filter(function(p){return p.mine}).length;
+  },function(err){
+    console.error('PUBLIC LOAD FAILED',err);
+    toast('Posts load failed: '+(err.code||err.message));
+    POSTS = POSTS && POSTS.length ? POSTS : DEMO_POSTS_PUBLIC.slice();
+    rFeed();
+  });
+}
+console.log('Tarangam v4 stable Firebase upload patch loaded');
+
 </script>
 </body>
 </html>
